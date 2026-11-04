@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Quản Trị Hệ Thống CTSV — FPTU EventHub{% endblock %}
+
+{% block content %}
+<div class="container" style="margin-top:30px;">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:26px;">
+    <div>
+      <h2 style="font-weight:800;color:var(--feh-navy);margin:0 0 4px;">
+        <i class="fa-solid fa-shield-halved" style="color:var(--feh-primary);"></i> Quản Trị Hệ Thống (Phòng CTSV)
+      </h2>
+      <p style="color:var(--feh-text-muted);margin:0;font-size:14px;">
+        Báo cáo tổng quan hoạt động phong trào và quản lý danh mục sự kiện toàn trường.
+      </p>
+    </div>
+    <span class="feh-badge feh-badge--fpt" style="font-size:13px;padding:8px 14px;">
+      <i class="fa-solid fa-user-shield"></i> Quyền Quản Trị Cao Cấp
+    </span>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="row" style="margin-bottom:30px;">
+    <div class="col-sm-3 col-xs-6" style="margin-bottom:15px;">
+      <div style="background:#fff;border:1px solid var(--feh-border);border-radius:12px;padding:20px;box-shadow:var(--feh-shadow);text-align:center;">
+        <div style="font-size:28px;font-weight:800;color:var(--feh-primary);">{{ total_events }}</div>
+        <div style="font-size:12px;color:#64748b;font-weight:700;text-transform:uppercase;margin-top:4px;">Tổng Sự Kiện</div>
+      </div>
+    </div>
+    <div class="col-sm-3 col-xs-6" style="margin-bottom:15px;">
+      <div style="background:#fff;border:1px solid var(--feh-border);border-radius:12px;padding:20px;box-shadow:var(--feh-shadow);text-align:center;">
+        <div style="font-size:28px;font-weight:800;color:#0284c7;">{{ total_tickets }}</div>
+        <div style="font-size:12px;color:#64748b;font-weight:700;text-transform:uppercase;margin-top:4px;">Lượt Vé Đã Phát Hành</div>
+      </div>
+    </div>
+    <div class="col-sm-3 col-xs-6" style="margin-bottom:15px;">
+      <div style="background:#fff;border:1px solid var(--feh-border);border-radius:12px;padding:20px;box-shadow:var(--feh-shadow);text-align:center;">
+        <div style="font-size:28px;font-weight:800;color:#10b981;">{{ checked_in_total }}</div>
+        <div style="font-size:12px;color:#64748b;font-weight:700;text-transform:uppercase;margin-top:4px;">Đã Check-in Thực Tế</div>
+      </div>
+    </div>
+    <div class="col-sm-3 col-xs-6" style="margin-bottom:15px;">
+      <div style="background:#fff;border:1px solid var(--feh-border);border-radius:12px;padding:20px;box-shadow:var(--feh-shadow);text-align:center;">
+        <div style="font-size:28px;font-weight:800;color:#8b5cf6;">{{ total_users }}</div>
+        <div style="font-size:12px;color:#64748b;font-weight:700;text-transform:uppercase;margin-top:4px;">Thành Viên Đăng Ký</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Grid: Categories & Recent Users -->
+  <div class="row">
+    <!-- Categories List -->
+    <div class="col-md-6" style="margin-bottom:24px;">
+      <div style="background:#fff;border:1px solid var(--feh-border);border-radius:14px;padding:24px;box-shadow:var(--feh-shadow);height:100%;">
+        <h4 style="font-weight:800;color:var(--feh-navy);margin:0 0 18px;">
+          <i class="fa-solid fa-layer-group" style="color:var(--feh-primary);"></i> Danh Mục Hoạt Động FPTU
+        </h4>
+        <ul class="list-group" style="box-shadow:none;">
+          {% for c in categories %}
+            <li class="list-group-item" style="display:flex;justify-content:space-between;align-items:center;border-color:#f1f5f9;padding:14px 16px;">
+              <div>
+                <i class="fa-solid {{ c.icon }}" style="color:{{ c.color }};margin-right:8px;"></i>
+                <strong style="color:var(--feh-navy);">{{ c.name }}</strong>
+                <div style="font-size:11px;color:#64748b;margin-top:2px;">{{ c.description }}</div>
+              </div>
+              <span class="badge" style="background:#f1f5f9;color:#334155;font-weight:700;">
+                {{ c.events|length }} sự kiện
+              </span>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Recent Users -->
+    <div class="col-md-6" style="margin-bottom:24px;">
+      <div style="background:#fff;border:1px solid var(--feh-border);border-radius:14px;padding:24px;box-shadow:var(--feh-shadow);height:100%;">
+        <h4 style="font-weight:800;color:var(--feh-navy);margin:0 0 18px;">
+          <i class="fa-solid fa-users" style="color:var(--feh-primary);"></i> Tài Khoản Hoạt Động Gần Đây
+        </h4>
+        <div class="table-responsive">
+          <table class="table table-hover" style="margin:0;font-size:13px;">
+            <thead>
+              <tr style="color:#64748b;font-size:11px;text-transform:uppercase;">
+                <th>MSSV / Mã</th>
+                <th>Họ và Tên</th>
+                <th>Email</th>
+                <th>Vai trò</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for u in recent_users %}
+                <tr>
+                  <td><code>{{ u.student_id or 'N/A' }}</code></td>
+                  <td style="font-weight:700;color:var(--feh-navy);">{{ u.full_name }}</td>
+                  <td>{{ u.email }}</td>
+                  <td>
+                    {% if u.role.name == 'Admin' %}
+                      <span class="label label-danger">Admin</span>
+                    {% elif u.role.name == 'Organizer' %}
+                      <span class="label label-warning">Organizer</span>
+                    {% else %}
+                      <span class="label label-success">Student</span>
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

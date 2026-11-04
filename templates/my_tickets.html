@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Vé Của Tôi — FPTU EventHub{% endblock %}
+
+{% block content %}
+<div class="container" style="margin-top:30px;">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:26px;">
+    <div>
+      <h2 style="font-weight:800;color:var(--feh-navy);margin:0 0 6px;">
+        <i class="fa-solid fa-ticket" style="color:var(--feh-primary);"></i> Vé Sự Kiện Đã Đăng Ký
+      </h2>
+      <p style="color:var(--feh-text-muted);margin:0;font-size:14px;">
+        Xuất trình mã QR tại bàn tiếp đón cửa hội trường để cán bộ BTC điểm danh tích lũy điểm PDP.
+      </p>
+    </div>
+    <a href="{{ url_for('home') }}" class="feh-btn feh-btn--primary">
+      <i class="fa-solid fa-plus"></i> Đăng ký thêm sự kiện
+    </a>
+  </div>
+
+  {% if tickets %}
+    <div class="row">
+      {% for t in tickets %}
+        <div class="col-md-12">
+          <div class="feh-ticket-card">
+            <!-- Left Info -->
+            <div class="feh-ticket-card__left">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+                <span class="feh-badge feh-badge--fpt">
+                  <i class="fa-solid {{ t.event.category.icon }}"></i> {{ t.event.category.name }}
+                </span>
+                
+                {% if t.status == 'REGISTERED' %}
+                  <span class="feh-badge feh-badge--success"><i class="fa-solid fa-check-circle"></i> ĐÃ ĐĂNG KÝ (HỢP LỆ)</span>
+                {% elif t.status == 'CHECKED_IN' %}
+                  <span class="feh-badge feh-badge--warning"><i class="fa-solid fa-qrcode"></i> ĐÃ CHECK-IN THAM GIA</span>
+                {% else %}
+                  <span class="feh-badge feh-badge--danger"><i class="fa-solid fa-ban"></i> ĐÃ HỦY VÉ</span>
+                {% endif %}
+              </div>
+
+              <h3 style="font-size:20px;font-weight:800;color:var(--feh-navy);margin:0 0 14px;">
+                <a href="{{ url_for('event_detail', event_id=t.event.id) }}" style="color:inherit;text-decoration:none;">{{ t.event.title }}</a>
+              </h3>
+
+              <div class="row" style="font-size:13px;color:#475569;margin-bottom:18px;">
+                <div class="col-sm-4" style="margin-bottom:8px;">
+                  <strong style="color:var(--feh-navy);display:block;"><i class="fa-regular fa-clock" style="color:var(--feh-primary);"></i> Thời Gian:</strong>
+                  {{ t.event.start_time.strftime('%H:%M • %d/%m/%Y') }}
+                </div>
+                <div class="col-sm-4" style="margin-bottom:8px;">
+                  <strong style="color:var(--feh-navy);display:block;"><i class="fa-solid fa-location-dot" style="color:var(--feh-primary);"></i> Địa Điểm:</strong>
+                  {{ t.event.venue }}
+                </div>
+                <div class="col-sm-4" style="margin-bottom:8px;">
+                  <strong style="color:var(--feh-navy);display:block;"><i class="fa-solid fa-user-graduate" style="color:var(--feh-primary);"></i> Sinh Viên:</strong>
+                  {{ t.user.full_name }} ({{ t.user.student_id }})
+                </div>
+              </div>
+
+              <div style="display:flex;align-items:center;gap:12px;">
+                <!-- QR Code trigger modal -->
+                <button type="button" class="feh-btn feh-btn--primary" data-toggle="modal" data-target="#qrModal{{ t.id }}">
+                  <i class="fa-solid fa-qrcode"></i> Xem Mã QR Check-in
+                </button>
+
+                <!-- Cancel Button -->
+                {% if t.status == 'REGISTERED' %}
+                  <form method="POST" action="{{ url_for('cancel_ticket', ticket_id=t.id) }}" style="display:inline;" onsubmit="return confirm('Bạn có chắc chắn muốn hủy vé này? Slot ghế sẽ được hoàn lại cho sinh viên khác.');">
+                    <button type="submit" class="btn btn-default btn-sm" style="color:#ef4444;border-color:#fca5a5;padding:8px 14px;border-radius:8px;font-weight:700;">
+                      <i class="fa-regular fa-trash-can"></i> Hủy vé
+                    </button>
+                  </form>
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- Right QR code & stub -->
+            <div class="feh-ticket-card__right hidden-xs">
+              <img src="{{ t.qr_url }}" alt="QR Code" style="width:110px;height:110px;border-radius:8px;border:1px solid #cbd5e1;padding:4px;background:#fff;margin-bottom:8px;">
+              <div class="feh-ticket-card__code">{{ t.ticket_code }}</div>
+              <div style="font-size:11px;color:#94a3b8;margin-top:6px;">Quét tại bàn đón tiếp</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- QR Code Modal -->
+        <div class="modal fade" id="qrModal{{ t.id }}" tabindex="-1" role="dialog">
+          <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content" style="border-radius:14px;overflow:hidden;text-align:center;">
+              <div class="modal-header" style="background:#0f172a;color:#fff;border:none;padding:16px;">
+                <button type="button" class="close" data-dismiss="modal" style="color:#fff;opacity:0.8;">&times;</button>
+                <h5 class="modal-title" style="font-weight:800;"><i class="fa-solid fa-ticket"></i> VÉ ĐIỆN TỬ FPTU</h5>
+              </div>
+              <div class="modal-body" style="padding:24px;">
+                <h5 style="font-weight:700;color:var(--feh-navy);margin:0 0 14px;line-height:1.4;">{{ t.event.title }}</h5>
+                <img src="{{ t.qr_url }}" alt="QR Code" style="width:200px;height:200px;margin:0 auto;border:2px solid var(--feh-primary);border-radius:12px;padding:6px;">
+                <div style="margin-top:14px;">
+                  <span class="feh-ticket-card__code" style="font-size:18px;">{{ t.ticket_code }}</span>
+                </div>
+                <div style="font-size:13px;font-weight:600;color:#334155;margin-top:10px;">
+                  SV: {{ t.user.full_name }} ({{ t.user.student_id }})
+                </div>
+                <div style="font-size:12px;color:#64748b;margin-top:4px;">
+                  Địa điểm: {{ t.event.venue }}
+                </div>
+              </div>
+              <div class="modal-footer" style="text-align:center;background:#f8fafc;border-top:1px solid #e2e8f0;">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" style="border-radius:8px;font-weight:700;">Đóng</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info text-center" style="background:#fff;border:1px solid #bfdbfe;border-radius:14px;padding:50px 20px;">
+      <i class="fa-solid fa-ticket-simple" style="font-size:44px;color:var(--feh-primary);margin-bottom:14px;"></i>
+      <h4 style="font-weight:800;color:var(--feh-navy);">Bạn chưa đăng ký sự kiện nào</h4>
+      <p style="color:var(--feh-text-muted);">Hãy lướt qua các workshop và hội thảo thú vị để đăng ký giữ chỗ ngay hôm nay!</p>
+      <a href="{{ url_for('home') }}" class="feh-btn feh-btn--primary" style="margin-top:12px;">
+        <i class="fa-solid fa-compass"></i> Khám phá sự kiện FPTU
+      </a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

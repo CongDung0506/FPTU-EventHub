@@ -1,0 +1,11 @@
+Flask
+Flask-SQLAlchemy
+Flask-Login
+Flask-Bootstrap
+Flask-WTF
+WTForms
+email-validator
+Markdown
+bleach
+python-dotenv
+qrcode

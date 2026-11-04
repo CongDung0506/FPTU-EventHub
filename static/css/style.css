@@ -1,0 +1,360 @@
+/* FPTU EventHub: Custom BEM-Scoped Stylesheet */
+/* Color Palette: FPT Orange (#f26f21), Navy Dark (#0f172a), Slate (#1e293b), Border (#e2e8f0) */
+
+:root {
+  --feh-primary: #f26f21;
+  --feh-primary-hover: #e05b0d;
+  --feh-primary-light: #fff7ed;
+  --feh-navy: #0f172a;
+  --feh-navy-light: #1e293b;
+  --feh-bg-page: #f8fafc;
+  --feh-bg-card: #ffffff;
+  --feh-text-main: #0f172a;
+  --feh-text-muted: #64748b;
+  --feh-border: #e2e8f0;
+  --feh-green: #10b981;
+  --feh-red: #ef4444;
+  --feh-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+  --feh-shadow-hover: 0 12px 24px rgba(242, 111, 33, 0.15);
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--feh-bg-page);
+  color: var(--feh-text-main);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- Navbar --- */
+.feh-navbar {
+  background-color: #ffffff;
+  border-bottom: 2px solid var(--feh-border);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 8px 0;
+  margin-bottom: 0;
+}
+.feh-navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--feh-navy) !important;
+  text-decoration: none;
+}
+.feh-navbar__logo-badge {
+  background: linear-gradient(135deg, #f26f21, #ff8c42);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.feh-navbar__link {
+  font-weight: 600;
+  color: #334155 !important;
+  padding: 12px 14px !important;
+  transition: all 0.2s;
+}
+.feh-navbar__link:hover {
+  color: var(--feh-primary) !important;
+}
+.feh-navbar__btn-login {
+  background-color: var(--feh-primary);
+  color: #fff !important;
+  border-radius: 20px;
+  padding: 8px 18px !important;
+  margin-top: 6px;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(242, 111, 33, 0.3);
+  transition: all 0.2s;
+}
+.feh-navbar__btn-login:hover {
+  background-color: var(--feh-primary-hover);
+  transform: translateY(-1px);
+}
+
+/* --- Hero Banner --- */
+.feh-hero {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #ffffff;
+  padding: 50px 0 40px;
+  border-bottom: 4px solid var(--feh-primary);
+  margin-bottom: 35px;
+}
+.feh-hero__title {
+  font-size: 36px;
+  font-weight: 800;
+  margin: 0 0 12px;
+  line-height: 1.25;
+}
+.feh-hero__subtitle {
+  font-size: 16px;
+  color: #94a3b8;
+  margin-bottom: 24px;
+}
+.feh-hero__stats-card {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 16px 20px;
+  backdrop-filter: blur(8px);
+}
+.feh-hero__stats-num {
+  font-size: 28px;
+  font-weight: 800;
+  color: #f26f21;
+}
+.feh-hero__stats-label {
+  font-size: 13px;
+  color: #cbd5e1;
+}
+
+/* --- Filter & Category Bar --- */
+.feh-filter-bar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+  padding: 14px 18px;
+  background: #ffffff;
+  border: 1px solid var(--feh-border);
+  border-radius: 14px;
+  box-shadow: var(--feh-shadow);
+}
+.feh-filter-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: #f1f5f9;
+  color: #475569;
+  font-weight: 600;
+  font-size: 13px;
+  text-decoration: none !important;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+.feh-filter-item:hover {
+  background: #e2e8f0;
+  color: var(--feh-navy);
+}
+.feh-filter-item--active {
+  background: var(--feh-primary-light);
+  color: var(--feh-primary);
+  border-color: var(--feh-primary);
+  font-weight: 700;
+}
+
+/* --- Event Card --- */
+.feh-event-card {
+  background: var(--feh-bg-card);
+  border: 1px solid var(--feh-border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--feh-shadow);
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 26px;
+}
+.feh-event-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--feh-shadow-hover);
+  border-color: #fdba74;
+}
+.feh-event-card__banner-wrap {
+  position: relative;
+  height: 180px;
+  background: #000;
+  overflow: hidden;
+}
+.feh-event-card__banner {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.feh-event-card:hover .feh-event-card__banner {
+  transform: scale(1.05);
+}
+.feh-event-card__category-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+.feh-event-card__body {
+  padding: 18px;
+}
+.feh-event-card__title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 10px;
+  line-height: 1.4;
+  height: 44px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.feh-event-card__title a {
+  color: var(--feh-navy);
+  text-decoration: none;
+}
+.feh-event-card__title a:hover {
+  color: var(--feh-primary);
+}
+.feh-event-card__meta-item {
+  font-size: 12px;
+  color: var(--feh-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.feh-event-card__meta-item i {
+  color: var(--feh-primary);
+  width: 14px;
+}
+.feh-event-card__capacity-bar-wrap {
+  margin: 14px 0 10px;
+}
+.feh-event-card__capacity-bar {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.feh-event-card__capacity-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f26f21, #fb923c);
+  border-radius: 3px;
+}
+.feh-event-card__footer {
+  padding: 12px 18px 18px;
+  border-top: 1px solid #f1f5f9;
+}
+
+/* --- Buttons --- */
+.feh-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 18px;
+  font-weight: 700;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none !important;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+.feh-btn--primary {
+  background-color: var(--feh-primary);
+  color: #fff !important;
+}
+.feh-btn--primary:hover {
+  background-color: var(--feh-primary-hover);
+  box-shadow: 0 4px 12px rgba(242, 111, 33, 0.35);
+}
+.feh-btn--block {
+  width: 100%;
+}
+.feh-btn--disabled {
+  background-color: #cbd5e1 !important;
+  color: #64748b !important;
+  cursor: not-allowed;
+}
+
+/* --- Ticket Boarding Pass Component --- */
+.feh-ticket-card {
+  background: #ffffff;
+  border: 1px solid var(--feh-border);
+  border-radius: 14px;
+  display: flex;
+  margin-bottom: 24px;
+  box-shadow: var(--feh-shadow);
+  overflow: hidden;
+  position: relative;
+}
+.feh-ticket-card__left {
+  flex: 1;
+  padding: 24px;
+}
+.feh-ticket-card__right {
+  width: 200px;
+  background: #f8fafc;
+  border-left: 2px dashed #cbd5e1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.feh-ticket-card__code {
+  font-family: monospace;
+  font-size: 16px;
+  font-weight: 800;
+  background: var(--feh-navy);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 6px;
+  letter-spacing: 1px;
+}
+
+/* --- Badges --- */
+.feh-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.feh-badge--success {
+  background: #dcfce7;
+  color: #15803d;
+}
+.feh-badge--warning {
+  background: #fef3c7;
+  color: #b45309;
+}
+.feh-badge--danger {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+.feh-badge--fpt {
+  background: var(--feh-primary-light);
+  color: var(--feh-primary);
+}
+
+/* --- Footer --- */
+.feh-footer {
+  background: #0f172a;
+  color: #94a3b8;
+  padding: 40px 0 20px;
+  margin-top: 60px;
+  border-top: 4px solid var(--feh-primary);
+}
+.feh-footer a {
+  color: #cbd5e1;
+  text-decoration: none;
+}
+.feh-footer a:hover {
+  color: var(--feh-primary);
+}
