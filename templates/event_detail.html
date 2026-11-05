@@ -30,16 +30,10 @@
               {% endif %}
             </div>
 
-            <!-- PDP Points Badge -->
-            {% if current_user.is_authenticated and (current_user.is_admin or current_user.is_organizer) %}
-              <span class="feh-badge" style="background:#eff6ff;color:#1e40af;font-size:13px;border:1px solid #bfdbfe;" title="Quy chuẩn điểm rèn luyện cấp cho sinh viên">
-                <i class="fa-solid fa-scale-balanced"></i> Chuẩn xét duyệt: +{{ event.pdp_points }} PDP/Sinh viên
-              </span>
-            {% else %}
-              <span class="feh-badge" style="background:#eff6ff;color:#2563eb;font-size:13px;border:1px solid #bfdbfe;" title="Điểm rèn luyện sinh viên nhận được sau khi tham gia và check-in">
-                <i class="fa-solid fa-award"></i> +{{ event.pdp_points }} Điểm Rèn Luyện (PDP cho SV)
-              </span>
-            {% endif %}
+            <!-- Free Ticket Badge -->
+            <span class="feh-badge" style="background:#ecfdf5;color:#059669;font-size:13px;border:1px solid #a7f3d0;" title="Sự kiện nội bộ miễn phí cho sinh viên FPT">
+              <i class="fa-solid fa-ticket"></i> Vé Miễn Phí (Free Entry)
+            </span>
           </div>
 
           <h2 style="font-weight:800;color:var(--feh-text-main);margin:0 0 16px;line-height:1.3;">
@@ -189,7 +183,7 @@
                 <i class="fa-solid fa-shield-halved"></i> QUYỀN ĐIỀU HÀNH CTSV
               </div>
               <p style="font-size:12px;color:#1e3a8a;margin:0;line-height:1.5;">
-                Bạn đang đăng nhập với tư cách <strong>Cán Bộ Phòng CTSV</strong> (Đơn vị tổ chức & giám sát). Chức năng đặt vé và tích lũy điểm rèn luyện PDP chỉ áp dụng cho Sinh viên FPT.
+                Bạn đang đăng nhập với tư cách <strong>Cán Bộ Phòng CTSV</strong> (Đơn vị tổ chức & giám sát). Chức năng đặt vé tham dự chỉ áp dụng cho Sinh viên FPT.
               </p>
             </div>
 
@@ -215,7 +209,7 @@
           {% elif has_checked_in %}
             <div class="alert alert-info" style="border-radius:10px;padding:14px;margin-bottom:14px;">
               <div style="font-weight:700;"><i class="fa-solid fa-award"></i> Bạn đã hoàn thành sự kiện!</div>
-              <div style="font-size:12px;margin-top:4px;">Tích lũy: +{{ event.pdp_points }} PDP</div>
+              <div style="font-size:12px;margin-top:4px;">Trạng thái: Đã điểm danh thành công tại sự kiện!</div>
             </div>
             <a href="{{ url_for('ticket_certificate', ticket_id=user_ticket.id) }}" class="feh-btn feh-btn--primary feh-btn--block" style="background:#2563eb;">
               <i class="fa-solid fa-award"></i> Xem Giấy Chứng Nhận

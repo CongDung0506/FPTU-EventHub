@@ -334,7 +334,7 @@ def register_ticket(event_id):
 
     # Can bo Phong CTSV / Ban To Chuc chi quan ly, khong dang ky ve nhu sinh vien
     if current_user.is_admin or current_user.is_organizer:
-        flash("Tài khoản Cán bộ Phòng CTSV là đơn vị tổ chức, quản lý và điều hành sự kiện — không áp dụng đăng ký giữ chỗ hoặc tích lũy điểm rèn luyện cá nhân!", "warning")
+        flash("Tài khoản Cán bộ Phòng CTSV là đơn vị tổ chức, quản lý và điều hành sự kiện — không áp dụng đăng ký giữ chỗ cá nhân!", "warning")
         return redirect(url_for("event_detail", event_id=event.id))
 
     # 1. Kiem tra sinh vien da dang ky chua
@@ -368,7 +368,7 @@ def register_ticket(event_id):
         )
         db.session.add(ticket)
         db.session.commit()
-        flash(f"🎉 Đăng ký vé thành công! Mã vé của bạn là: {ticket_code} (+{event.pdp_points} PDP sau khi điểm danh)", "success")
+        flash(f"🎉 Đăng ký vé thành công! Mã vé của bạn là: {ticket_code} ", "success")
         return redirect(url_for("my_tickets"))
     except Exception as e:
         db.session.rollback()
@@ -513,10 +513,10 @@ def export_attendees_csv(event_id):
     si = io.StringIO()
     cw = csv.writer(si)
     # Header chuan phong CTSV FPT
-    cw.writerow(["Mã Vé", "MSSV", "Họ và Tên", "Email", "Số Điện Thoại", "Thời Gian Đăng Ký", "Trạng Thái", "Thời Gian Điểm Danh", "Điểm PDP Nhận"])
+    cw.writerow(["Mã Vé", "MSSV", "Họ và Tên", "Email", "Số Điện Thoại", "Thời Gian Đăng Ký", "Trạng Thái", "Thời Gian Điểm Danh"])
 
     for t in tickets:
-        pdp_earned = event.pdp_points if t.status == "CHECKED_IN" else 0
+        
         cw.writerow([
             t.ticket_code,
             t.user.student_id or "",
@@ -526,7 +526,6 @@ def export_attendees_csv(event_id):
             t.registered_at.strftime("%Y-%m-%d %H:%M:%S") if t.registered_at else "",
             "Đã điểm danh" if t.status == "CHECKED_IN" else ("Đã đăng ký" if t.status == "REGISTERED" else "Đã hủy"),
             t.checked_in_at.strftime("%Y-%m-%d %H:%M:%S") if t.checked_in_at else "Chưa",
-            pdp_earned
         ])
 
     # UTF-8 BOM giup Excel Windows hien thi dung tieng Viet khong loi font
@@ -582,7 +581,7 @@ def check_in():
             db.session.commit()
             check_result = {
                 "success": True,
-                "msg": f"✅ CHECK-IN THÀNH CÔNG cho sinh viên {ticket.user.full_name} ({ticket.user.student_id})! +{ticket.event.pdp_points} Điểm PDP",
+                "msg": f"✅ CHECK-IN THÀNH CÔNG cho sinh viên {ticket.user.full_name} ({ticket.user.student_id})!",
                 "type": "success",
                 "ticket": ticket
             }
@@ -630,7 +629,7 @@ def api_scan_checkin():
 
     return jsonify({
         "success": True,
-        "msg": f"🎉 CHECK-IN THÀNH CÔNG: {ticket.user.full_name} ({ticket.user.student_id})! +{ticket.event.pdp_points} PDP",
+        "msg": f"🎉 CHECK-IN THÀNH CÔNG: {ticket.user.full_name} ({ticket.user.student_id})!",
         "type": "success",
         "ticket": {
             "code": ticket.ticket_code,
@@ -649,7 +648,7 @@ def toggle_checkin(ticket_id):
     if ticket.status == "REGISTERED":
         ticket.status = "CHECKED_IN"
         ticket.checked_in_at = datetime.utcnow()
-        flash(f"Đã điểm danh vé {ticket.ticket_code} (+{ticket.event.pdp_points} PDP) thành công!", "success")
+        flash(f"Đã điểm danh vé {ticket.ticket_code}  thành công!", "success")
     elif ticket.status == "CHECKED_IN":
         ticket.status = "REGISTERED"
         ticket.checked_in_at = None

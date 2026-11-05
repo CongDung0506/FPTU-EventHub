@@ -15,7 +15,7 @@
       </h2>
       <p style="color:var(--feh-text-muted);margin:0;font-size:14px;">
         Sự kiện: <strong>{{ event.title }}</strong> &middot; {{ event.start_time.strftime('%H:%M • %d/%m/%Y') }} &middot; 
-        <span class="badge" style="background:#eff6ff;color:#2563eb;">+{{ event.pdp_points }} PDP/SV</span>
+        
       </p>
     </div>
     <div style="display:flex;gap:12px;align-items:center;">
@@ -47,7 +47,7 @@
             <th>MSSV</th>
             <th>Thời gian đặt</th>
             <th>Trạng thái Check-in</th>
-            <th>Điểm PDP</th>
+            
             <th style="text-align:right;padding-right:20px;">Hành động</th>
           </tr>
         </thead>
@@ -78,13 +78,7 @@
                   </span>
                 {% endif %}
               </td>
-              <td>
-                {% if t.status == 'CHECKED_IN' %}
-                  <strong class="text-success">+{{ event.pdp_points }} PDP</strong>
-                {% else %}
-                  <span style="color:var(--feh-text-muted);">0 PDP</span>
-                {% endif %}
-              </td>
+
               <td style="text-align:right;padding-right:20px;">
                 {% if t.status != 'CANCELLED' %}
                   <form method="POST" action="{{ url_for('toggle_checkin', ticket_id=t.id) }}" style="display:inline;">

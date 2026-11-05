@@ -265,8 +265,8 @@
           {% if current_user.is_authenticated %}
             {% if not current_user.is_admin and not current_user.is_organizer %}
               <li class="hidden-xs" style="margin-right:8px;">
-                <span class="feh-rank-pill {{ current_user.pdp_rank.badge_class }}" title="Hạng rèn luyện PDP FPTU" style="font-size:12px;padding:4px 10px;cursor:pointer;" onclick="location.href='{{ url_for('my_tickets') }}'">
-                  {{ current_user.pdp_rank.icon }} {{ current_user.pdp_rank.title }} • {{ current_user.total_pdp_points }} PDP
+                <span class="badge" style="background:#e0f2fe;color:#0284c7;padding:6px 12px;font-size:12px;border-radius:12px;font-weight:700;">
+                  <i class="fa-solid fa-graduation-cap"></i> Sinh Viên FPT
                 </span>
               </li>
             {% elif current_user.is_admin %}
@@ -302,7 +302,7 @@
                   <li><a href="{{ url_for('check_in') }}"><i class="fa-solid fa-qrcode"></i> Bàn quét mã QR Check-in</a></li>
                 {% else %}
                   <li class="dropdown-header">MSSV: {{ current_user.student_id or 'FPT Student' }}</li>
-                  <li><a href="{{ url_for('my_tickets') }}"><i class="fa-solid fa-ticket"></i> Vé đã đăng ký & Điểm PDP</a></li>
+                  <li><a href="{{ url_for('my_tickets') }}"><i class="fa-solid fa-ticket"></i> Vé Đã Đăng Ký Của Tôi</a></li>
                 {% endif %}
                 <li role="separator" class="divider"></li>
                 <li><a href="{{ url_for('logout') }}"><i class="fa-solid fa-arrow-right-from-bracket text-danger"></i> Đăng xuất an toàn</a></li>
@@ -346,14 +346,14 @@
             <i class="fa-solid fa-graduation-cap" style="color:var(--feh-primary);"></i> FPTU EventHub
           </h4>
           <p style="font-size:13px;line-height:1.7;">
-            Cổng thông tin sự kiện & workshop chính thức dành cho sinh viên Đại học FPT. Giúp sinh viên đăng ký giữ chỗ hội thảo, tích lũy điểm rèn luyện PDP và phát triển kỹ năng toàn diện.
+            Cổng thông tin sự kiện & workshop chính thức dành cho sinh viên Đại học FPT. Giúp sinh viên đăng ký giữ chỗ hội thảo, nhận vé điện tử QR Code và phát triển kỹ năng toàn diện.
           </p>
         </div>
         <div class="col-md-3">
           <h5 style="color:#fff;font-weight:700;">Liên Kết Nhanh</h5>
           <ul class="list-unstyled" style="font-size:13px;line-height:2;">
             <li><a href="{{ url_for('home') }}">Khám phá sự kiện FPT</a></li>
-            <li><a href="{{ url_for('my_tickets') }}">Vé của tôi & Điểm PDP</a></li>
+            <li><a href="{{ url_for('my_tickets') }}">Vé Của Tôi</a></li>
             <li><a href="{{ url_for('check_in') }}">Bàn quét QR Check-in</a></li>
           </ul>
         </div>
