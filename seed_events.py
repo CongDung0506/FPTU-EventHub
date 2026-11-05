@@ -113,7 +113,7 @@ def seed_data_internal():
         {"name": "Học Thuật & Hackathon", "slug": "academic-hackathon", "icon": "fa-code", "color": "#f26f21", "desc": "Đấu trường lập trình, cuộc thi học thuật và nghiên cứu khoa học"},
         {"name": "Kỹ Năng & Hướng Nghiệp", "slug": "career-skills", "icon": "fa-briefcase", "color": "#059669", "desc": "Giao lưu doanh nghiệp, phỏng vấn tuyển dụng OJT và kỹ năng mềm"},
         {"name": "Văn Hóa & Câu Lạc Bộ", "slug": "culture-clubs", "icon": "fa-guitar", "color": "#d97706", "desc": "Lễ hội giao lưu, chương trình âm nhạc, kịch nghệ và hoạt động CLB"},
-        {"name": "Thể Thao & Rèn Luyện", "slug": "sports-pdp", "icon": "fa-dumbbell", "color": "#7c3aed", "desc": "Giải thi đấu Vovinam, bóng đá, cầu lông và tính điểm rèn luyện PDP"},
+        {"name": "Thể Thao & Phong Trào", "slug": "sports-activities", "icon": "fa-dumbbell", "color": "#7c3aed", "desc": "Giải thi đấu Vovinam, bóng đá, cầu lông và rèn luyện thể chất sinh viên"},
     ]
 
     cats_map = {}
@@ -154,7 +154,7 @@ Workshop dành riêng cho sinh viên ngành CNTT ĐH FPT, mang đến cái nhìn
 - **Nội dung 2:** Thực hành tích hợp Google Antigravity SDK vào ứng dụng Web.
 - **Nội dung 3:** Hỏi đáp trực tiếp cùng các chuyên gia hàng đầu từ FPT Software.
 
-*Lưu ý: Sinh viên tham dự đầy đủ sẽ được cấp chứng nhận và tích lũy **10 điểm rèn luyện PDP**!*"""
+*Lưu ý: Sinh viên tham dự đầy đủ sẽ được cấp chứng nhận và nhận chứng nhận tham gia sự kiện!*"""
         },
         {
             "title": "F-Code Hackathon 2026: Xây Dựng Ứng Dụng Thông Minh",
@@ -175,7 +175,7 @@ Workshop dành riêng cho sinh viên ngành CNTT ĐH FPT, mang đến cái nhìn
 Thử thách bản thân trong môi trường áp lực cao để phát triển giải pháp công nghệ phục vụ cộng đồng:
 - Tổng giá trị giải thưởng lên đến **50.000.000 VNĐ**.
 - Được hỗ trợ Mentor 1-1 từ các công ty công nghệ đối tác.
-- Tích lũy ngay **15 điểm rèn luyện PDP** cho các thành viên hoàn thành sản phẩm.
+- Nhận ngay giấy chứng nhận cho các thành viên hoàn thành sản phẩm.
 - **Tình trạng:** Phòng thi đấu Lab AI đã đủ số lượng 20 thí sinh (Hết chỗ đăng ký)."""
         },
         {
@@ -217,12 +217,12 @@ Dành cho sinh viên từ kỳ 4 trở lên chuẩn bị bước vào kỳ On-th
             "desc_md": """### Đêm nhạc hội bùng nổ sắc màu sinh viên FPT
 - Gian hàng ẩm thực và trải nghiệm từ hơn 30 câu lạc bộ học thuật, nghệ thuật, thể thao.
 - Sân khấu biểu diễn ca nhạc, nhảy hiện đại và DJ sôi động.
-- Điểm danh tích lũy **5 điểm rèn luyện PDP**."""
+- Điểm danh nhận vé tham dự và quà lưu niệm CLB."""
         },
         {
             "title": "Giải Vô Địch Vovinam & Võ Thuật Học Đường FPTU",
             "slug": "vovinam-championship-fptu",
-            "category": cats_map["sports-pdp"],
+            "category": cats_map["sports-activities"],
             "venue": "Nhà Thi Đấu Thể Thao Đa Năng FPT University",
             "start_time": now + timedelta(days=10, hours=7, minutes=30),
             "end_time": now + timedelta(days=10, hours=16),
