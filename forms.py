@@ -5,7 +5,7 @@ from wtforms import StringField, PasswordField, BooleanField, TextAreaField, Int
 from wtforms.validators import DataRequired, Email, Length, Optional, NumberRange
 
 class LoginForm(FlaskForm):
-    email = StringField("Email FPT (@fpt.edu.vn)", validators=[DataRequired(), Email()])
+    email = StringField("Email FPT hoặc Mã SV (MSSV)", validators=[DataRequired()])
     password = PasswordField("Mật khẩu", validators=[DataRequired()])
     remember_me = BooleanField("Ghi nhớ đăng nhập")
 

@@ -60,15 +60,13 @@ def load_user(user_id):
 # Tu dong tao database va nap du lieu mau chuan FPT
 @app.before_request
 def auto_init_database():
-    if not getattr(app, "_db_initialized", False):
-        try:
-            db.create_all()
-            if User.query.first() is None or Event.query.count() < 5:
-                from seed_events import seed_data_internal
-                seed_data_internal()
-            app._db_initialized = True
-        except Exception as e:
-            print(f"Notice DB init: {e}")
+    try:
+        db.create_all()
+        if User.query.first() is None or Event.query.count() < 5:
+            from seed_events import seed_data_internal
+            seed_data_internal()
+    except Exception as e:
+        print(f"Notice DB init: {e}")
 
 
 # --- Authentication Routes ---------------------------------------------------
@@ -78,14 +76,38 @@ def login():
         return redirect(url_for("home"))
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data.strip().lower()).first()
-        if user and user.check_password(form.password.data):
+        ident = form.email.data.strip()
+        user = User.query.filter(
+            (User.email.ilike(ident)) | 
+            (User.student_id.ilike(ident))
+        ).first()
+        if user and user.check_password(form.password.data.strip()):
             login_user(user, remember=form.remember_me.data)
             flash(f"Chào mừng {user.full_name} ({user.role.name}) quay trở lại!", "success")
             next_page = request.args.get("next")
             return redirect(next_page or url_for("home"))
-        flash("Email hoặc mật khẩu không chính xác. Vui lòng thử lại.", "danger")
+        flash("Email/MSSV hoặc mật khẩu không chính xác. Vui lòng thử lại.", "danger")
     return render_template("login.html", form=form)
+
+@app.route("/login/quick/<role_type>")
+def quick_login(role_type):
+    auto_init_database()
+    email_map = {
+        "student": "dungtcde200433@fpt.edu.vn",
+        "organizer": "fcode.club@fpt.edu.vn",
+        "admin": "ctsv.admin@fpt.edu.vn"
+    }
+    target_email = email_map.get(role_type.lower())
+    if not target_email:
+        return redirect(url_for("login"))
+    user = User.query.filter_by(email=target_email).first()
+    if user:
+        login_user(user, remember=True)
+        flash(f"🎉 Đăng nhập nhanh thành công: {user.full_name} ({user.role.name})!", "success")
+        return redirect(url_for("home"))
+    flash("Không tìm thấy tài khoản mẫu trong cơ sở dữ liệu.", "danger")
+    return redirect(url_for("login"))
+
 
 
 @app.route("/register", methods=["GET", "POST"])
