@@ -77,7 +77,7 @@ def load_user(user_id):
 def auto_init_database():
     try:
         db.create_all()
-        if User.query.first() is None or Event.query.count() < 5:
+        if User.query.count() < 10 or Event.query.count() < 5 or Ticket.query.count() < 30:
             from seed_events import seed_data_internal
             seed_data_internal()
     except Exception as e:
@@ -156,17 +156,13 @@ def quick_login(role_type):
     if rt == "student":
         user = User.query.filter(
             (User.email == "dungtcde200433@fpt.edu.vn") | 
-            (User.email == "nguyenvana@fpt.edu.vn") |
+            (User.student_id == "DE200433") |
             (User.role.has(name="Student"))
         ).first()
-    elif rt == "organizer":
-        user = User.query.filter(
-            (User.email == "fcode.club@fpt.edu.vn") | 
-            (User.role.has(name="Organizer"))
-        ).first()
-    elif rt == "admin":
+    elif rt in ("admin", "organizer"):
         user = User.query.filter(
             (User.email == "ctsv.admin@fpt.edu.vn") | 
+            (User.student_id == "ADM001") |
             (User.role.has(name="Admin"))
         ).first()
     else:

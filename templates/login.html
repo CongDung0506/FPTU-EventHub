@@ -84,18 +84,14 @@
         <div style="font-weight:800;color:var(--feh-primary);margin-bottom:10px;font-size:12px;text-transform:uppercase;display:flex;align-items:center;gap:6px;">
           <i class="fa-solid fa-bolt"></i> Bấm 1-Click Đăng Nhập Nhanh (Demo / Chấm điểm):
         </div>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <a href="{{ url_for('quick_login', role_type='student') }}" class="btn btn-default" style="border-radius:8px;font-weight:700;display:flex;justify-content:space-between;align-items:center;background:var(--feh-bg-card);color:var(--feh-text-main);border-color:var(--feh-border);">
-            <span><i class="fa-solid fa-user-graduate" style="color:var(--feh-primary);margin-right:6px;"></i> Sinh viên: Trương Công Dũng</span>
-            <span class="badge" style="background:#e0f2fe;color:#0284c7;">DE200433</span>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <a href="{{ url_for('quick_login', role_type='student') }}" class="btn btn-default" style="border-radius:10px;padding:12px 16px;font-weight:700;display:flex;justify-content:space-between;align-items:center;background:var(--feh-bg-card);color:var(--feh-text-main);border-color:var(--feh-border);box-shadow:var(--feh-shadow);">
+            <span><i class="fa-solid fa-user-graduate" style="color:var(--feh-primary);font-size:16px;margin-right:8px;"></i> Tài khoản Sinh viên: Trương Công Dũng</span>
+            <span class="badge" style="background:#e0f2fe;color:#0284c7;font-size:12px;padding:5px 10px;">DE200433</span>
           </a>
-          <a href="{{ url_for('quick_login', role_type='organizer') }}" class="btn btn-default" style="border-radius:8px;font-weight:700;display:flex;justify-content:space-between;align-items:center;background:var(--feh-bg-card);color:var(--feh-text-main);border-color:var(--feh-border);">
-            <span><i class="fa-solid fa-users" style="color:#d97706;margin-right:6px;"></i> Ban tổ chức: CLB F-Code</span>
-            <span class="badge" style="background:#fef3c7;color:#b45309;">ORG001</span>
-          </a>
-          <a href="{{ url_for('quick_login', role_type='admin') }}" class="btn btn-default" style="border-radius:8px;font-weight:700;display:flex;justify-content:space-between;align-items:center;background:var(--feh-bg-card);color:var(--feh-text-main);border-color:var(--feh-border);">
-            <span><i class="fa-solid fa-shield-halved" style="color:#2563eb;margin-right:6px;"></i> Quản trị viên: Phòng CTSV</span>
-            <span class="badge" style="background:#eff6ff;color:#1e40af;">ADM001</span>
+          <a href="{{ url_for('quick_login', role_type='admin') }}" class="btn btn-default" style="border-radius:10px;padding:12px 16px;font-weight:700;display:flex;justify-content:space-between;align-items:center;background:var(--feh-bg-card);color:var(--feh-text-main);border-color:var(--feh-border);box-shadow:var(--feh-shadow);">
+            <span><i class="fa-solid fa-shield-halved" style="color:#2563eb;font-size:16px;margin-right:8px;"></i> Quản trị: Phòng Công Tác Sinh Viên (CTSV)</span>
+            <span class="badge" style="background:#eff6ff;color:#1e40af;font-size:12px;padding:5px 10px;">ADM001</span>
           </a>
         </div>
       </div>

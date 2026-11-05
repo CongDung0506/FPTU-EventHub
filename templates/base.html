@@ -54,7 +54,9 @@
       flex-wrap: wrap !important;
     }
     .feh-navbar {
-      background: rgba(255, 255, 255, 0.95);
+      position: relative !important;
+      z-index: 99999 !important;
+      background: rgba(255, 255, 255, 0.98) !important;
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--feh-border);
       border-radius: 0;
@@ -62,8 +64,45 @@
       padding: 6px 0;
     }
     [data-theme="dark"] .feh-navbar {
-      background: rgba(15, 23, 42, 0.95);
+      background: rgba(15, 23, 42, 0.98) !important;
       border-bottom-color: #334155;
+    }
+    .feh-navbar .dropdown {
+      position: relative !important;
+    }
+    .feh-navbar .dropdown-menu {
+      position: absolute !important;
+      top: 100% !important;
+      right: 0 !important;
+      left: auto !important;
+      z-index: 100000 !important;
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+      border: 1px solid #cbd5e1 !important;
+      border-radius: 12px !important;
+      box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.25), 0 10px 10px -5px rgba(0, 0, 0, 0.1) !important;
+      min-width: 250px !important;
+      padding: 8px 0 !important;
+      margin-top: 8px !important;
+    }
+    [data-theme="dark"] .feh-navbar .dropdown-menu {
+      background-color: #1e293b !important;
+      color: #f8fafc !important;
+      border-color: #334155 !important;
+      box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.6) !important;
+    }
+    .feh-navbar .dropdown-menu > li > a {
+      color: var(--feh-text-main, #0f172a) !important;
+      padding: 10px 20px !important;
+      font-weight: 600 !important;
+      font-size: 13px !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+    }
+    .feh-navbar .dropdown-menu > li > a:hover {
+      background-color: rgba(242, 111, 33, 0.1) !important;
+      color: var(--feh-primary, #f26f21) !important;
     }
     .feh-navbar__brand {
       font-weight: 800;
@@ -202,17 +241,15 @@
         <ul class="nav navbar-nav">
           <li><a href="{{ url_for('home') }}" class="feh-navbar__link"><i class="fa-solid fa-house"></i> Trang Chủ</a></li>
           {% if current_user.is_authenticated %}
-            {% if not current_user.is_admin and not current_user.is_organizer %}
-              <li><a href="{{ url_for('my_tickets') }}" class="feh-navbar__link"><i class="fa-solid fa-ticket"></i> Vé Của Tôi</a></li>
-            {% endif %}
-            {% if current_user.is_organizer %}
-              <li><a href="{{ url_for('organizer_dashboard') }}" class="feh-navbar__link"><i class="fa-solid fa-chart-line"></i> Quản Lý Sự Kiện</a></li>
-              <li><a href="{{ url_for('check_in') }}" class="feh-navbar__link"><i class="fa-solid fa-qrcode"></i> Bàn Check-in</a></li>
-            {% endif %}
             {% if current_user.is_admin %}
               <li><a href="{{ url_for('admin_dashboard') }}" class="feh-navbar__link"><i class="fa-solid fa-shield-halved"></i> Quản Trị CTSV</a></li>
-              <li><a href="{{ url_for('organizer_dashboard') }}" class="feh-navbar__link"><i class="fa-solid fa-chart-line"></i> Duyệt Sự Kiện</a></li>
+              <li><a href="{{ url_for('organizer_dashboard') }}" class="feh-navbar__link"><i class="fa-solid fa-chart-line"></i> Quản Lý Sự Kiện & Điểm Danh</a></li>
               <li><a href="{{ url_for('check_in') }}" class="feh-navbar__link"><i class="fa-solid fa-qrcode"></i> Bàn Check-in</a></li>
+            {% elif current_user.is_organizer %}
+              <li><a href="{{ url_for('organizer_dashboard') }}" class="feh-navbar__link"><i class="fa-solid fa-chart-line"></i> Quản Lý Sự Kiện</a></li>
+              <li><a href="{{ url_for('check_in') }}" class="feh-navbar__link"><i class="fa-solid fa-qrcode"></i> Bàn Check-in</a></li>
+            {% else %}
+              <li><a href="{{ url_for('my_tickets') }}" class="feh-navbar__link"><i class="fa-solid fa-ticket"></i> Vé Của Tôi</a></li>
             {% endif %}
           {% endif %}
         </ul>
@@ -251,28 +288,21 @@
                 <span>{{ current_user.full_name }} ({{ current_user.role.name }})</span>
                 <span class="caret"></span>
               </a>
-              <ul class="dropdown-menu">
-                <li class="dropdown-header">
-                  {% if not current_user.is_admin and not current_user.is_organizer %}
-                    MSSV: {{ current_user.student_id or 'FPT Student' }}
-                  {% else %}
-                    Vai trò: {{ current_user.role.name }}
-                  {% endif %}
-                </li>
-                {% if not current_user.is_admin and not current_user.is_organizer %}
-                  <li><a href="{{ url_for('my_tickets') }}"><i class="fa-solid fa-ticket"></i> Vé đã đăng ký & Điểm PDP</a></li>
-                {% endif %}
-                {% if current_user.is_organizer %}
-                  <li role="separator" class="divider"></li>
-                  <li><a href="{{ url_for('event_create') }}"><i class="fa-solid fa-plus-circle"></i> Đăng sự kiện mới</a></li>
-                  <li><a href="{{ url_for('organizer_dashboard') }}"><i class="fa-solid fa-gauge-high"></i> Dashboard Ban tổ chức</a></li>
-                  <li><a href="{{ url_for('check_in') }}"><i class="fa-solid fa-qrcode"></i> Bàn quét mã QR Check-in</a></li>
-                {% endif %}
+              <ul class="dropdown-menu dropdown-menu-right">
                 {% if current_user.is_admin %}
-                  <li role="separator" class="divider"></li>
+                  <li class="dropdown-header">Cán bộ CTSV: {{ current_user.student_id or 'ADM001' }}</li>
                   <li><a href="{{ url_for('admin_dashboard') }}"><i class="fa-solid fa-shield-halved"></i> Trung tâm Quản trị CTSV</a></li>
-                  <li><a href="{{ url_for('event_create') }}"><i class="fa-solid fa-plus-circle"></i> Tạo sự kiện cấp trường</a></li>
+                  <li><a href="{{ url_for('organizer_dashboard') }}"><i class="fa-solid fa-chart-line"></i> Quản lý sự kiện & Người tham gia</a></li>
+                  <li><a href="{{ url_for('event_create') }}"><i class="fa-solid fa-plus-circle"></i> Đăng sự kiện mới</a></li>
                   <li><a href="{{ url_for('check_in') }}"><i class="fa-solid fa-qrcode"></i> Bàn quét mã QR Check-in</a></li>
+                {% elif current_user.is_organizer %}
+                  <li class="dropdown-header">Ban tổ chức: {{ current_user.student_id or 'ORG001' }}</li>
+                  <li><a href="{{ url_for('organizer_dashboard') }}"><i class="fa-solid fa-gauge-high"></i> Dashboard Quản lý sự kiện</a></li>
+                  <li><a href="{{ url_for('event_create') }}"><i class="fa-solid fa-plus-circle"></i> Đăng sự kiện mới</a></li>
+                  <li><a href="{{ url_for('check_in') }}"><i class="fa-solid fa-qrcode"></i> Bàn quét mã QR Check-in</a></li>
+                {% else %}
+                  <li class="dropdown-header">MSSV: {{ current_user.student_id or 'FPT Student' }}</li>
+                  <li><a href="{{ url_for('my_tickets') }}"><i class="fa-solid fa-ticket"></i> Vé đã đăng ký & Điểm PDP</a></li>
                 {% endif %}
                 <li role="separator" class="divider"></li>
                 <li><a href="{{ url_for('logout') }}"><i class="fa-solid fa-arrow-right-from-bracket text-danger"></i> Đăng xuất an toàn</a></li>
