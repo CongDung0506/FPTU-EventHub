@@ -22,7 +22,15 @@ Bootstrap(app)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "fptu-eventhub-secret-key-2026")
 
 # Database configuration linh hoat cho ca Localhost va Cloud (Vercel)
-if os.environ.get("VERCEL"):
+is_serverless = bool(
+    os.environ.get("VERCEL") or 
+    os.environ.get("VERCEL_ENV") or 
+    os.environ.get("AWS_LAMBDA_FUNCTION_NAME") or 
+    os.environ.get("LAMBDA_TASK_ROOT") or 
+    os.path.exists("/var/task")
+)
+
+if is_serverless:
     db_path = os.path.join(tempfile.gettempdir(), "fptu_eventhub.db")
     app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
 elif os.environ.get("DATABASE_URL"):
@@ -39,7 +47,11 @@ else:
         params = urllib.parse.quote_plus(test_conn)
         app.config["SQLALCHEMY_DATABASE_URI"] = f"mssql+pyodbc:///?odbc_connect={params}"
     except Exception:
-        app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///fptu_eventhub.db"
+        if is_serverless or not os.access(".", os.W_OK):
+            db_path = os.path.join(tempfile.gettempdir(), "fptu_eventhub.db")
+            app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
+        else:
+            app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///fptu_eventhub.db"
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
@@ -54,7 +66,10 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    return db.session.get(User, int(user_id))
+    try:
+        return db.session.get(User, int(user_id))
+    except Exception:
+        return None
 
 
 # Tu dong tao database va nap du lieu mau chuan FPT
@@ -66,13 +81,16 @@ def auto_init_database():
             from seed_events import seed_data_internal
             seed_data_internal()
     except Exception as e:
+        db.session.rollback()
         print(f"Notice DB init: {e}")
 
 @app.before_request
 def require_fpt_login():
     # Bat buoc tat ca nguoi dung phai dang nhap FPT Mail truoc khi truy cap vao cong su kien
+    if not request.endpoint:
+        return None
     public_endpoints = ("login", "quick_login", "register", "static", "serve_static_fallback")
-    if request.endpoint and request.endpoint in public_endpoints:
+    if request.endpoint in public_endpoints:
         return None
     if not current_user.is_authenticated:
         return redirect(url_for("login"))
@@ -134,21 +152,35 @@ def login():
 @app.route("/login/quick/<role_type>")
 def quick_login(role_type):
     auto_init_database()
-    email_map = {
-        "student": "nguyenvana@fpt.edu.vn",
-        "organizer": "fcode.club@fpt.edu.vn",
-        "admin": "ctsv.admin@fpt.edu.vn"
-    }
-    target_email = email_map.get(role_type.lower())
-    if not target_email:
-        return redirect(url_for("login"))
-    user = User.query.filter((User.email == target_email) | (User.email == "dungtcde200433@fpt.edu.vn")).first()
-    if not user and role_type.lower() == "student":
-        user = User.query.filter(User.role.has(name="Student")).first()
+    rt = role_type.lower().strip()
+    if rt == "student":
+        user = User.query.filter(
+            (User.email == "dungtcde200433@fpt.edu.vn") | 
+            (User.email == "nguyenvana@fpt.edu.vn") |
+            (User.role.has(name="Student"))
+        ).first()
+    elif rt == "organizer":
+        user = User.query.filter(
+            (User.email == "fcode.club@fpt.edu.vn") | 
+            (User.role.has(name="Organizer"))
+        ).first()
+    elif rt == "admin":
+        user = User.query.filter(
+            (User.email == "ctsv.admin@fpt.edu.vn") | 
+            (User.role.has(name="Admin"))
+        ).first()
+    else:
+        user = None
+
     if user:
         login_user(user, remember=True)
-        flash(f"🎉 Đăng nhập nhanh thành công: {user.full_name} ({user.role.name})!", "success")
+        flash(f"🎉 Đăng nhập thành công: {user.full_name} ({user.role.name})!", "success")
+        if user.is_admin:
+            return redirect(url_for("admin_dashboard"))
+        elif user.is_organizer:
+            return redirect(url_for("organizer_dashboard"))
         return redirect(url_for("home"))
+
     flash("Không tìm thấy tài khoản mẫu trong cơ sở dữ liệu.", "danger")
     return redirect(url_for("login"))
 

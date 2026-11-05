@@ -202,13 +202,17 @@
         <ul class="nav navbar-nav">
           <li><a href="{{ url_for('home') }}" class="feh-navbar__link"><i class="fa-solid fa-house"></i> Trang Chủ</a></li>
           {% if current_user.is_authenticated %}
-            <li><a href="{{ url_for('my_tickets') }}" class="feh-navbar__link"><i class="fa-solid fa-ticket"></i> Vé Của Tôi</a></li>
+            {% if not current_user.is_admin and not current_user.is_organizer %}
+              <li><a href="{{ url_for('my_tickets') }}" class="feh-navbar__link"><i class="fa-solid fa-ticket"></i> Vé Của Tôi</a></li>
+            {% endif %}
             {% if current_user.is_organizer %}
               <li><a href="{{ url_for('organizer_dashboard') }}" class="feh-navbar__link"><i class="fa-solid fa-chart-line"></i> Quản Lý Sự Kiện</a></li>
               <li><a href="{{ url_for('check_in') }}" class="feh-navbar__link"><i class="fa-solid fa-qrcode"></i> Bàn Check-in</a></li>
             {% endif %}
             {% if current_user.is_admin %}
               <li><a href="{{ url_for('admin_dashboard') }}" class="feh-navbar__link"><i class="fa-solid fa-shield-halved"></i> Quản Trị CTSV</a></li>
+              <li><a href="{{ url_for('organizer_dashboard') }}" class="feh-navbar__link"><i class="fa-solid fa-chart-line"></i> Duyệt Sự Kiện</a></li>
+              <li><a href="{{ url_for('check_in') }}" class="feh-navbar__link"><i class="fa-solid fa-qrcode"></i> Bàn Check-in</a></li>
             {% endif %}
           {% endif %}
         </ul>
@@ -222,11 +226,25 @@
           </li>
 
           {% if current_user.is_authenticated %}
-            <li class="hidden-xs" style="margin-right:8px;">
-              <span class="feh-rank-pill {{ current_user.pdp_rank.badge_class }}" title="Hạng rèn luyện PDP FPTU" style="font-size:12px;padding:4px 10px;cursor:pointer;" onclick="location.href='{{ url_for('my_tickets') }}'">
-                {{ current_user.pdp_rank.icon }} {{ current_user.pdp_rank.title }} • {{ current_user.total_pdp_points }} PDP
-              </span>
-            </li>
+            {% if not current_user.is_admin and not current_user.is_organizer %}
+              <li class="hidden-xs" style="margin-right:8px;">
+                <span class="feh-rank-pill {{ current_user.pdp_rank.badge_class }}" title="Hạng rèn luyện PDP FPTU" style="font-size:12px;padding:4px 10px;cursor:pointer;" onclick="location.href='{{ url_for('my_tickets') }}'">
+                  {{ current_user.pdp_rank.icon }} {{ current_user.pdp_rank.title }} • {{ current_user.total_pdp_points }} PDP
+                </span>
+              </li>
+            {% elif current_user.is_admin %}
+              <li class="hidden-xs" style="margin-right:8px;">
+                <span class="badge" style="background:#1e40af;color:#eff6ff;padding:6px 12px;font-size:12px;border-radius:12px;font-weight:700;">
+                  <i class="fa-solid fa-shield-halved"></i> Cán Bộ CTSV
+                </span>
+              </li>
+            {% elif current_user.is_organizer %}
+              <li class="hidden-xs" style="margin-right:8px;">
+                <span class="badge" style="background:#b45309;color:#fef3c7;padding:6px 12px;font-size:12px;border-radius:12px;font-weight:700;">
+                  <i class="fa-solid fa-users"></i> Ban Tổ Chức CLB
+                </span>
+              </li>
+            {% endif %}
             <li class="dropdown">
               <a href="#" class="dropdown-toggle feh-navbar__link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="display:flex;align-items:center;gap:8px;">
                 <img src="{{ current_user.avatar_url or '/static/images/fpt_logo.jpg' }}" alt="Avatar" style="width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid #cbd5e1;" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80';">
@@ -234,15 +252,30 @@
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu">
-                <li class="dropdown-header">MSSV: {{ current_user.student_id or 'FPT Staff' }}</li>
-                <li><a href="{{ url_for('my_tickets') }}"><i class="fa-solid fa-ticket"></i> Vé đã đăng ký</a></li>
+                <li class="dropdown-header">
+                  {% if not current_user.is_admin and not current_user.is_organizer %}
+                    MSSV: {{ current_user.student_id or 'FPT Student' }}
+                  {% else %}
+                    Vai trò: {{ current_user.role.name }}
+                  {% endif %}
+                </li>
+                {% if not current_user.is_admin and not current_user.is_organizer %}
+                  <li><a href="{{ url_for('my_tickets') }}"><i class="fa-solid fa-ticket"></i> Vé đã đăng ký & Điểm PDP</a></li>
+                {% endif %}
                 {% if current_user.is_organizer %}
                   <li role="separator" class="divider"></li>
                   <li><a href="{{ url_for('event_create') }}"><i class="fa-solid fa-plus-circle"></i> Đăng sự kiện mới</a></li>
                   <li><a href="{{ url_for('organizer_dashboard') }}"><i class="fa-solid fa-gauge-high"></i> Dashboard Ban tổ chức</a></li>
+                  <li><a href="{{ url_for('check_in') }}"><i class="fa-solid fa-qrcode"></i> Bàn quét mã QR Check-in</a></li>
+                {% endif %}
+                {% if current_user.is_admin %}
+                  <li role="separator" class="divider"></li>
+                  <li><a href="{{ url_for('admin_dashboard') }}"><i class="fa-solid fa-shield-halved"></i> Trung tâm Quản trị CTSV</a></li>
+                  <li><a href="{{ url_for('event_create') }}"><i class="fa-solid fa-plus-circle"></i> Tạo sự kiện cấp trường</a></li>
+                  <li><a href="{{ url_for('check_in') }}"><i class="fa-solid fa-qrcode"></i> Bàn quét mã QR Check-in</a></li>
                 {% endif %}
                 <li role="separator" class="divider"></li>
-                <li><a href="{{ url_for('logout') }}"><i class="fa-solid fa-arrow-right-from-bracket text-danger"></i> Đăng xuất</a></li>
+                <li><a href="{{ url_for('logout') }}"><i class="fa-solid fa-arrow-right-from-bracket text-danger"></i> Đăng xuất an toàn</a></li>
               </ul>
             </li>
           {% else %}
