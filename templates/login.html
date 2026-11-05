@@ -20,8 +20,8 @@
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <a href="{{ url_for('quick_login', role_type='student') }}" class="btn btn-default" style="border-radius:8px;font-weight:700;display:flex;justify-content:space-between;align-items:center;background:var(--feh-bg-card);color:var(--feh-text-main);border-color:var(--feh-border);">
-          <span><i class="fa-solid fa-user-graduate" style="color:var(--feh-primary);margin-right:6px;"></i> Sinh viên mẫu: Nguyễn Văn A</span>
-          <span class="badge" style="background:#e0f2fe;color:#0284c7;">DE170001</span>
+          <span><i class="fa-solid fa-user-graduate" style="color:var(--feh-primary);margin-right:6px;"></i> Sinh viên: Trương Công Dũng</span>
+          <span class="badge" style="background:#e0f2fe;color:#0284c7;">DE200433</span>
         </a>
         <a href="{{ url_for('quick_login', role_type='organizer') }}" class="btn btn-default" style="border-radius:8px;font-weight:700;display:flex;justify-content:space-between;align-items:center;background:var(--feh-bg-card);color:var(--feh-text-main);border-color:var(--feh-border);">
           <span><i class="fa-solid fa-users" style="color:#d97706;margin-right:6px;"></i> Ban tổ chức: CLB F-Code</span>
@@ -47,7 +47,7 @@
 
       <div class="form-group" style="margin-bottom:18px;">
         <label style="font-weight:700;color:var(--feh-text-main);">Email FPT hoặc Mã SV (MSSV)</label>
-        {{ form.email(class="form-control", placeholder="Ví dụ: nguyenvana@fpt.edu.vn hoặc DE170001", style="height:44px;border-radius:8px;") }}
+        {{ form.email(class="form-control", placeholder="Ví dụ: nguyenvana@fpt.edu.vn hoặc DExxxxxx", style="height:44px;border-radius:8px;") }}
         {% for err in form.email.errors %}
           <div class="text-danger" style="font-size:12px;margin-top:4px;">{{ err }}</div>
         {% endfor %}
