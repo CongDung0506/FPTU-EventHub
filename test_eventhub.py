@@ -155,5 +155,39 @@ class EventHubTestCase(unittest.TestCase):
         self.assertEqual(ev.review_count, 1)
         self.assertEqual(ev.average_rating, 5.0)
 
+    def test_email_domain_validation(self):
+        from forms import RegisterForm
+        # Non-FPT email must fail
+        f_bad = RegisterForm(student_id="DE123456", full_name="User Test", email="test@gmail.com", password="password123")
+        self.assertFalse(f_bad.validate())
+        self.assertTrue(any("FPT" in err for err in f_bad.email.errors))
+
+        # Other university email must fail
+        f_other_uni = RegisterForm(student_id="DE123456", full_name="User Test", email="sv@hcmus.edu.vn", password="password123")
+        self.assertFalse(f_other_uni.validate())
+        self.assertTrue(any("FPT" in err for err in f_other_uni.email.errors))
+
+        # FPT emails must succeed
+        f_good1 = RegisterForm(student_id="DE123456", full_name="User Test", email="svfpt@fpt.edu.vn", password="password123")
+        self.assertTrue(f_good1.validate())
+
+        f_good2 = RegisterForm(student_id="FE123456", full_name="Staff Test", email="staff@fe.edu.vn", password="password123")
+        self.assertTrue(f_good2.validate())
+
+    def test_user_pdp_rank_levels(self):
+        u = self.user
+        self.assertEqual(u.total_pdp_points, 0)
+        self.assertEqual(u.pdp_rank["title"], "Tân Binh Trường F")
+        self.assertEqual(u.pdp_rank["icon"], "🥉")
+
+        # Mock tickets to give 15 points
+        t = Ticket(ticket_code="FU-2026-MOCK1", event=self.event, user=u, status="CHECKED_IN")
+        db.session.add(t)
+        db.session.commit()
+
+        self.assertEqual(u.total_pdp_points, 15)
+        self.assertEqual(u.pdp_rank["title"], "Chiến Binh Năng Nổ")
+        self.assertEqual(u.pdp_rank["icon"], "🥈")
+
 if __name__ == "__main__":
     unittest.main()

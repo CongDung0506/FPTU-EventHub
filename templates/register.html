@@ -3,55 +3,255 @@
 {% block title %}Đăng Ký Tài Khoản Sinh Viên — FPTU EventHub{% endblock %}
 
 {% block content %}
-<div class="container" style="margin-top:40px;max-width:550px;">
-  <div style="background:#fff;border:1px solid var(--feh-border);border-radius:16px;padding:36px;box-shadow:var(--feh-shadow);">
-    <div style="text-align:center;margin-bottom:28px;">
-      <h3 style="font-weight:800;color:var(--feh-navy);margin:0 0 6px;">Đăng Ký Tài Khoản Sinh Viên</h3>
-      <p style="color:var(--feh-text-muted);font-size:13px;margin:0;">Đăng ký bằng email trường cấp để tích lũy điểm rèn luyện PDP</p>
+<div class="container" style="margin-top:35px;margin-bottom:50px;max-width:580px;">
+  <div style="background:var(--feh-bg-card);border:1px solid var(--feh-border);border-radius:18px;padding:36px;box-shadow:var(--feh-shadow);">
+
+    <!-- BƯỚC 1: XÁC THỰC DANH TÍNH SINH VIÊN TRƯỜNG FPT -->
+    <div id="step-identity" style="text-align:center;{% if form.errors %}display:none;{% endif %}">
+      <div style="width:70px;height:70px;background:var(--feh-primary-light);color:var(--feh-primary);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:16px;">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+      
+      <span class="feh-badge feh-badge--fpt" style="margin-bottom:10px;font-size:11px;text-transform:uppercase;">
+        Bảo Mật Nội Bộ FPT University
+      </span>
+      
+      <h3 style="font-weight:800;color:var(--feh-text-main);margin:8px 0 10px;">
+        Xác Thực Sinh Viên FPT
+      </h3>
+      
+      <p style="color:var(--feh-text-muted);font-size:14px;line-height:1.6;margin-bottom:26px;">
+        Cổng thông tin <strong>FPTU EventHub</strong> quản lý vé điện tử và tích lũy điểm rèn luyện PDP dành riêng cho cộng đồng sinh viên Đại học FPT.<br>
+        <strong>Bạn có phải là Sinh viên hoặc Cán bộ thuộc Đại học FPT không?</strong>
+      </p>
+
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <button type="button" id="btn-is-fpt" class="feh-btn feh-btn--primary" style="height:48px;font-size:15px;width:100%;font-weight:700;">
+          <i class="fa-solid fa-circle-check"></i> ĐÚNG, TÔI LÀ SINH VIÊN / CÁN BỘ FPT
+        </button>
+        <button type="button" id="btn-not-fpt" class="feh-btn" style="height:48px;font-size:15px;width:100%;background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;font-weight:700;">
+          <i class="fa-solid fa-circle-xmark"></i> KHÔNG, TÔI LÀ KHÁCH NGOÀI TRƯỜNG
+        </button>
+      </div>
     </div>
 
-    <form method="POST">
-      {{ form.hidden_tag() }}
+    <!-- CẢNH BÁO TỪ CHỐI KHI KHÔNG PHẢI SINH VIÊN FPT -->
+    <div id="block-not-fpt" style="display:none;text-align:center;">
+      <div style="width:70px;height:70px;background:#fee2e2;color:#dc2626;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:16px;">
+        <i class="fa-solid fa-hand"></i>
+      </div>
 
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="form-group" style="margin-bottom:18px;">
-            <label style="font-weight:700;color:var(--feh-navy);">{{ form.student_id.label }}</label>
-            {{ form.student_id(class="form-control", placeholder="Ví dụ: DE200433", style="height:44px;border-radius:8px;text-transform:uppercase;") }}
+      <h3 style="font-weight:800;color:#991b1b;margin:0 0 10px;">
+        Rất Tiếc! Cổng Đăng Ký Chỉ Dành Cho FPTU
+      </h3>
+
+      <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:18px;margin-bottom:24px;text-align:left;">
+        <p style="color:#7f1d1d;font-size:13px;line-height:1.6;margin:0 0 8px;">
+          <i class="fa-solid fa-circle-info text-danger"></i> <strong>Lý do từ chối:</strong>
+        </p>
+        <ul style="color:#7f1d1d;font-size:13px;line-height:1.6;padding-left:20px;margin:0;">
+          <li>Hệ thống liên kết trực tiếp với điểm rèn luyện PDP của Đại học FPT.</li>
+          <li>Số lượng chỗ ngồi tại các hội trường (Alpha, Beta, Gamma) có giới hạn.</li>
+          <li>Chỉ chấp nhận tài khoản có email trường cấp (<code>@fpt.edu.vn</code> hoặc <code>@fe.edu.vn</code>).</li>
+        </ul>
+      </div>
+
+      <p style="color:var(--feh-text-muted);font-size:13px;margin-bottom:20px;">
+        Nếu bạn là đối tác doanh nghiệp hoặc khách mời, vui lòng liên hệ Phòng CTSV FPT qua email: <strong>ctsv@fpt.edu.vn</strong>
+      </p>
+
+      <div style="display:flex;gap:10px;">
+        <a href="{{ url_for('home') }}" class="feh-btn" style="flex:1;background:#dc2626;color:#fff;font-size:13px;height:42px;">
+          <i class="fa-solid fa-arrow-left"></i> Về Trang Chủ
+        </a>
+        <button type="button" id="btn-reselect" class="feh-btn" style="flex:1;background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;font-size:13px;height:42px;">
+          <i class="fa-solid fa-rotate-left"></i> Tôi là sinh viên FPT
+        </button>
+      </div>
+    </div>
+
+    <!-- BƯỚC 2: FORM ĐIỀN THÔNG TIN TÀI KHOẢN FPT -->
+    <div id="step-form" style="{% if not form.errors %}display:none;{% endif %}">
+      <div style="text-align:center;margin-bottom:24px;">
+        <span class="feh-badge feh-badge--fpt" style="font-size:11px;">
+          <i class="fa-solid fa-id-card"></i> Hồ Sơ Tân Sinh Viên FPT
+        </span>
+        <h3 style="font-weight:800;color:var(--feh-text-main);margin:8px 0 4px;">Đăng Ký Tài Khoản FPTU</h3>
+        <p style="color:var(--feh-text-muted);font-size:13px;margin:0;">Vui lòng nhập chính xác MSSV và Email trường cấp</p>
+      </div>
+
+      <form method="POST" id="register-form" novalidate>
+        {{ form.hidden_tag() }}
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group" style="margin-bottom:16px;">
+              <label style="font-weight:700;color:var(--feh-text-main);font-size:13px;">
+                {{ form.student_id.label }} <span class="text-danger">*</span>
+              </label>
+              {{ form.student_id(id="reg-mssv", class="form-control", placeholder="Ví dụ: DE200433", style="height:44px;border-radius:10px;text-transform:uppercase;font-weight:600;") }}
+              {% if form.student_id.errors %}
+                <span class="text-danger" style="font-size:12px;font-weight:600;">{{ form.student_id.errors[0] }}</span>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group" style="margin-bottom:16px;">
+              <label style="font-weight:700;color:var(--feh-text-main);font-size:13px;">
+                {{ form.full_name.label }} <span class="text-danger">*</span>
+              </label>
+              {{ form.full_name(class="form-control", placeholder="Ví dụ: Trương Công Dũng", style="height:44px;border-radius:10px;font-weight:600;") }}
+              {% if form.full_name.errors %}
+                <span class="text-danger" style="font-size:12px;font-weight:600;">{{ form.full_name.errors[0] }}</span>
+              {% endif %}
+            </div>
           </div>
         </div>
-        <div class="col-sm-6">
-          <div class="form-group" style="margin-bottom:18px;">
-            <label style="font-weight:700;color:var(--feh-navy);">{{ form.full_name.label }}</label>
-            {{ form.full_name(class="form-control", placeholder="Ví dụ: Trương Công Dũng", style="height:44px;border-radius:8px;") }}
-          </div>
+
+        <!-- Email trường cấp with Live Validation Feedback -->
+        <div class="form-group" style="margin-bottom:16px;">
+          <label style="font-weight:700;color:var(--feh-text-main);font-size:13px;">
+            Email trường cấp (@fpt.edu.vn / @fe.edu.vn) <span class="text-danger">*</span>
+          </label>
+          {{ form.email(id="reg-email", class="form-control", placeholder="dungtcde200433@fpt.edu.vn", style="height:44px;border-radius:10px;font-weight:600;") }}
+          
+          <!-- Real-time Validation Message Container -->
+          <div id="email-feedback" style="margin-top:6px;font-size:12px;font-weight:700;"></div>
+          
+          {% if form.email.errors %}
+            <span class="text-danger" style="font-size:12px;font-weight:600;">{{ form.email.errors[0] }}</span>
+          {% endif %}
         </div>
+
+        <div class="form-group" style="margin-bottom:16px;">
+          <label style="font-weight:700;color:var(--feh-text-main);font-size:13px;">
+            {{ form.password.label }} <span class="text-danger">*</span>
+          </label>
+          {{ form.password(class="form-control", placeholder="Tối thiểu 6 ký tự", style="height:44px;border-radius:10px;") }}
+          {% if form.password.errors %}
+            <span class="text-danger" style="font-size:12px;font-weight:600;">{{ form.password.errors[0] }}</span>
+          {% endif %}
+        </div>
+
+        <div class="form-group" style="margin-bottom:22px;">
+          <label style="font-weight:700;color:var(--feh-text-main);font-size:13px;">
+            {{ form.phone.label }}
+          </label>
+          {{ form.phone(class="form-control", placeholder="0905xxxxxx (Tùy chọn)", style="height:44px;border-radius:10px;") }}
+        </div>
+
+        <button type="submit" id="btn-submit-reg" class="feh-btn feh-btn--primary feh-btn--block" style="height:46px;font-size:15px;font-weight:700;">
+          <i class="fa-solid fa-user-plus"></i> HOÀN TẤT ĐĂNG KÝ
+        </button>
+      </form>
+
+      <div style="text-align:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--feh-border);font-size:13px;color:var(--feh-text-muted);">
+        <button type="button" id="btn-back-step1" style="background:none;border:none;color:var(--feh-text-muted);font-weight:600;font-size:12px;cursor:pointer;">
+          <i class="fa-solid fa-arrow-left"></i> Quay lại câu hỏi xác thực
+        </button>
       </div>
+    </div>
 
-      <div class="form-group" style="margin-bottom:18px;">
-        <label style="font-weight:700;color:var(--feh-navy);">{{ form.email.label }}</label>
-        {{ form.email(class="form-control", placeholder="dungtcde200433@fpt.edu.vn", style="height:44px;border-radius:8px;") }}
-      </div>
-
-      <div class="form-group" style="margin-bottom:18px;">
-        <label style="font-weight:700;color:var(--feh-navy);">{{ form.password.label }}</label>
-        {{ form.password(class="form-control", placeholder="Tối thiểu 6 ký tự", style="height:44px;border-radius:8px;") }}
-      </div>
-
-      <div class="form-group" style="margin-bottom:24px;">
-        <label style="font-weight:700;color:var(--feh-navy);">{{ form.phone.label }}</label>
-        {{ form.phone(class="form-control", placeholder="0905xxxxxx (Tùy chọn)", style="height:44px;border-radius:8px;") }}
-      </div>
-
-      <button type="submit" class="feh-btn feh-btn--primary feh-btn--block" style="height:44px;font-size:15px;">
-        <i class="fa-solid fa-user-plus"></i> HOÀN TẤT ĐĂNG KÝ
-      </button>
-    </form>
-
-    <div style="text-align:center;margin-top:24px;padding-top:18px;border-top:1px solid #f1f5f9;font-size:13px;color:var(--feh-text-muted);">
+    <!-- Bottom link to login -->
+    <div style="text-align:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--feh-border);font-size:13px;color:var(--feh-text-muted);">
       Đã có tài khoản? 
       <a href="{{ url_for('login') }}" style="color:var(--feh-primary);font-weight:700;">Đăng nhập ngay</a>
     </div>
+
   </div>
 </div>
+
+<!-- Client-side Interactive Logic -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const stepIdentity = document.getElementById("step-identity");
+  const blockNotFpt = document.getElementById("block-not-fpt");
+  const stepForm = document.getElementById("step-form");
+
+  const btnIsFpt = document.getElementById("btn-is-fpt");
+  const btnNotFpt = document.getElementById("btn-not-fpt");
+  const btnReselect = document.getElementById("btn-reselect");
+  const btnBackStep1 = document.getElementById("btn-back-step1");
+
+  const emailInput = document.getElementById("reg-email");
+  const emailFeedback = document.getElementById("email-feedback");
+  const submitBtn = document.getElementById("btn-submit-reg");
+  const regForm = document.getElementById("register-form");
+
+  // 1. Interactive Step Switching
+  if (btnIsFpt) {
+    btnIsFpt.addEventListener("click", function () {
+      stepIdentity.style.display = "none";
+      blockNotFpt.style.display = "none";
+      stepForm.style.display = "block";
+    });
+  }
+
+  if (btnNotFpt) {
+    btnNotFpt.addEventListener("click", function () {
+      stepIdentity.style.display = "none";
+      stepForm.style.display = "none";
+      blockNotFpt.style.display = "block";
+    });
+  }
+
+  if (btnReselect) {
+    btnReselect.addEventListener("click", function () {
+      blockNotFpt.style.display = "none";
+      stepIdentity.style.display = "none";
+      stepForm.style.display = "block";
+    });
+  }
+
+  if (btnBackStep1) {
+    btnBackStep1.addEventListener("click", function () {
+      stepForm.style.display = "none";
+      blockNotFpt.style.display = "none";
+      stepIdentity.style.display = "block";
+    });
+  }
+
+  // 2. Real-Time Email Validation for @fpt.edu.vn and @fe.edu.vn
+  if (emailInput && emailFeedback) {
+    function validateEmailDomain() {
+      const val = emailInput.value.trim().toLowerCase();
+      if (!val) {
+        emailFeedback.innerHTML = "";
+        submitBtn.removeAttribute("disabled");
+        return true;
+      }
+
+      if (!val.includes("@")) {
+        emailFeedback.innerHTML = "<span class='text-muted'><i class='fa-solid fa-spinner'></i> Vui lòng nhập đầy đủ địa chỉ email (VD: dungtcde200433@fpt.edu.vn)</span>";
+        return false;
+      }
+
+      const isFpt = val.endsWith("@fpt.edu.vn") || val.endsWith("@fe.edu.vn");
+      if (isFpt) {
+        emailFeedback.innerHTML = "<span style='color:#16a34a;'><i class='fa-solid fa-circle-check'></i> Email sinh viên / cán bộ FPT hợp lệ!</span>";
+        emailInput.style.borderColor = "#16a34a";
+        submitBtn.removeAttribute("disabled");
+        return true;
+      } else {
+        emailFeedback.innerHTML = "<span style='color:#dc2626;'><i class='fa-solid fa-circle-xmark'></i> Email không hợp lệ! Bạn phải sử dụng email trường Đại học FPT cấp (@fpt.edu.vn hoặc @fe.edu.vn). Sinh viên trường khác không được phép đăng ký.</span>";
+        emailInput.style.borderColor = "#dc2626";
+        return false;
+      }
+    }
+
+    emailInput.addEventListener("input", validateEmailDomain);
+
+    if (regForm) {
+      regForm.addEventListener("submit", function (e) {
+        if (!validateEmailDomain()) {
+          e.preventDefault();
+          alert("Lỗi: Bạn phải sử dụng email do Đại học FPT cấp (@fpt.edu.vn hoặc @fe.edu.vn) để đăng ký tài khoản!");
+          emailInput.focus();
+        }
+      });
+    }
+  }
+});
+</script>
 {% endblock %}

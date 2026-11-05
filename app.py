@@ -77,6 +77,10 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         ident = form.email.data.strip()
+        if '@' in ident:
+            if not (ident.lower().endswith('@fpt.edu.vn') or ident.lower().endswith('@fe.edu.vn')):
+                flash('❌ Email không thuộc hệ thống Đại học FPT! Vui lòng sử dụng email trường cấp (@fpt.edu.vn / @fe.edu.vn) hoặc Mã SV (MSSV).', 'danger')
+                return render_template('login.html', form=form)
         user = User.query.filter(
             (User.email.ilike(ident)) | 
             (User.student_id.ilike(ident))
@@ -116,7 +120,11 @@ def register():
         return redirect(url_for("home"))
     form = RegisterForm()
     if form.validate_on_submit():
-        existing_email = User.query.filter_by(email=form.email.data.strip().lower()).first()
+        email_clean = form.email.data.strip().lower()
+        if not (email_clean.endswith('@fpt.edu.vn') or email_clean.endswith('@fe.edu.vn')):
+            flash('❌ Đăng ký không thành công! FPTU EventHub chỉ dành riêng cho sinh viên & cán bộ Đại học FPT (yêu cầu email @fpt.edu.vn hoặc @fe.edu.vn).', 'danger')
+            return render_template('register.html', form=form)
+        existing_email = User.query.filter_by(email=email_clean).first()
         if existing_email:
             flash("Email này đã được đăng ký tài khoản.", "warning")
             return render_template("register.html", form=form)

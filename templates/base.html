@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css">
   
   <!-- Custom BEM Scoped Stylesheet with Cache Buster -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=3.1">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=3.2">
   
   <!-- Inline Fallback Styles to Prevent FOUC (Flash of Unstyled Content) -->
   <style>
@@ -127,9 +127,23 @@
       background: linear-gradient(135deg, #fff7ed 0%, #f0fdf4 100%);
       border-bottom: 1px solid var(--feh-border);
       padding: 45px 0 55px;
+      color: #0f172a;
+    }
+    .feh-hero__title {
+      color: #0f172a;
+    }
+    .feh-hero__subtitle {
+      color: #334155;
     }
     [data-theme="dark"] .feh-hero {
       background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      color: #f8fafc;
+    }
+    [data-theme="dark"] .feh-hero__title {
+      color: #f8fafc;
+    }
+    [data-theme="dark"] .feh-hero__subtitle {
+      color: #94a3b8;
     }
     .feh-countdown {
       display: flex;

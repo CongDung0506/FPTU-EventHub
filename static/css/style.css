@@ -117,10 +117,10 @@ body {
 
 /* --- Hero Banner --- */
 .feh-hero {
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  color: #ffffff;
+  background: linear-gradient(135deg, #fff7ed 0%, #f1f5f9 100%);
+  color: #0f172a;
   padding: 50px 0 45px;
-  border-bottom: 4px solid var(--feh-primary);
+  border-bottom: 3px solid var(--feh-primary);
   margin-bottom: 35px;
   position: relative;
   overflow: hidden;
@@ -129,7 +129,7 @@ body {
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-image: radial-gradient(circle at 80% 20%, rgba(242, 111, 33, 0.15) 0%, transparent 60%);
+  background-image: radial-gradient(circle at 80% 20%, rgba(242, 111, 33, 0.1) 0%, transparent 60%);
   pointer-events: none;
 }
 .feh-hero__title {
@@ -137,47 +137,51 @@ body {
   font-weight: 800;
   margin: 0 0 12px;
   line-height: 1.25;
+  color: #0f172a;
 }
 .feh-hero__subtitle {
   font-size: 16px;
-  color: #94a3b8;
+  color: #334155;
   margin-bottom: 24px;
 }
 .feh-hero__stats-card {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(8px);
-  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+  border-radius: 14px;
   padding: 16px 20px;
   margin-bottom: 15px;
   display: flex;
   align-items: center;
   gap: 15px;
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 .feh-hero__stats-card:hover {
   transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
+  border-color: var(--feh-primary);
 }
 .feh-hero__stats-icon {
   font-size: 28px;
   color: var(--feh-primary);
 }
 .feh-hero__stats-val {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 800;
   line-height: 1.1;
-  color: #fff;
+  color: #0f172a;
 }
 .feh-hero__stats-lbl {
-  font-size: 12px;
-  color: #94a3b8;
+  font-size: 13px;
+  color: #475569;
+  font-weight: 600;
 }
 
 /* Countdown Timer */
 .feh-countdown-wrap {
-  background: rgba(0, 0, 0, 0.35);
-  border: 1px solid rgba(242, 111, 33, 0.35);
+  background: #ffffff;
+  border: 1px solid #fed7aa;
+  box-shadow: 0 4px 16px rgba(242, 111, 33, 0.12);
   border-radius: 12px;
   padding: 16px 20px;
   margin-top: 20px;
@@ -186,7 +190,7 @@ body {
 .feh-countdown-header {
   font-size: 13px;
   font-weight: 700;
-  color: #fdba74;
+  color: #c2410c;
   margin-bottom: 8px;
   display: flex;
   align-items: center;
@@ -197,8 +201,8 @@ body {
   gap: 10px;
 }
 .feh-countdown-box {
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
   border-radius: 8px;
   padding: 6px 12px;
   text-align: center;
@@ -207,12 +211,53 @@ body {
 .feh-countdown-num {
   font-size: 20px;
   font-weight: 800;
-  color: #fff;
+  color: #c2410c;
   display: block;
 }
 .feh-countdown-lbl {
   font-size: 10px;
+  color: #7c2d12;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+[data-theme="dark"] .feh-hero {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #f8fafc;
+}
+[data-theme="dark"] .feh-hero__title {
+  color: #f8fafc;
+}
+[data-theme="dark"] .feh-hero__subtitle {
+  color: #94a3b8;
+}
+[data-theme="dark"] .feh-hero__stats-card {
+  background: #1e293b;
+  border-color: #334155;
+}
+[data-theme="dark"] .feh-hero__stats-val {
+  color: #f8fafc;
+}
+[data-theme="dark"] .feh-hero__stats-lbl {
+  color: #94a3b8;
+}
+[data-theme="dark"] .feh-countdown-wrap {
+  background: #1e293b;
+  border-color: #475569;
+}
+[data-theme="dark"] .feh-countdown-header {
+  color: #fb923c;
+}
+[data-theme="dark"] .feh-countdown-box {
+  background: #0f172a;
+  border-color: #334155;
+}
+[data-theme="dark"] .feh-countdown-num {
+  color: #fb923c;
+}
+[data-theme="dark"] .feh-countdown-lbl {
   color: #cbd5e1;
+}
   text-transform: uppercase;
 }
 
