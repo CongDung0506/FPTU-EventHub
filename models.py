@@ -33,15 +33,6 @@ class Role(db.Model):
                 db.session.add(role)
         db.session.commit()
 
-    @property
-    def pdp_rank(self):
-        pts = self.total_pdp_points
-        if pts >= 30:
-            return {"title": "Huyền Thoại Cóc Vàng", "badge": "🥇", "color": "#f59e0b", "next_target": 50, "percent": 100}
-        elif pts >= 15:
-            return {"title": "Chiến Binh Năng Nổ", "badge": "🥈", "color": "#3b82f6", "next_target": 30, "percent": int((pts / 30) * 100)}
-        return {"title": "Tân Binh Trường F", "badge": "🥉", "color": "#10b981", "next_target": 15, "percent": int((pts / 15) * 100)}
-
     def __repr__(self):
         return f"<Role {self.name}>"
 
@@ -92,6 +83,41 @@ class User(UserMixin, db.Model):
         # Tinh tong diem PDP da tich luy qua cac su kien da check-in
         checked_tickets = Ticket.query.filter_by(user_id=self.id, status="CHECKED_IN").all()
         return sum(t.event.pdp_points for t in checked_tickets if t.event and t.event.pdp_points)
+
+    @property
+    def pdp_rank(self):
+        pts = self.total_pdp_points
+        if pts >= 30:
+            return {
+                "title": "Huyền Thoại Cóc Vàng",
+                "icon": "🥇",
+                "badge_class": "feh-rank-gold",
+                "color": "#f59e0b",
+                "next_rank": None,
+                "pts_to_next": 0,
+                "progress_percent": 100
+            }
+        elif pts >= 15:
+            return {
+                "title": "Chiến Binh Năng Nổ",
+                "icon": "🥈",
+                "badge_class": "feh-rank-warrior",
+                "color": "#3b82f6",
+                "next_rank": "Huyền Thoại Cóc Vàng (30 PDP)",
+                "pts_to_next": 30 - pts,
+                "progress_percent": min(100, int((pts / 30) * 100))
+            }
+        else:
+            return {
+                "title": "Tân Binh Trường F",
+                "icon": "🥉",
+                "badge_class": "feh-rank-recruit",
+                "color": "#10b981",
+                "next_rank": "Chiến Binh Năng Nổ (15 PDP)",
+                "pts_to_next": 15 - pts,
+                "progress_percent": min(100, int((pts / 15) * 100))
+            }
+
 
     def __repr__(self):
         return f"<User {self.email} ({self.student_id})>"
