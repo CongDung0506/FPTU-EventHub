@@ -619,3 +619,102 @@ body {
 .feh-footer a:hover {
   color: var(--feh-primary);
 }
+
+/* --- Interactive Timeline View & View Switcher ----------------------------- */
+.feh-view-switcher {
+  display: inline-flex;
+  background: var(--feh-bg-card);
+  border: 1px solid var(--feh-border);
+  border-radius: 10px;
+  padding: 3px;
+  gap: 4px;
+}
+.feh-view-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--feh-text-muted);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.feh-view-btn.active {
+  background: var(--feh-primary);
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(242, 111, 33, 0.3);
+}
+
+.feh-timeline {
+  position: relative;
+  max-width: 900px;
+  margin: 25px auto 40px;
+  padding: 10px 0;
+}
+.feh-timeline::after {
+  content: "";
+  position: absolute;
+  width: 4px;
+  background: linear-gradient(180deg, var(--feh-primary) 0%, #3b82f6 100%);
+  top: 0;
+  bottom: 0;
+  left: 28px;
+  margin-left: -2px;
+  border-radius: 2px;
+}
+.feh-timeline-item {
+  padding: 8px 0 8px 55px;
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.feh-timeline-badge {
+  position: absolute;
+  left: 16px;
+  top: 26px;
+  width: 24px;
+  height: 24px;
+  background: var(--feh-primary);
+  border: 3px solid var(--feh-bg-card);
+  border-radius: 50%;
+  z-index: 5;
+  box-shadow: 0 0 10px rgba(242, 111, 33, 0.6);
+}
+.feh-timeline-content {
+  padding: 18px 22px;
+  background: var(--feh-bg-card);
+  border-radius: 14px;
+  border: 1px solid var(--feh-border);
+  box-shadow: var(--feh-shadow);
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  transition: all 0.25s ease;
+}
+.feh-timeline-content:hover {
+  transform: translateX(6px);
+  border-color: var(--feh-primary);
+  box-shadow: var(--feh-shadow-hover);
+}
+.feh-timeline-thumb {
+  width: 130px;
+  height: 90px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* Gamification Rank Badge */
+.feh-rank-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(242, 111, 33, 0.1);
+  color: var(--feh-primary);
+  border: 1px solid rgba(242, 111, 33, 0.25);
+}

@@ -33,6 +33,15 @@ class Role(db.Model):
                 db.session.add(role)
         db.session.commit()
 
+    @property
+    def pdp_rank(self):
+        pts = self.total_pdp_points
+        if pts >= 30:
+            return {"title": "Huyền Thoại Cóc Vàng", "badge": "🥇", "color": "#f59e0b", "next_target": 50, "percent": 100}
+        elif pts >= 15:
+            return {"title": "Chiến Binh Năng Nổ", "badge": "🥈", "color": "#3b82f6", "next_target": 30, "percent": int((pts / 30) * 100)}
+        return {"title": "Tân Binh Trường F", "badge": "🥉", "color": "#10b981", "next_target": 15, "percent": int((pts / 15) * 100)}
+
     def __repr__(self):
         return f"<Role {self.name}>"
 

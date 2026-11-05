@@ -110,8 +110,8 @@
     {% endfor %}
   </div>
 
-  <!-- Event Grid Header -->
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+  <!-- Event Grid Header & View Mode Switcher -->
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
     <div>
       <h3 style="margin:0;font-weight:800;color:var(--feh-text-main);">
         <i class="fa-solid fa-fire" style="color:var(--feh-primary);"></i> Danh Sách Sự Kiện ĐH FPT
@@ -119,6 +119,16 @@
       <p style="margin:4px 0 0;font-size:13px;color:var(--feh-text-muted);">
         Đăng ký sớm để giữ chỗ, nhận vé điện tử QR Code và tích lũy điểm PDP!
       </p>
+    </div>
+
+    <!-- View Mode Switcher (Grid vs Interactive Timeline) -->
+    <div class="feh-view-switcher btn-group" role="group" aria-label="Chế độ hiển thị">
+      <button type="button" id="btn-view-grid" class="btn btn-sm btn-primary" style="font-weight:700;border-radius:8px 0 0 8px;padding:6px 14px;">
+        <i class="fa-solid fa-table-cells"></i> Dạng Lưới (Grid)
+      </button>
+      <button type="button" id="btn-view-timeline" class="btn btn-sm btn-default" style="font-weight:700;border-radius:0 8px 8px 0;padding:6px 14px;">
+        <i class="fa-solid fa-timeline"></i> Dòng Thời Gian (Timeline)
+      </button>
     </div>
   </div>
 
@@ -143,7 +153,7 @@
         <div class="feh-event-card">
           <!-- Banner Image & Category Badge -->
           <div class="feh-event-card__img-wrap">
-            <img src="{{ ev.banner_url }}" alt="{{ ev.title }}" class="feh-event-card__img" loading="lazy">
+            <img src="{{ ev.banner_url }}" alt="{{ ev.title }}" class="feh-event-card__img" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80';">
             <span class="feh-event-card__cat-badge" style="background: {{ ev.category.color }};">
               <i class="fa-solid {{ ev.category.icon }}"></i> {{ ev.category.name }}
             </span>
@@ -213,6 +223,66 @@
                 <i class="fa-solid fa-ticket"></i> Chi Tiết & Đăng Ký
               </a>
             {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Event Interactive Timeline View (Radically distinct from events.fptu.vn) -->
+  <div id="events-timeline" class="feh-timeline" style="display:none;">
+    {% for ev in events %}
+      <div class="feh-timeline-item feh-event-item" 
+           data-title="{{ ev.title|lower }}" 
+           data-venue="{{ ev.venue|lower }}" 
+           data-speaker="{{ (ev.speaker_name or '')|lower }}"
+           data-category="{{ ev.category.name|lower }}">
+        
+        <div class="feh-timeline-badge" style="background: {{ ev.category.color }};">
+          <i class="fa-solid {{ ev.category.icon }}"></i>
+        </div>
+
+        <div class="feh-timeline-content">
+          <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;">
+            <img src="{{ ev.banner_url }}" alt="{{ ev.title }}" class="feh-timeline-thumb" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=400&q=80';">
+            
+            <div style="flex:1;min-width:240px;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;">
+                <span class="feh-badge" style="background:{{ ev.category.color }};color:#fff;font-size:11px;">
+                  <i class="fa-solid {{ ev.category.icon }}"></i> {{ ev.category.name }}
+                </span>
+                <span class="feh-rank-pill feh-rank-recruit" style="font-size:11px;padding:2px 8px;">
+                  <i class="fa-solid fa-award"></i> +{{ ev.pdp_points }} PDP
+                </span>
+                <span style="font-size:12px;color:var(--feh-text-muted);font-weight:600;">
+                  <i class="fa-regular fa-calendar-days"></i> {{ ev.start_time.strftime('%H:%M • %d/%m/%Y') }}
+                </span>
+              </div>
+
+              <h4 style="margin:0 0 6px;font-weight:800;font-size:16px;">
+                <a href="{{ url_for('event_detail', event_id=ev.id) }}" style="color:var(--feh-text-main);text-decoration:none;">
+                  {{ ev.title }}
+                </a>
+              </h4>
+
+              <div style="display:flex;gap:16px;font-size:12px;color:var(--feh-text-muted);flex-wrap:wrap;margin-bottom:10px;">
+                <span><i class="fa-solid fa-location-dot" style="color:var(--feh-primary);"></i> {{ ev.venue }}</span>
+                {% if ev.speaker_name %}
+                  <span><i class="fa-solid fa-user-tie"></i> {{ ev.speaker_name }}</span>
+                {% endif %}
+                <span><i class="fa-solid fa-chair"></i> Còn {{ ev.available_slots }}/{{ ev.total_capacity }} chỗ</span>
+              </div>
+
+              <div style="display:flex;gap:10px;align-items:center;">
+                {% if ev.is_sold_out %}
+                  <span class="label label-danger" style="padding:6px 10px;font-size:11px;border-radius:6px;">HẾT VÉ</span>
+                {% else %}
+                  <a href="{{ url_for('event_detail', event_id=ev.id) }}" class="feh-btn feh-btn--primary" style="padding:6px 14px;font-size:12px;">
+                    Chi Tiết & Đăng Ký →
+                  </a>
+                {% endif %}
+              </div>
+            </div>
           </div>
         </div>
       </div>

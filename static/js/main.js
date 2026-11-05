@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // 3. Instant Live Search
   initLiveSearch();
+
+  // 4. View Switcher (Grid vs Interactive Timeline)
+  initViewSwitcher();
 });
 
 // --- Dark Mode ---------------------------------------------------------------
@@ -123,5 +126,42 @@ function triggerConfetti() {
       spread: 70,
       origin: { y: 0.6 }
     });
+  }
+}
+
+// --- View Switcher (Grid vs Interactive Timeline) ---------------------------
+function initViewSwitcher() {
+  const btnGrid = document.getElementById("btn-view-grid");
+  const btnTimeline = document.getElementById("btn-view-timeline");
+  const gridView = document.getElementById("events-grid");
+  const timelineView = document.getElementById("events-timeline");
+
+  if (!btnGrid || !btnTimeline || !gridView || !timelineView) return;
+
+  const savedView = localStorage.getItem("feh-view-mode") || "grid";
+  setViewMode(savedView);
+
+  btnGrid.addEventListener("click", function () {
+    setViewMode("grid");
+  });
+
+  btnTimeline.addEventListener("click", function () {
+    setViewMode("timeline");
+  });
+
+  function setViewMode(mode) {
+    if (mode === "timeline") {
+      gridView.style.display = "none";
+      timelineView.style.display = "block";
+      btnTimeline.className = "btn btn-sm btn-primary";
+      btnGrid.className = "btn btn-sm btn-default";
+      localStorage.setItem("feh-view-mode", "timeline");
+    } else {
+      gridView.style.display = "flex";
+      timelineView.style.display = "none";
+      btnGrid.className = "btn btn-sm btn-primary";
+      btnTimeline.className = "btn btn-sm btn-default";
+      localStorage.setItem("feh-view-mode", "grid");
+    }
   }
 }

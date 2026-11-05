@@ -20,6 +20,31 @@
     </div>
   </div>
 
+  <!-- Gamified PDP Level & Progress Bar -->
+  <div style="background:var(--feh-bg-card);border:1px solid var(--feh-border);border-radius:14px;padding:20px;margin-bottom:26px;box-shadow:var(--feh-shadow);">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+      <div>
+        <span style="font-size:13px;color:var(--feh-text-muted);font-weight:600;">Hạng Rèn Luyện FPT:</span>
+        <span class="feh-rank-pill {{ current_user.pdp_rank.badge_class }}" style="margin-left:8px;font-size:13px;padding:4px 12px;">
+          {{ current_user.pdp_rank.icon }} {{ current_user.pdp_rank.title }}
+        </span>
+      </div>
+      <div style="font-size:13px;color:var(--feh-text-muted);font-weight:600;">
+        {% if current_user.pdp_rank.next_rank %}
+          Còn <strong>{{ current_user.pdp_rank.pts_to_next }} PDP</strong> để thăng hạng <span style="color:var(--feh-primary);font-weight:700;">{{ current_user.pdp_rank.next_rank }}</span>
+        {% else %}
+          <span style="color:#d97706;font-weight:700;"><i class="fa-solid fa-crown"></i> Cấp Bậc Danh Giá Nhất!</span>
+        {% endif %}
+      </div>
+    </div>
+    <div class="progress" style="height:12px;border-radius:8px;margin:0;background:var(--feh-border);overflow:hidden;">
+      <div class="progress-bar progress-bar-striped active" role="progressbar" 
+           aria-valuenow="{{ current_user.pdp_rank.progress_percent }}" aria-valuemin="0" aria-valuemax="100" 
+           style="width:{{ current_user.pdp_rank.progress_percent }}%;background:linear-gradient(90deg, #f26f21, #f59e0b);">
+      </div>
+    </div>
+  </div>
+
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:26px;">
     <div>
       <h3 style="font-weight:800;color:var(--feh-text-main);margin:0 0 6px;">
