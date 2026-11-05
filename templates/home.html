@@ -217,7 +217,11 @@
 
           <!-- Footer Actions -->
           <div class="feh-event-card__footer">
-            {% if ev.is_sold_out %}
+            {% if current_user.is_authenticated and (current_user.is_admin or current_user.is_organizer) %}
+              <a href="{{ url_for('event_detail', event_id=ev.id) }}" class="feh-btn feh-btn--block" style="background:#1e40af;color:#fff;font-weight:700;">
+                <i class="fa-solid fa-sliders"></i> Chi Tiết & Quản Lý (CTSV)
+              </a>
+            {% elif ev.is_sold_out %}
               <button class="feh-btn feh-btn--disabled feh-btn--block" disabled>
                 <i class="fa-solid fa-ban"></i> ĐÃ HẾT VÉ (SOLD OUT)
               </button>

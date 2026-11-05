@@ -332,6 +332,11 @@ def add_review(event_id):
 def register_ticket(event_id):
     event = Event.query.get_or_404(event_id)
 
+    # Can bo Phong CTSV / Ban To Chuc chi quan ly, khong dang ky ve nhu sinh vien
+    if current_user.is_admin or current_user.is_organizer:
+        flash("Tài khoản Cán bộ Phòng CTSV là đơn vị tổ chức, quản lý và điều hành sự kiện — không áp dụng đăng ký giữ chỗ hoặc tích lũy điểm rèn luyện cá nhân!", "warning")
+        return redirect(url_for("event_detail", event_id=event.id))
+
     # 1. Kiem tra sinh vien da dang ky chua
     existing_ticket = Ticket.query.filter_by(
         user_id=current_user.id,

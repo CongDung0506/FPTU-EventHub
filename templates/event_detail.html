@@ -31,9 +31,15 @@
             </div>
 
             <!-- PDP Points Badge -->
-            <span class="feh-badge" style="background:#eff6ff;color:#2563eb;font-size:13px;border:1px solid #bfdbfe;">
-              <i class="fa-solid fa-award"></i> +{{ event.pdp_points }} Điểm Rèn Luyện (PDP)
-            </span>
+            {% if current_user.is_authenticated and (current_user.is_admin or current_user.is_organizer) %}
+              <span class="feh-badge" style="background:#eff6ff;color:#1e40af;font-size:13px;border:1px solid #bfdbfe;" title="Quy chuẩn điểm rèn luyện cấp cho sinh viên">
+                <i class="fa-solid fa-scale-balanced"></i> Chuẩn xét duyệt: +{{ event.pdp_points }} PDP/Sinh viên
+              </span>
+            {% else %}
+              <span class="feh-badge" style="background:#eff6ff;color:#2563eb;font-size:13px;border:1px solid #bfdbfe;" title="Điểm rèn luyện sinh viên nhận được sau khi tham gia và check-in">
+                <i class="fa-solid fa-award"></i> +{{ event.pdp_points }} Điểm Rèn Luyện (PDP cho SV)
+              </span>
+            {% endif %}
           </div>
 
           <h2 style="font-weight:800;color:var(--feh-text-main);margin:0 0 16px;line-height:1.3;">
@@ -150,7 +156,11 @@
       <!-- Registration Action Box -->
       <div style="background:var(--feh-bg-card);border:1px solid var(--feh-border);border-radius:14px;padding:24px;box-shadow:var(--feh-shadow);margin-bottom:24px;position:sticky;top:20px;">
         <h4 style="font-weight:800;color:var(--feh-text-main);margin:0 0 16px;">
-          <i class="fa-solid fa-ticket" style="color:var(--feh-primary);"></i> Đăng Ký Tham Dự
+          {% if current_user.is_authenticated and (current_user.is_admin or current_user.is_organizer) %}
+            <i class="fa-solid fa-shield-halved" style="color:#2563eb;"></i> Điều Hành Sự Kiện (CTSV)
+          {% else %}
+            <i class="fa-solid fa-ticket" style="color:var(--feh-primary);"></i> Đăng Ký Tham Dự
+          {% endif %}
         </h4>
 
         <!-- Slot progress -->
@@ -172,7 +182,29 @@
         </div>
 
         {% if current_user.is_authenticated %}
-          {% if has_registered %}
+          {% if current_user.is_admin or current_user.is_organizer %}
+            <!-- Panel Dieu Hanh Danh Rieng Cho Can Bo CTSV / Ban To Chuc -->
+            <div style="background:linear-gradient(135deg, rgba(30,64,175,0.08) 0%, rgba(37,99,235,0.04) 100%);border:1px solid #bfdbfe;border-radius:12px;padding:16px;margin-bottom:16px;">
+              <div style="display:flex;align-items:center;gap:8px;font-weight:800;color:#1e40af;font-size:13px;margin-bottom:6px;">
+                <i class="fa-solid fa-shield-halved"></i> QUYỀN ĐIỀU HÀNH CTSV
+              </div>
+              <p style="font-size:12px;color:#1e3a8a;margin:0;line-height:1.5;">
+                Bạn đang đăng nhập với tư cách <strong>Cán Bộ Phòng CTSV</strong> (Đơn vị tổ chức & giám sát). Chức năng đặt vé và tích lũy điểm rèn luyện PDP chỉ áp dụng cho Sinh viên FPT.
+              </p>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <a href="{{ url_for('event_attendees', event_id=event.id) }}" class="feh-btn feh-btn--primary feh-btn--block" style="background:#2563eb;padding:12px 16px;font-size:14px;">
+                <i class="fa-solid fa-users-viewfinder"></i> Xem Danh Sách Điểm Danh ({{ event.total_capacity - event.available_slots }} SV)
+              </a>
+              <a href="{{ url_for('check_in') }}" class="feh-btn feh-btn--block" style="background:var(--feh-bg-body);color:var(--feh-text-main);border:1px solid var(--feh-border);font-weight:700;padding:11px 16px;">
+                <i class="fa-solid fa-qrcode" style="color:var(--feh-primary);"></i> Mở Bàn Quét Mã QR Check-in
+              </a>
+              <a href="{{ url_for('organizer_dashboard') }}" class="feh-btn feh-btn--block" style="background:transparent;color:var(--feh-text-muted);border:1px dashed var(--feh-border);font-size:13px;padding:10px 16px;">
+                <i class="fa-solid fa-chart-line"></i> Dashboard Quản Lý Sự Kiện
+              </a>
+            </div>
+          {% elif has_registered %}
             <div class="alert alert-success" style="border-radius:10px;padding:14px;margin-bottom:14px;">
               <div style="font-weight:700;"><i class="fa-solid fa-circle-check"></i> Bạn đã có vé!</div>
               <div style="font-size:12px;margin-top:4px;">Mã vé: <code>{{ user_ticket.ticket_code }}</code></div>
