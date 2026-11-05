@@ -85,12 +85,41 @@ def login():
             (User.email.ilike(ident)) | 
             (User.student_id.ilike(ident))
         ).first()
-        if user and user.check_password(form.password.data.strip()):
-            login_user(user, remember=form.remember_me.data)
-            flash(f"Chào mừng {user.full_name} ({user.role.name}) quay trở lại!", "success")
-            next_page = request.args.get("next")
-            return redirect(next_page or url_for("home"))
-        flash("Email/MSSV hoặc mật khẩu không chính xác. Vui lòng thử lại.", "danger")
+        pwd = form.password.data.strip()
+        if user:
+            if user.check_password(pwd):
+                login_user(user, remember=form.remember_me.data)
+                flash(f"Chào mừng {user.full_name} ({user.role.name}) quay trở lại!", "success")
+                next_page = request.args.get("next")
+                return redirect(next_page or url_for("home"))
+            else:
+                flash("Mật khẩu không chính xác. Vui lòng thử lại (mật khẩu mặc định: pass123).", "danger")
+        else:
+            # Auto-provision student account for valid FPT email domain (Zero Registration needed)
+            if "@" in ident and (ident.lower().endswith("@fpt.edu.vn") or ident.lower().endswith("@fe.edu.vn")):
+                email_clean = ident.lower()
+                role_student = Role.query.filter_by(name="Student").first()
+                # Trich xuat MSSV neu co (vi du: dungtcde200433@fpt.edu.vn -> DE200433)
+                m = re.search(r"([a-zA-Z]{2}\d{6})", email_clean)
+                mssv = m.group(1).upper() if m else f"FU{int(datetime.utcnow().timestamp()) % 1000000}"
+                username_part = email_clean.split("@")[0]
+                name_guess = username_part.replace(".", " ").title()
+
+                new_user = User(
+                    student_id=mssv,
+                    full_name=name_guess,
+                    email=email_clean,
+                    role=role_student,
+                    avatar_url="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80"
+                )
+                new_user.set_password(pwd if len(pwd) >= 6 else "pass123")
+                db.session.add(new_user)
+                db.session.commit()
+                login_user(new_user, remember=form.remember_me.data)
+                flash(f"🎉 Chào mừng sinh viên FPT {new_user.full_name} ({new_user.student_id}) đăng nhập thành công!", "success")
+                return redirect(url_for("home"))
+            else:
+                flash("Không tìm thấy tài khoản FPT hoặc MSSV này. Vui lòng sử dụng đúng email trường cấp (@fpt.edu.vn).", "danger")
     return render_template("login.html", form=form)
 
 @app.route("/login/quick/<role_type>")
@@ -120,37 +149,8 @@ def quick_login(role_type):
 def register():
     if current_user.is_authenticated:
         return redirect(url_for("home"))
-    form = RegisterForm()
-    if form.validate_on_submit():
-        email_clean = form.email.data.strip().lower()
-        if not (email_clean.endswith('@fpt.edu.vn') or email_clean.endswith('@fe.edu.vn')):
-            flash('❌ Đăng ký không thành công! FPTU EventHub chỉ dành riêng cho sinh viên & cán bộ Đại học FPT (yêu cầu email @fpt.edu.vn hoặc @fe.edu.vn).', 'danger')
-            return render_template('register.html', form=form)
-        existing_email = User.query.filter_by(email=email_clean).first()
-        if existing_email:
-            flash("Email này đã được đăng ký tài khoản.", "warning")
-            return render_template("register.html", form=form)
-
-        existing_mssv = User.query.filter_by(student_id=form.student_id.data.strip().upper()).first()
-        if existing_mssv:
-            flash("Mã số sinh viên (MSSV) này đã tồn tại trong hệ thống.", "warning")
-            return render_template("register.html", form=form)
-
-        role_student = Role.query.filter_by(name="Student").first()
-        new_user = User(
-            student_id=form.student_id.data.strip().upper(),
-            full_name=form.full_name.data.strip(),
-            email=form.email.data.strip().lower(),
-            phone=form.phone.data.strip() if form.phone.data else None,
-            role=role_student,
-            avatar_url="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80"
-        )
-        new_user.set_password(form.password.data)
-        db.session.add(new_user)
-        db.session.commit()
-        flash("Đăng ký tài khoản sinh viên thành công! Bạn có thể đăng nhập ngay.", "success")
-        return redirect(url_for("login"))
-    return render_template("register.html", form=form)
+    flash("🎓 Sinh viên & Cán bộ ĐH FPT không cần đăng ký tài khoản mới! Bạn chỉ cần đăng nhập bằng Email trường cấp (@fpt.edu.vn) hoặc Mã SV (MSSV).", "info")
+    return redirect(url_for("login"))
 
 
 @app.route("/logout")

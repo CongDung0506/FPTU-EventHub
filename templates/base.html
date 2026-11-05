@@ -240,8 +240,11 @@
               </ul>
             </li>
           {% else %}
-            <li><a href="{{ url_for('register') }}" class="feh-navbar__link"><i class="fa-solid fa-user-plus"></i> Đăng Ký</a></li>
-            <li><a href="{{ url_for('login') }}" class="feh-navbar__btn-login"><i class="fa-solid fa-arrow-right-to-bracket"></i> Đăng Nhập FPT</a></li>
+            <li>
+              <a href="{{ url_for('login') }}" class="feh-navbar__btn-login" style="padding:8px 18px;">
+                <i class="fa-solid fa-graduation-cap"></i> Đăng Nhập FPT Mail
+              </a>
+            </li>
           {% endif %}
         </ul>
       </div>
