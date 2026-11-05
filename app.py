@@ -2,17 +2,19 @@
 # He thong Quan ly & Dang ky Su kien Sinh vien FPT University (events.fptu.vn)
 
 import os
+import csv
+import io
 import tempfile
 import urllib.parse
 from datetime import datetime
-from flask import Flask, render_template, redirect, url_for, request, flash, abort, jsonify
+from flask import Flask, render_template, redirect, url_for, request, flash, abort, jsonify, Response
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager, login_required, current_user, login_user, logout_user
 
-from models import db, User, Role, Category, Event, Ticket
+from models import db, User, Role, Category, Event, Ticket, Review
 from markdown_utils import render_safe_markdown
 from decorators import organizer_required, admin_required
-from forms import LoginForm, RegisterForm, EventCreateForm, CheckInManualForm
+from forms import LoginForm, RegisterForm, EventCreateForm, CheckInManualForm, ReviewForm
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -32,7 +34,6 @@ else:
         DB_NAME = os.environ.get("DB_NAME", "FPTU_EventHub_DB")
         DB_DRIVER = os.environ.get("DB_DRIVER", "ODBC Driver 17 for SQL Server")
         test_conn = f"DRIVER={{{DB_DRIVER}}};SERVER={DB_SERVER};DATABASE={DB_NAME};Trusted_Connection=yes;TrustServerCertificate=yes;"
-        # Thu ket noi xem DB da tao tren SQL Server chua
         with pyodbc.connect(test_conn, timeout=1):
             pass
         params = urllib.parse.quote_plus(test_conn)
@@ -149,6 +150,14 @@ def home():
     events = query.order_by(Event.start_time.asc()).all()
     categories = Category.query.order_by(Category.id).all()
 
+    # Su kien noi bat sap dien ra nhat cho Countdown Timer
+    featured_event = None
+    upcoming_events = [e for e in events if e.start_time > datetime.utcnow() and not e.is_sold_out]
+    if upcoming_events:
+        featured_event = upcoming_events[0]
+    elif events:
+        featured_event = events[0]
+
     # Thong ke nhanh tren trang chu
     total_events = Event.query.count()
     total_tickets = Ticket.query.filter_by(status="REGISTERED").count()
@@ -160,6 +169,7 @@ def home():
         categories=categories,
         active_cat=cat_slug,
         search_q=search_q,
+        featured_event=featured_event,
         total_events=total_events,
         total_tickets=total_tickets,
         total_students=total_students
@@ -170,27 +180,81 @@ def home():
 def event_detail(event_id):
     event = Event.query.get_or_404(event_id)
     has_registered = False
+    has_checked_in = False
     user_ticket = None
+    user_review = None
+
     if current_user.is_authenticated:
-        user_ticket = Ticket.query.filter_by(
-            user_id=current_user.id, 
-            event_id=event.id, 
-            status="REGISTERED"
-        ).first()
-        has_registered = user_ticket is not None
+        tickets = Ticket.query.filter_by(user_id=current_user.id, event_id=event.id).all()
+        for t in tickets:
+            if t.status == "REGISTERED":
+                has_registered = True
+                user_ticket = t
+            elif t.status == "CHECKED_IN":
+                has_checked_in = True
+                user_ticket = t
+
+        user_review = Review.query.filter_by(event_id=event.id, user_id=current_user.id).first()
+
+    review_form = ReviewForm()
 
     related_events = Event.query.filter(
         Event.category_id == event.category_id,
         Event.id != event.id
     ).limit(3).all()
 
+    # Google Calendar URL Generator
+    gcal_start = event.start_time.strftime("%Y%m%dT%H%M%SZ")
+    gcal_end = event.end_time.strftime("%Y%m%dT%H%M%SZ")
+    speaker_txt = event.speaker_name or "FPTU"
+    details_txt = f"Sự kiện FPT University: {event.title} - Diễn giả: {speaker_txt}"
+    gcal_url = (
+        f"https://calendar.google.com/calendar/render?action=TEMPLATE"
+        f"&text={urllib.parse.quote(event.title)}"
+        f"&dates={gcal_start}/{gcal_end}"
+        f"&details={urllib.parse.quote(details_txt)}"
+        f"&location={urllib.parse.quote(event.venue)}"
+    )
+
     return render_template(
         "event_detail.html",
         event=event,
         has_registered=has_registered,
+        has_checked_in=has_checked_in,
         user_ticket=user_ticket,
+        user_review=user_review,
+        review_form=review_form,
+        gcal_url=gcal_url,
         related_events=related_events
     )
+
+
+# --- Event Reviews & Ratings ------------------------------------------------
+@app.route("/events/<int:event_id>/review", methods=["POST"])
+@login_required
+def add_review(event_id):
+    event = Event.query.get_or_404(event_id)
+    form = ReviewForm()
+    if form.validate_on_submit():
+        existing = Review.query.filter_by(event_id=event.id, user_id=current_user.id).first()
+        if existing:
+            existing.rating = form.rating.data
+            existing.comment = form.comment.data.strip()
+            existing.created_at = datetime.utcnow()
+            flash("Đã cập nhật đánh giá của bạn cho sự kiện!", "success")
+        else:
+            review = Review(
+                event_id=event.id,
+                user_id=current_user.id,
+                rating=form.rating.data,
+                comment=form.comment.data.strip()
+            )
+            db.session.add(review)
+            flash("Cảm ơn bạn đã gửi đánh giá cho sự kiện!", "success")
+        db.session.commit()
+    else:
+        flash("Vui lòng nhập đầy đủ nội dung đánh giá.", "warning")
+    return redirect(url_for("event_detail", event_id=event.id))
 
 
 # --- Ticket Registration & Cancellation (Atomic Transaction) ----------------
@@ -230,7 +294,7 @@ def register_ticket(event_id):
         )
         db.session.add(ticket)
         db.session.commit()
-        flash(f"🎉 Đăng ký vé thành công! Mã vé của bạn là: {ticket_code}", "success")
+        flash(f"🎉 Đăng ký vé thành công! Mã vé của bạn là: {ticket_code} (+{event.pdp_points} PDP sau khi điểm danh)", "success")
         return redirect(url_for("my_tickets"))
     except Exception as e:
         db.session.rollback()
@@ -242,7 +306,22 @@ def register_ticket(event_id):
 @login_required
 def my_tickets():
     tickets = Ticket.query.filter_by(user_id=current_user.id).order_by(Ticket.registered_at.desc()).all()
-    return render_template("my_tickets.html", tickets=tickets)
+    # Tinh tong diem PDP
+    total_pdp = current_user.total_pdp_points
+    return render_template("my_tickets.html", tickets=tickets, total_pdp=total_pdp)
+
+
+@app.route("/tickets/<int:ticket_id>/certificate")
+@login_required
+def ticket_certificate(ticket_id):
+    ticket = Ticket.query.get_or_404(ticket_id)
+    if ticket.user_id != current_user.id and not current_user.is_organizer:
+        flash("Bạn không có quyền xem giấy chứng nhận này.", "danger")
+        return abort(403)
+    if ticket.status != "CHECKED_IN":
+        flash("Giấy chứng nhận chỉ được cấp sau khi bạn đã được điểm danh (Check-in) tại sự kiện!", "warning")
+        return redirect(url_for("my_tickets"))
+    return render_template("certificate.html", ticket=ticket)
 
 
 @app.route("/tickets/<int:ticket_id>/cancel", methods=["POST"])
@@ -299,7 +378,7 @@ def event_create():
             flash("Thời gian kết thúc sự kiện phải sau thời gian bắt đầu.", "danger")
             return render_template("event_create.html", form=form)
 
-        banner = form.banner_url.data.strip() if form.banner_url.data else "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80"
+        banner = form.banner_url.data.strip() if form.banner_url.data else "/static/images/events/workshop_ai.jpg"
         slug_gen = f"event-{int(datetime.utcnow().timestamp())}"
 
         new_event = Event(
@@ -311,6 +390,7 @@ def event_create():
             end_time=form.end_time.data,
             total_capacity=form.total_capacity.data,
             available_slots=form.total_capacity.data,
+            pdp_points=form.pdp_points.data,
             speaker_name=form.speaker_name.data.strip() if form.speaker_name.data else None,
             speaker_title=form.speaker_title.data.strip() if form.speaker_title.data else None,
             banner_url=banner,
@@ -346,7 +426,46 @@ def event_attendees(event_id):
     )
 
 
-# --- Check-in Desk for Event Staff ------------------------------------------
+# --- Export Attendees CSV for Organizer & Admin -----------------------------
+@app.route("/organizer/events/<int:event_id>/export-csv")
+@organizer_required
+def export_attendees_csv(event_id):
+    event = Event.query.get_or_404(event_id)
+    if not current_user.is_admin and event.organizer_id != current_user.id:
+        return abort(403)
+
+    tickets = Ticket.query.filter_by(event_id=event.id).order_by(Ticket.registered_at.asc()).all()
+
+    si = io.StringIO()
+    cw = csv.writer(si)
+    # Header chuan phong CTSV FPT
+    cw.writerow(["Mã Vé", "MSSV", "Họ và Tên", "Email", "Số Điện Thoại", "Thời Gian Đăng Ký", "Trạng Thái", "Thời Gian Điểm Danh", "Điểm PDP Nhận"])
+
+    for t in tickets:
+        pdp_earned = event.pdp_points if t.status == "CHECKED_IN" else 0
+        cw.writerow([
+            t.ticket_code,
+            t.user.student_id or "",
+            t.user.full_name,
+            t.user.email,
+            t.user.phone or "",
+            t.registered_at.strftime("%Y-%m-%d %H:%M:%S") if t.registered_at else "",
+            "Đã điểm danh" if t.status == "CHECKED_IN" else ("Đã đăng ký" if t.status == "REGISTERED" else "Đã hủy"),
+            t.checked_in_at.strftime("%Y-%m-%d %H:%M:%S") if t.checked_in_at else "Chưa",
+            pdp_earned
+        ])
+
+    # UTF-8 BOM giup Excel Windows hien thi dung tieng Viet khong loi font
+    output = '\ufeff' + si.getvalue()
+    filename = f"FPTU_DiemDanh_Event_{event.id}.csv"
+    return Response(
+        output,
+        mimetype="text/csv; charset=utf-8",
+        headers={"Content-Disposition": f"attachment; filename={filename}"}
+    )
+
+
+# --- Check-in Desk (Manual & Camera QR Code Scanner) -----------------------
 @app.route("/organizer/check-in", methods=["GET", "POST"])
 @organizer_required
 def check_in():
@@ -355,6 +474,12 @@ def check_in():
 
     if form.validate_on_submit():
         code = form.ticket_code.data.strip().upper()
+        # ho tro ca format parse tu QR
+        if "|" in code:
+            parts = code.split("|")
+            if len(parts) >= 2:
+                code = parts[1].strip()
+
         ticket = Ticket.query.filter_by(ticket_code=code).first()
 
         if ticket is None:
@@ -377,18 +502,69 @@ def check_in():
                 "ticket": ticket
             }
         else:
-            # Check-in thanh cong
             ticket.status = "CHECKED_IN"
             ticket.checked_in_at = datetime.utcnow()
             db.session.commit()
             check_result = {
                 "success": True,
-                "msg": f"✅ CHECK-IN THÀNH CÔNG cho sinh viên {ticket.user.full_name} ({ticket.user.student_id})!",
+                "msg": f"✅ CHECK-IN THÀNH CÔNG cho sinh viên {ticket.user.full_name} ({ticket.user.student_id})! +{ticket.event.pdp_points} Điểm PDP",
                 "type": "success",
                 "ticket": ticket
             }
 
     return render_template("checkin.html", form=form, check_result=check_result)
+
+
+@app.route("/api/check-in/scan", methods=["POST"])
+@organizer_required
+def api_scan_checkin():
+    data = request.get_json() or {}
+    raw_code = data.get("ticket_code", "").strip()
+
+    code = raw_code
+    if "|" in raw_code:
+        parts = raw_code.split("|")
+        if len(parts) >= 2:
+            code = parts[1].strip()
+
+    code = code.strip().upper()
+    ticket = Ticket.query.filter_by(ticket_code=code).first()
+
+    if not ticket:
+        return jsonify({"success": False, "msg": f"❌ Không tìm thấy vé có mã '{code}' trong hệ thống!", "type": "danger"}), 404
+
+    if ticket.status == "CANCELLED":
+        return jsonify({"success": False, "msg": f"⚠️ Vé '{code}' của {ticket.user.full_name} đã bị HỦY!", "type": "warning"}), 400
+
+    if ticket.status == "CHECKED_IN":
+        return jsonify({
+            "success": False,
+            "msg": f"⚠️ Vé này ĐÃ CHECK-IN vào lúc {ticket.checked_in_at.strftime('%H:%M - %d/%m/%Y')}!",
+            "type": "warning",
+            "ticket": {
+                "code": ticket.ticket_code,
+                "student_name": ticket.user.full_name,
+                "student_id": ticket.user.student_id,
+                "event_title": ticket.event.title
+            }
+        }), 200
+
+    ticket.status = "CHECKED_IN"
+    ticket.checked_in_at = datetime.utcnow()
+    db.session.commit()
+
+    return jsonify({
+        "success": True,
+        "msg": f"🎉 CHECK-IN THÀNH CÔNG: {ticket.user.full_name} ({ticket.user.student_id})! +{ticket.event.pdp_points} PDP",
+        "type": "success",
+        "ticket": {
+            "code": ticket.ticket_code,
+            "student_name": ticket.user.full_name,
+            "student_id": ticket.user.student_id,
+            "event_title": ticket.event.title,
+            "pdp_points": ticket.event.pdp_points
+        }
+    })
 
 
 @app.route("/organizer/tickets/<int:ticket_id>/toggle-checkin", methods=["POST"])
@@ -398,7 +574,7 @@ def toggle_checkin(ticket_id):
     if ticket.status == "REGISTERED":
         ticket.status = "CHECKED_IN"
         ticket.checked_in_at = datetime.utcnow()
-        flash(f"Đã điểm danh vé {ticket.ticket_code} thành công!", "success")
+        flash(f"Đã điểm danh vé {ticket.ticket_code} (+{ticket.event.pdp_points} PDP) thành công!", "success")
     elif ticket.status == "CHECKED_IN":
         ticket.status = "REGISTERED"
         ticket.checked_in_at = None

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giấy Chứng Nhận - {{ ticket.event.title }} - FPTU EventHub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --fpt-orange: #f26f21;
+      --fpt-navy: #0f172a;
+      --gold: #d4af37;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: #f1f5f9;
+      font-family: 'Inter', sans-serif;
+      color: #1e293b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 15px;
+      min-height: 100vh;
+    }
+    .print-actions {
+      margin-bottom: 25px;
+      display: flex;
+      gap: 15px;
+    }
+    .btn {
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+    .btn-primary {
+      background: var(--fpt-orange);
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #d95a10;
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      background: white;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+    }
+    .btn-secondary:hover {
+      background: #f8fafc;
+    }
+
+    /* Certificate Canvas */
+    .cert-frame {
+      width: 100%;
+      max-width: 900px;
+      background: #ffffff;
+      border: 12px double var(--gold);
+      padding: 45px 50px;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+      border-radius: 6px;
+      background-image: radial-gradient(circle at center, rgba(242, 111, 33, 0.03) 0%, transparent 70%);
+    }
+
+    .cert-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+    }
+    .cert-brand {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .cert-logo {
+      height: 60px;
+      width: auto;
+      object-fit: contain;
+    }
+    .cert-brand-text h2 {
+      font-size: 18px;
+      color: var(--fpt-orange);
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+    .cert-brand-text p {
+      font-size: 12px;
+      color: #64748b;
+    }
+    .cert-id {
+      text-align: right;
+      font-size: 12px;
+      color: #64748b;
+    }
+    .cert-id strong {
+      color: #0f172a;
+      display: block;
+      font-size: 14px;
+      font-family: monospace;
+    }
+
+    .cert-title {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .cert-title h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 32px;
+      color: var(--fpt-navy);
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+    .cert-title p {
+      font-size: 15px;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .cert-body {
+      text-align: center;
+      margin: 30px 0;
+    }
+    .cert-recipient-pre {
+      font-size: 15px;
+      color: #475569;
+      font-style: italic;
+    }
+    .cert-recipient-name {
+      font-family: 'Cinzel', serif;
+      font-size: 36px;
+      color: var(--fpt-orange);
+      margin: 12px 0 6px;
+      font-weight: 700;
+      border-bottom: 2px solid var(--gold);
+      display: inline-block;
+      padding: 0 40px 8px;
+    }
+    .cert-recipient-meta {
+      font-size: 15px;
+      color: #475569;
+      margin-top: 10px;
+    }
+    .cert-recipient-meta strong {
+      color: var(--fpt-navy);
+    }
+
+    .cert-achievement {
+      margin: 25px auto;
+      max-width: 680px;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #334155;
+    }
+    .cert-event-title {
+      font-weight: 700;
+      color: var(--fpt-navy);
+      font-size: 18px;
+      display: block;
+      margin: 8px 0;
+    }
+    .cert-pdp-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #eff6ff;
+      color: #2563eb;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      margin-top: 6px;
+      border: 1px solid #bfdbfe;
+    }
+
+    .cert-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 40px;
+      padding-top: 25px;
+      border-top: 1px dashed #cbd5e1;
+    }
+    .cert-qr {
+      text-align: center;
+    }
+    .cert-qr img {
+      width: 90px;
+      height: 90px;
+      border: 2px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 3px;
+      background: white;
+    }
+    .cert-qr p {
+      font-size: 10px;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+
+    .cert-sign {
+      text-align: center;
+    }
+    .cert-sign-date {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 8px;
+      font-style: italic;
+    }
+    .cert-signature-img {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      color: #0f172a;
+      font-style: italic;
+      margin: 10px 0;
+    }
+    .cert-sign-role {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--fpt-navy);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .cert-sign-sub {
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+      .print-actions {
+        display: none !important;
+      }
+      .cert-frame {
+        box-shadow: none;
+        border: 8px double var(--gold);
+        max-width: 100%;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="print-actions">
+    <a href="{{ url_for('my_tickets') }}" class="btn btn-secondary">
+      <i class="fa-solid fa-arrow-left"></i> Quay lại Vé của tôi
+    </a>
+    <button onclick="window.print()" class="btn btn-primary">
+      <i class="fa-solid fa-print"></i> In / Lưu PDF Giấy Chứng Nhận
+    </button>
+  </div>
+
+  <div class="cert-frame">
+    <div class="cert-header">
+      <div class="cert-brand">
+        <img src="/static/images/fpt_logo.jpg" alt="FPT University Logo" class="cert-logo">
+        <div class="cert-brand-text">
+          <h2>ĐẠI HỌC FPT</h2>
+          <p>Phòng Công Tác Sinh Viên (CTSV) & Khối Đào Tạo</p>
+        </div>
+      </div>
+      <div class="cert-id">
+        Số chứng nhận:
+        <strong>{{ ticket.ticket_code }}</strong>
+        <span>Thời gian: {{ ticket.checked_in_at.strftime('%d/%m/%Y') if ticket.checked_in_at else '' }}</span>
+      </div>
+    </div>
+
+    <div class="cert-title">
+      <h1>GIẤY CHỨNG NHẬN THAM GIA</h1>
+      <p>CERTIFICATE OF PARTICIPATION & PDP CREDITS</p>
+    </div>
+
+    <div class="cert-body">
+      <p class="cert-recipient-pre">Chứng nhận sinh viên:</p>
+      <div class="cert-recipient-name">{{ ticket.user.full_name }}</div>
+      <p class="cert-recipient-meta">
+        Mã số sinh viên (MSSV): <strong>{{ ticket.user.student_id or 'Chưa cập nhật' }}</strong> &bull; Email: <strong>{{ ticket.user.email }}</strong>
+      </p>
+
+      <div class="cert-achievement">
+        Đã tham gia đầy đủ và hoàn thành chương trình:
+        <span class="cert-event-title">"{{ ticket.event.title }}"</span>
+        Địa điểm: <strong>{{ ticket.event.venue }}</strong>
+        <br>
+        <span class="cert-pdp-badge">
+          <i class="fa-solid fa-award"></i> Tích lũy thành công: +{{ ticket.event.pdp_points }} Điểm Rèn Luyện (PDP)
+        </span>
+      </div>
+    </div>
+
+    <div class="cert-footer">
+      <div class="cert-qr">
+        <img src="{{ ticket.qr_url }}" alt="QR Code Xác thực">
+        <p>Quét để xác thực online</p>
+      </div>
+
+      <div class="cert-sign">
+        <div class="cert-sign-date">Hà Nội / TP.HCM, Ngày {{ ticket.checked_in_at.strftime('%d tháng %m năm %Y') if ticket.checked_in_at else '' }}</div>
+        <div class="cert-signature-img">Trần Vũ Tuấn</div>
+        <div class="cert-sign-role">TRƯỞNG PHÒNG CÔNG TÁC SINH VIÊN</div>
+        <div class="cert-sign-sub">Trường Đại Học FPT</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

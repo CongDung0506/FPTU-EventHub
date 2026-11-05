@@ -3,13 +3,13 @@
 {% block title %}Trang Chủ — FPTU EventHub{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
+<!-- Hero Section with Countdown Timer -->
 <section class="feh-hero">
   <div class="container">
     <div class="row" style="display:flex;align-items:center;flex-wrap:wrap;">
       <div class="col-md-7">
         <span class="feh-badge feh-badge--fpt" style="margin-bottom:12px;font-size:12px;text-transform:uppercase;">
-          <i class="fa-solid fa-sparkles"></i> Cổng Sự Kiện FPT University
+          <span class="feh-pulse-dot"></span> Cổng Sự Kiện FPT University 2026
         </span>
         <h1 class="feh-hero__title">
           Khám Phá & Đăng Ký <br>
@@ -18,41 +18,61 @@
         <p class="feh-hero__subtitle">
           Tham gia các buổi Workshop công nghệ, Hackathon học thuật và đêm hội văn hóa bùng nổ. Nhận vé điện tử có mã QR check-in tức thì và tích lũy điểm rèn luyện PDP.
         </p>
-        
-        <!-- Search Form -->
-        <form method="GET" action="{{ url_for('home') }}" style="max-width:480px;display:flex;gap:8px;">
-          {% if active_cat %}<input type="hidden" name="cat" value="{{ active_cat }}">{% endif %}
-          <div class="input-group" style="width:100%;">
-            <input type="text" name="q" value="{{ search_q or '' }}" class="form-control" placeholder="Tìm tên sự kiện, diễn giả hoặc địa điểm..." style="height:44px;border-radius:22px 0 0 22px;padding-left:18px;border:none;">
-            <span class="input-group-btn">
-              <button class="btn btn-default" type="submit" style="height:44px;background:var(--feh-primary);color:#fff;border:none;border-radius:0 22px 22px 0;padding:0 20px;">
-                <i class="fa-solid fa-magnifying-glass"></i>
-              </button>
-            </span>
+
+        <!-- Countdown Timer to next major event -->
+        {% if featured_event %}
+          <div class="feh-countdown-wrap">
+            <div class="feh-countdown-header">
+              <i class="fa-solid fa-stopwatch text-warning"></i> Sắp diễn ra: <strong>{{ featured_event.title }}</strong>
+            </div>
+            <div id="feh-countdown" class="feh-countdown" data-target-time="{{ featured_event.start_time.isoformat() }}">
+              <div class="feh-countdown-box">
+                <span id="cd-days" class="feh-countdown-num">00</span>
+                <span class="feh-countdown-lbl">Ngày</span>
+              </div>
+              <div class="feh-countdown-box">
+                <span id="cd-hours" class="feh-countdown-num">00</span>
+                <span class="feh-countdown-lbl">Giờ</span>
+              </div>
+              <div class="feh-countdown-box">
+                <span id="cd-mins" class="feh-countdown-num">00</span>
+                <span class="feh-countdown-lbl">Phút</span>
+              </div>
+              <div class="feh-countdown-box">
+                <span id="cd-secs" class="feh-countdown-num">00</span>
+                <span class="feh-countdown-lbl">Giây</span>
+              </div>
+            </div>
           </div>
-        </form>
+        {% endif %}
       </div>
 
       <div class="col-md-5 hidden-xs hidden-sm">
         <div class="row">
           <div class="col-xs-6" style="margin-bottom:15px;">
-            <div class="feh-hero__stats-card text-center">
-              <div class="feh-hero__stats-num">{{ total_events }}</div>
-              <div class="feh-hero__stats-label"><i class="fa-solid fa-calendar-check"></i> Sự Kiện Học Đường</div>
+            <div class="feh-hero__stats-card">
+              <i class="fa-solid fa-calendar-check feh-hero__stats-icon"></i>
+              <div>
+                <div class="feh-hero__stats-val">{{ total_events }}</div>
+                <div class="feh-hero__stats-lbl">Sự Kiện Thực Tế</div>
+              </div>
             </div>
           </div>
           <div class="col-xs-6" style="margin-bottom:15px;">
-            <div class="feh-hero__stats-card text-center">
-              <div class="feh-hero__stats-num">{{ total_tickets }}+</div>
-              <div class="feh-hero__stats-label"><i class="fa-solid fa-ticket"></i> Lượt Vé Đã Đặt</div>
+            <div class="feh-hero__stats-card">
+              <i class="fa-solid fa-ticket feh-hero__stats-icon"></i>
+              <div>
+                <div class="feh-hero__stats-val">{{ total_tickets }}+</div>
+                <div class="feh-hero__stats-lbl">Lượt Vé Đã Đặt</div>
+              </div>
             </div>
           </div>
           <div class="col-xs-12">
-            <div class="feh-hero__stats-card" style="display:flex;align-items:center;gap:14px;">
-              <div style="font-size:32px;color:var(--feh-primary);"><i class="fa-solid fa-qrcode"></i></div>
+            <div class="feh-hero__stats-card">
+              <i class="fa-solid fa-qrcode feh-hero__stats-icon"></i>
               <div>
-                <strong style="color:#fff;font-size:14px;">Vé Điện Tử QR Code Tự Động</strong>
-                <p style="font-size:12px;color:#94a3b8;margin:0;">Quét mã điểm danh siêu tốc tại cửa hội trường.</p>
+                <strong style="color:#fff;font-size:14px;">Camera QR Scanner & Check-in Tức Thì</strong>
+                <p style="font-size:12px;color:#94a3b8;margin:0;">Điểm danh bằng camera điện thoại và cấp E-Certificate tự động.</p>
               </div>
             </div>
           </div>
@@ -64,20 +84,26 @@
 
 <!-- Main Container -->
 <div class="container">
-  <!-- Filter Tabs -->
-  <div class="feh-filter-bar">
-    <span style="font-size:13px;font-weight:700;color:var(--feh-text-muted);display:flex;align-items:center;margin-right:6px;">
-      <i class="fa-solid fa-filter" style="margin-right:6px;"></i> Phân loại:
-    </span>
+  
+  <!-- Instant Live Search Bar -->
+  <div class="feh-search-bar">
+    <i class="fa-solid fa-magnifying-glass" style="color:var(--feh-primary);font-size:18px;"></i>
+    <input type="text" id="live-search-input" class="feh-search-input" placeholder="Gõ để tìm kiếm nhanh theo tên sự kiện, diễn giả, hội trường..." autocomplete="off">
+    {% if search_q %}
+      <a href="{{ url_for('home') }}" class="btn btn-xs btn-default" title="Xóa lọc">Xóa tìm kiếm</a>
+    {% endif %}
+  </div>
 
+  <!-- Category Pills Bar -->
+  <div class="feh-cat-list">
     <a href="{{ url_for('home', q=search_q) }}" 
-       class="feh-filter-item {% if not active_cat %}feh-filter-item--active{% endif %}">
+       class="feh-cat-pill {% if not active_cat %}active{% endif %}">
       <i class="fa-solid fa-border-all"></i> Tất Cả ({{ events|length }})
     </a>
 
     {% for cat in categories %}
       <a href="{{ url_for('home', cat=cat.slug, q=search_q) }}" 
-         class="feh-filter-item {% if active_cat == cat.slug %}feh-filter-item--active{% endif %}">
+         class="feh-cat-pill {% if active_cat == cat.slug %}active{% endif %}">
         <i class="fa-solid {{ cat.icon }}" style="color:{{ cat.color }};"></i>
         {{ cat.name }}
       </a>
@@ -87,70 +113,91 @@
   <!-- Event Grid Header -->
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
     <div>
-      <h3 style="margin:0;font-weight:800;color:var(--feh-navy);">
-        <i class="fa-solid fa-fire" style="color:var(--feh-primary);"></i> Sự Kiện Sắp Diễn Ra
+      <h3 style="margin:0;font-weight:800;color:var(--feh-text-main);">
+        <i class="fa-solid fa-fire" style="color:var(--feh-primary);"></i> Danh Sách Sự Kiện ĐH FPT
       </h3>
       <p style="margin:4px 0 0;font-size:13px;color:var(--feh-text-muted);">
-        Đăng ký sớm để giữ chỗ, số lượng ghế ngồi có hạn tại mỗi hội trường!
+        Đăng ký sớm để giữ chỗ, nhận vé điện tử QR Code và tích lũy điểm PDP!
       </p>
     </div>
-    {% if search_q %}
-      <span class="label label-info" style="font-size:12px;padding:6px 12px;border-radius:14px;">
-        Kết quả tìm kiếm cho: "{{ search_q }}"
-      </span>
-    {% endif %}
+  </div>
+
+  <!-- Live No Results Alert -->
+  <div id="live-no-results" style="display:none;">
+    <div class="alert alert-warning text-center" style="border-radius:12px;padding:30px;">
+      <i class="fa-solid fa-magnifying-glass" style="font-size:32px;margin-bottom:10px;color:var(--feh-primary);"></i>
+      <h4>Không tìm thấy sự kiện nào khớp với từ khóa của bạn</h4>
+      <p style="margin:0;color:var(--feh-text-muted);">Hãy thử nhập từ khóa khác như "AI", "Hackathon", "Vovinam", "Alpha", v.v.</p>
+    </div>
   </div>
 
   <!-- Event Cards Grid -->
-  <div class="row">
+  <div class="row" id="events-grid">
     {% for ev in events %}
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 feh-event-item" 
+           data-title="{{ ev.title|lower }}" 
+           data-venue="{{ ev.venue|lower }}" 
+           data-speaker="{{ (ev.speaker_name or '')|lower }}"
+           data-category="{{ ev.category.name|lower }}">
+        
         <div class="feh-event-card">
-          <div>
-            <!-- Banner Image & Category Badge -->
-            <div class="feh-event-card__banner-wrap">
-              <img src="{{ ev.banner_url }}" alt="{{ ev.title }}" class="feh-event-card__banner" loading="lazy">
-              <span class="feh-event-card__category-badge" style="border-left: 3px solid {{ ev.category.color }};">
-                <i class="fa-solid {{ ev.category.icon }}"></i> {{ ev.category.name }}
+          <!-- Banner Image & Category Badge -->
+          <div class="feh-event-card__img-wrap">
+            <img src="{{ ev.banner_url }}" alt="{{ ev.title }}" class="feh-event-card__img" loading="lazy">
+            <span class="feh-event-card__cat-badge" style="background: {{ ev.category.color }};">
+              <i class="fa-solid {{ ev.category.icon }}"></i> {{ ev.category.name }}
+            </span>
+            <span class="feh-event-card__pdp-badge" title="Điểm rèn luyện PDP nhận được">
+              <i class="fa-solid fa-award"></i> +{{ ev.pdp_points }} PDP
+            </span>
+          </div>
+
+          <!-- Body Information -->
+          <div class="feh-event-card__body">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+              <span class="feh-stars" style="font-size:12px;font-weight:700;">
+                <i class="fa-solid fa-star"></i> {{ ev.average_rating }} <small style="color:var(--feh-text-muted);">({{ ev.review_count }} đánh giá)</small>
               </span>
+              {% if not ev.is_sold_out %}
+                <span style="font-size:11px;color:var(--feh-green);font-weight:700;">
+                  <span class="feh-pulse-dot"></span> Đang mở
+                </span>
+              {% endif %}
             </div>
 
-            <!-- Body Information -->
-            <div class="feh-event-card__body">
-              <h4 class="feh-event-card__title">
-                <a href="{{ url_for('event_detail', event_id=ev.id) }}" title="{{ ev.title }}">{{ ev.title }}</a>
-              </h4>
+            <h4 class="feh-event-card__title">
+              <a href="{{ url_for('event_detail', event_id=ev.id) }}" title="{{ ev.title }}">{{ ev.title }}</a>
+            </h4>
 
+            <div class="feh-event-card__meta-item">
+              <i class="fa-regular fa-calendar-days"></i>
+              <span>{{ ev.start_time.strftime('%H:%M • %d/%m/%Y') }}</span>
+            </div>
+
+            <div class="feh-event-card__meta-item">
+              <i class="fa-solid fa-location-dot"></i>
+              <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="{{ ev.venue }}">{{ ev.venue }}</span>
+            </div>
+
+            {% if ev.speaker_name %}
               <div class="feh-event-card__meta-item">
-                <i class="fa-regular fa-calendar-days"></i>
-                <span>{{ ev.start_time.strftime('%H:%M • %d/%m/%Y') }}</span>
+                <i class="fa-solid fa-user-tie"></i>
+                <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ ev.speaker_name }}</span>
               </div>
+            {% endif %}
 
-              <div class="feh-event-card__meta-item">
-                <i class="fa-solid fa-location-dot"></i>
-                <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="{{ ev.venue }}">{{ ev.venue }}</span>
+            <!-- Slot Capacity Progress Bar -->
+            <div class="feh-event-card__capacity-bar-wrap">
+              <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:4px;">
+                <span>Số chỗ:</span>
+                {% if ev.is_sold_out %}
+                  <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i> Hết chỗ (0/{{ ev.total_capacity }})</span>
+                {% else %}
+                  <span style="color:var(--feh-primary);"><i class="fa-solid fa-chair"></i> Còn {{ ev.available_slots }}/{{ ev.total_capacity }} chỗ</span>
+                {% endif %}
               </div>
-
-              {% if ev.speaker_name %}
-                <div class="feh-event-card__meta-item">
-                  <i class="fa-solid fa-user-tie"></i>
-                  <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ ev.speaker_name }}</span>
-                </div>
-              {% endif %}
-
-              <!-- Slot Capacity Progress Bar -->
-              <div class="feh-event-card__capacity-bar-wrap">
-                <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:4px;">
-                  <span>Trạng thái chỗ:</span>
-                  {% if ev.is_sold_out %}
-                    <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i> Hết chỗ (0/{{ ev.total_capacity }})</span>
-                  {% else %}
-                    <span style="color:var(--feh-primary);"><i class="fa-solid fa-chair"></i> Còn {{ ev.available_slots }}/{{ ev.total_capacity }} chỗ</span>
-                  {% endif %}
-                </div>
-                <div class="feh-event-card__capacity-bar">
-                  <div class="feh-event-card__capacity-fill" style="width: {{ ev.filled_percentage }}%;"></div>
-                </div>
+              <div class="feh-event-card__capacity-bar">
+                <div class="feh-event-card__capacity-fill" style="width: {{ ev.filled_percentage }}%;"></div>
               </div>
             </div>
           </div>
@@ -167,17 +214,6 @@
               </a>
             {% endif %}
           </div>
-        </div>
-      </div>
-    {% else %}
-      <div class="col-md-12">
-        <div class="alert alert-warning text-center" style="background:#fff;border:1px solid #fed7aa;border-radius:14px;padding:40px 20px;">
-          <i class="fa-solid fa-calendar-xmark" style="font-size:40px;color:var(--feh-primary);margin-bottom:12px;"></i>
-          <h4 style="font-weight:700;color:var(--feh-navy);">Không tìm thấy sự kiện phù hợp</h4>
-          <p style="color:var(--feh-text-muted);">Vui lòng thử chọn danh mục khác hoặc xóa bộ lọc tìm kiếm.</p>
-          <a href="{{ url_for('home') }}" class="feh-btn feh-btn--primary" style="margin-top:10px;">
-            Xem tất cả sự kiện
-          </a>
         </div>
       </div>
     {% endfor %}

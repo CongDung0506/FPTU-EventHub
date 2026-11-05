@@ -3,7 +3,7 @@
 import unittest
 from datetime import datetime, timedelta
 from app import app
-from models import db, User, Role, Category, Event, Ticket
+from models import db, User, Role, Category, Event, Ticket, Review
 
 class EventHubTestCase(unittest.TestCase):
     def setUp(self):
@@ -45,6 +45,7 @@ class EventHubTestCase(unittest.TestCase):
             end_time=datetime.now() + timedelta(days=2, hours=2),
             total_capacity=10,
             available_slots=10,
+            pdp_points=15,
             category=self.cat,
             organizer=self.organizer
         )
@@ -118,7 +119,7 @@ class EventHubTestCase(unittest.TestCase):
         self.assertEqual(ev.available_slots, 10)
         self.assertEqual(t.status, "CANCELLED")
 
-    def test_check_in_logic(self):
+    def test_check_in_and_pdp_points_logic(self):
         ev = Event.query.first()
         u = User.query.filter_by(student_id="DE200433").first()
 
@@ -132,14 +133,27 @@ class EventHubTestCase(unittest.TestCase):
         db.session.commit()
 
         self.assertIsNone(t.checked_in_at)
+        self.assertEqual(u.total_pdp_points, 0)
 
-        # Check-in
+        # Check-in -> Tich luy diem PDP
         t.status = "CHECKED_IN"
         t.checked_in_at = datetime.utcnow()
         db.session.commit()
 
         self.assertEqual(t.status, "CHECKED_IN")
         self.assertIsNotNone(t.checked_in_at)
+        self.assertEqual(u.total_pdp_points, 15)
+
+    def test_event_review_and_average_rating(self):
+        ev = Event.query.first()
+        u = User.query.filter_by(student_id="DE200433").first()
+
+        r1 = Review(event=ev, user=u, rating=5, comment="Sự kiện rất tuyệt vời!")
+        db.session.add(r1)
+        db.session.commit()
+
+        self.assertEqual(ev.review_count, 1)
+        self.assertEqual(ev.average_rating, 5.0)
 
 if __name__ == "__main__":
     unittest.main()

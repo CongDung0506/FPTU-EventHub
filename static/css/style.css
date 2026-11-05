@@ -14,8 +14,22 @@
   --feh-border: #e2e8f0;
   --feh-green: #10b981;
   --feh-red: #ef4444;
+  --feh-gold: #f59e0b;
   --feh-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
   --feh-shadow-hover: 0 12px 24px rgba(242, 111, 33, 0.15);
+  --feh-glass-bg: rgba(255, 255, 255, 0.85);
+}
+
+/* --- Dark Theme Palette ---------------------------------------------------- */
+[data-theme="dark"] {
+  --feh-bg-page: #080d1a;
+  --feh-bg-card: #111827;
+  --feh-text-main: #f1f5f9;
+  --feh-text-muted: #94a3b8;
+  --feh-border: #1f293d;
+  --feh-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --feh-shadow-hover: 0 12px 28px rgba(242, 111, 33, 0.25);
+  --feh-glass-bg: rgba(17, 24, 39, 0.85);
 }
 
 body {
@@ -25,15 +39,17 @@ body {
   line-height: 1.6;
   margin: 0;
   padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* --- Navbar --- */
 .feh-navbar {
-  background-color: #ffffff;
+  background-color: var(--feh-bg-card);
   border-bottom: 2px solid var(--feh-border);
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   padding: 8px 0;
   margin-bottom: 0;
+  transition: all 0.3s ease;
 }
 .feh-navbar__brand {
   display: flex;
@@ -41,7 +57,7 @@ body {
   gap: 10px;
   font-weight: 800;
   font-size: 20px;
-  color: var(--feh-navy) !important;
+  color: var(--feh-text-main) !important;
   text-decoration: none;
 }
 .feh-navbar__logo-badge {
@@ -50,10 +66,11 @@ body {
   padding: 6px 10px;
   border-radius: 8px;
   font-size: 16px;
+  box-shadow: 0 2px 8px rgba(242, 111, 33, 0.3);
 }
 .feh-navbar__link {
   font-weight: 600;
-  color: #334155 !important;
+  color: var(--feh-text-main) !important;
   padding: 12px 14px !important;
   transition: all 0.2s;
 }
@@ -75,13 +92,45 @@ body {
   transform: translateY(-1px);
 }
 
+/* Dark Mode Toggle Button */
+.feh-theme-btn {
+  background: transparent;
+  border: 1px solid var(--feh-border);
+  color: var(--feh-text-main);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-top: 7px;
+  margin-left: 8px;
+  transition: all 0.2s ease;
+}
+.feh-theme-btn:hover {
+  background: var(--feh-primary-light);
+  color: var(--feh-primary);
+  border-color: var(--feh-primary);
+  transform: rotate(15deg);
+}
+
 /* --- Hero Banner --- */
 .feh-hero {
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
   color: #ffffff;
-  padding: 50px 0 40px;
+  padding: 50px 0 45px;
   border-bottom: 4px solid var(--feh-primary);
   margin-bottom: 35px;
+  position: relative;
+  overflow: hidden;
+}
+.feh-hero::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: radial-gradient(circle at 80% 20%, rgba(242, 111, 33, 0.15) 0%, transparent 60%);
+  pointer-events: none;
 }
 .feh-hero__title {
   font-size: 36px;
@@ -95,108 +144,210 @@ body {
   margin-bottom: 24px;
 }
 .feh-hero__stats-card {
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
   border-radius: 12px;
   padding: 16px 20px;
-  backdrop-filter: blur(8px);
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: transform 0.2s;
 }
-.feh-hero__stats-num {
+.feh-hero__stats-card:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.12);
+}
+.feh-hero__stats-icon {
   font-size: 28px;
-  font-weight: 800;
-  color: #f26f21;
+  color: var(--feh-primary);
 }
-.feh-hero__stats-label {
-  font-size: 13px;
-  color: #cbd5e1;
+.feh-hero__stats-val {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #fff;
+}
+.feh-hero__stats-lbl {
+  font-size: 12px;
+  color: #94a3b8;
 }
 
-/* --- Filter & Category Bar --- */
-.feh-filter-bar {
+/* Countdown Timer */
+.feh-countdown-wrap {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(242, 111, 33, 0.35);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-top: 20px;
+  display: inline-block;
+}
+.feh-countdown-header {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fdba74;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.feh-countdown {
   display: flex;
   gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 30px;
-  padding: 14px 18px;
-  background: #ffffff;
-  border: 1px solid var(--feh-border);
-  border-radius: 14px;
-  box-shadow: var(--feh-shadow);
 }
-.feh-filter-item {
+.feh-countdown-box {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 6px 12px;
+  text-align: center;
+  min-width: 52px;
+}
+.feh-countdown-num {
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+  display: block;
+}
+.feh-countdown-lbl {
+  font-size: 10px;
+  color: #cbd5e1;
+  text-transform: uppercase;
+}
+
+/* Pulse Live Indicator */
+.feh-pulse-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: #10b981;
+  border-radius: 50%;
+  margin-right: 6px;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: feh-pulse 1.8s infinite;
+}
+@keyframes feh-pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+/* --- Search & Category Filter --- */
+.feh-search-bar {
+  background: var(--feh-bg-card);
+  border: 1px solid var(--feh-border);
+  border-radius: 12px;
+  padding: 8px 12px;
+  box-shadow: var(--feh-shadow);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 25px;
+  transition: all 0.3s;
+}
+.feh-search-bar:focus-within {
+  border-color: var(--feh-primary);
+  box-shadow: 0 0 0 3px rgba(242, 111, 33, 0.15);
+}
+.feh-search-input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-size: 15px;
+  outline: none;
+  color: var(--feh-text-main);
+}
+.feh-cat-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 30px;
+}
+.feh-cat-pill {
+  background: var(--feh-bg-card);
+  border: 1px solid var(--feh-border);
+  color: var(--feh-text-main);
+  padding: 7px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none !important;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 16px;
-  border-radius: 20px;
-  background: #f1f5f9;
-  color: #475569;
-  font-weight: 600;
-  font-size: 13px;
-  text-decoration: none !important;
   transition: all 0.2s;
-  border: 1px solid transparent;
+  cursor: pointer;
 }
-.feh-filter-item:hover {
-  background: #e2e8f0;
-  color: var(--feh-navy);
-}
-.feh-filter-item--active {
-  background: var(--feh-primary-light);
-  color: var(--feh-primary);
+.feh-cat-pill:hover,
+.feh-cat-pill.active {
+  background-color: var(--feh-primary);
+  color: #fff !important;
   border-color: var(--feh-primary);
-  font-weight: 700;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(242, 111, 33, 0.25);
 }
 
-/* --- Event Card --- */
+/* --- Event Cards Grid --- */
 .feh-event-card {
   background: var(--feh-bg-card);
   border: 1px solid var(--feh-border);
   border-radius: 14px;
   overflow: hidden;
   box-shadow: var(--feh-shadow);
-  transition: all 0.3s ease;
-  height: 100%;
+  margin-bottom: 30px;
+  transition: all 0.25s ease;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  margin-bottom: 26px;
+  position: relative;
 }
 .feh-event-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-5px);
   box-shadow: var(--feh-shadow-hover);
-  border-color: #fdba74;
+  border-color: rgba(242, 111, 33, 0.4);
 }
-.feh-event-card__banner-wrap {
+.feh-event-card__img-wrap {
   position: relative;
-  height: 180px;
-  background: #000;
+  height: 200px;
   overflow: hidden;
+  background-color: #0f172a;
 }
-.feh-event-card__banner {
+.feh-event-card__img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.4s ease;
 }
-.feh-event-card:hover .feh-event-card__banner {
+.feh-event-card:hover .feh-event-card__img {
   transform: scale(1.05);
 }
-.feh-event-card__category-badge {
+.feh-event-card__cat-badge {
   position: absolute;
   top: 12px;
   left: 12px;
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(6px);
-  color: #fff;
-  font-size: 11px;
-  font-weight: 700;
   padding: 4px 10px;
   border-radius: 6px;
-  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+.feh-event-card__pdp-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  background: #2563eb;
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 .feh-event-card__body {
   padding: 18px;
+  flex: 1;
 }
 .feh-event-card__title {
   font-size: 16px;
@@ -210,7 +361,7 @@ body {
   -webkit-box-orient: vertical;
 }
 .feh-event-card__title a {
-  color: var(--feh-navy);
+  color: var(--feh-text-main);
   text-decoration: none;
 }
 .feh-event-card__title a:hover {
@@ -233,7 +384,7 @@ body {
 }
 .feh-event-card__capacity-bar {
   height: 6px;
-  background: #e2e8f0;
+  background: var(--feh-border);
   border-radius: 3px;
   overflow: hidden;
 }
@@ -241,10 +392,11 @@ body {
   height: 100%;
   background: linear-gradient(90deg, #f26f21, #fb923c);
   border-radius: 3px;
+  transition: width 0.6s ease;
 }
 .feh-event-card__footer {
   padding: 12px 18px 18px;
-  border-top: 1px solid #f1f5f9;
+  border-top: 1px solid var(--feh-border);
 }
 
 /* --- Buttons --- */
@@ -270,18 +422,27 @@ body {
   background-color: var(--feh-primary-hover);
   box-shadow: 0 4px 12px rgba(242, 111, 33, 0.35);
 }
+.feh-btn--secondary {
+  background-color: var(--feh-bg-card);
+  color: var(--feh-text-main) !important;
+  border: 1px solid var(--feh-border);
+}
+.feh-btn--secondary:hover {
+  border-color: var(--feh-primary);
+  color: var(--feh-primary) !important;
+}
 .feh-btn--block {
   width: 100%;
 }
 .feh-btn--disabled {
-  background-color: #cbd5e1 !important;
-  color: #64748b !important;
+  background-color: #94a3b8 !important;
+  color: #f1f5f9 !important;
   cursor: not-allowed;
 }
 
 /* --- Ticket Boarding Pass Component --- */
 .feh-ticket-card {
-  background: #ffffff;
+  background: var(--feh-bg-card);
   border: 1px solid var(--feh-border);
   border-radius: 14px;
   display: flex;
@@ -295,9 +456,9 @@ body {
   padding: 24px;
 }
 .feh-ticket-card__right {
-  width: 200px;
-  background: #f8fafc;
-  border-left: 2px dashed #cbd5e1;
+  width: 220px;
+  background: rgba(15, 23, 42, 0.03);
+  border-left: 2px dashed var(--feh-border);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -314,6 +475,36 @@ body {
   padding: 4px 10px;
   border-radius: 6px;
   letter-spacing: 1px;
+}
+
+/* PDP Banner Card */
+.feh-pdp-banner {
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  color: white;
+  border-radius: 14px;
+  padding: 24px 30px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25);
+}
+.feh-pdp-banner h3 {
+  margin: 0 0 6px;
+  font-weight: 800;
+  font-size: 24px;
+}
+.feh-pdp-banner p {
+  margin: 0;
+  color: #bfdbfe;
+  font-size: 14px;
+}
+.feh-pdp-score {
+  font-size: 44px;
+  font-weight: 800;
+  color: #fbbf24;
+  line-height: 1;
+  text-align: right;
 }
 
 /* --- Badges --- */
@@ -343,9 +534,79 @@ body {
   color: var(--feh-primary);
 }
 
+/* Reviews & Ratings */
+.feh-review-card {
+  background: var(--feh-bg-card);
+  border: 1px solid var(--feh-border);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 15px;
+}
+.feh-stars {
+  color: #f59e0b;
+}
+
+/* QR Scanner Box */
+#reader {
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto 20px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid var(--feh-primary);
+}
+
+/* --- Dark Theme Overrides for Bootstrap Elements --- */
+[data-theme="dark"] .dropdown-menu {
+  background-color: #111827;
+  border: 1px solid #1f293d;
+}
+[data-theme="dark"] .dropdown-menu > li > a {
+  color: #e2e8f0;
+}
+[data-theme="dark"] .dropdown-menu > li > a:hover {
+  background-color: #1f293d;
+  color: #f26f21;
+}
+[data-theme="dark"] .panel-default {
+  background-color: #111827;
+  border-color: #1f293d;
+}
+[data-theme="dark"] .panel-default > .panel-heading {
+  background-color: #1a2234;
+  border-color: #1f293d;
+  color: #f1f5f9;
+}
+[data-theme="dark"] .panel-footer {
+  background-color: #1a2234;
+  border-color: #1f293d;
+}
+[data-theme="dark"] .form-control {
+  background-color: #1a2234;
+  border-color: #1f293d;
+  color: #f1f5f9;
+}
+[data-theme="dark"] .table {
+  color: #f1f5f9;
+}
+[data-theme="dark"] .table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #161f33;
+}
+[data-theme="dark"] .table-hover > tbody > tr:hover {
+  background-color: #1d273f;
+}
+[data-theme="dark"] .table > thead > tr > th,
+[data-theme="dark"] .table > tbody > tr > th,
+[data-theme="dark"] .table > tbody > tr > td {
+  border-top-color: #1f293d;
+}
+[data-theme="dark"] .feh-ticket-card__right {
+  background: #161f33;
+}
+
 /* --- Footer --- */
 .feh-footer {
-  background: #0f172a;
+  background: #0a0f1d;
   color: #94a3b8;
   padding: 40px 0 20px;
   margin-top: 60px;
