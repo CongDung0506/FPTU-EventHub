@@ -3,79 +3,200 @@
 {% block title %}Đăng Nhập — FPTU EventHub{% endblock %}
 
 {% block content %}
-<div class="container" style="margin-top:40px;max-width:540px;">
-  <div style="background:var(--feh-bg-card);border:1px solid var(--feh-border);border-radius:16px;padding:36px;box-shadow:var(--feh-shadow);">
-    <div style="text-align:center;margin-bottom:24px;">
-      <div style="width:60px;height:60px;border-radius:14px;background:var(--feh-primary-light);color:var(--feh-primary);font-size:26px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
+<div class="container" style="margin-top:35px;margin-bottom:50px;max-width:540px;">
+  <div style="background:var(--feh-bg-card);border:1px solid var(--feh-border);border-radius:18px;padding:36px;box-shadow:var(--feh-shadow);">
+
+    <!-- BƯỚC 1: XÁC THỰC DANH TÍNH SINH VIÊN FPT TRƯỚC KHI ĐĂNG NHẬP -->
+    <div id="login-step-identity" style="text-align:center;{% if form.errors %}display:none;{% endif %}">
+      <div style="width:70px;height:70px;background:var(--feh-primary-light);color:var(--feh-primary);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:16px;">
         <i class="fa-solid fa-graduation-cap"></i>
       </div>
-      <h3 style="font-weight:800;color:var(--feh-text-main);margin:0 0 6px;">Đăng Nhập FPTU EventHub</h3>
-      <p style="color:var(--feh-text-muted);font-size:13px;margin:0;">Sử dụng tài khoản Email FPT hoặc Mã số sinh viên (MSSV)</p>
-    </div>
-
-    <!-- Quick 1-Click Login Buttons -->
-    <div style="background:rgba(242,111,33,0.06);border:2px dashed var(--feh-primary);border-radius:12px;padding:16px;margin-bottom:24px;">
-      <div style="font-weight:800;color:var(--feh-primary);margin-bottom:10px;font-size:12px;text-transform:uppercase;display:flex;align-items:center;gap:6px;">
-        <i class="fa-solid fa-bolt"></i> Bấm 1-Click Đăng Nhập Nhanh (Dành cho Demo / Chấm điểm):
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <a href="{{ url_for('quick_login', role_type='student') }}" class="btn btn-default" style="border-radius:8px;font-weight:700;display:flex;justify-content:space-between;align-items:center;background:var(--feh-bg-card);color:var(--feh-text-main);border-color:var(--feh-border);">
-          <span><i class="fa-solid fa-user-graduate" style="color:var(--feh-primary);margin-right:6px;"></i> Sinh viên: Trương Công Dũng</span>
-          <span class="badge" style="background:#e0f2fe;color:#0284c7;">DE200433</span>
-        </a>
-        <a href="{{ url_for('quick_login', role_type='organizer') }}" class="btn btn-default" style="border-radius:8px;font-weight:700;display:flex;justify-content:space-between;align-items:center;background:var(--feh-bg-card);color:var(--feh-text-main);border-color:var(--feh-border);">
-          <span><i class="fa-solid fa-users" style="color:#d97706;margin-right:6px;"></i> Ban tổ chức: CLB F-Code</span>
-          <span class="badge" style="background:#fef3c7;color:#b45309;">ORG001</span>
-        </a>
-        <a href="{{ url_for('quick_login', role_type='admin') }}" class="btn btn-default" style="border-radius:8px;font-weight:700;display:flex;justify-content:space-between;align-items:center;background:var(--feh-bg-card);color:var(--feh-text-main);border-color:var(--feh-border);">
-          <span><i class="fa-solid fa-shield-halved" style="color:#2563eb;margin-right:6px;"></i> Quản trị viên: Phòng CTSV</span>
-          <span class="badge" style="background:#eff6ff;color:#1e40af;">ADM001</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- Manual Login Form -->
-    <div style="text-align:center;position:relative;margin:18px 0 20px;">
-      <span style="background:var(--feh-bg-card);padding:0 12px;color:var(--feh-text-muted);font-size:12px;font-weight:700;position:relative;z-index:2;">
-        HOẶC NHẬP THỦ CÔNG
+      
+      <span class="feh-badge feh-badge--fpt" style="margin-bottom:10px;font-size:11px;text-transform:uppercase;">
+        Bảo Mật Nội Bộ FPT University
       </span>
-      <div style="position:absolute;top:50%;left:0;right:0;border-top:1px solid var(--feh-border);z-index:1;"></div>
+      
+      <h3 style="font-weight:800;color:var(--feh-text-main);margin:8px 0 10px;">
+        Xác Thực Sinh Viên FPT
+      </h3>
+      
+      <p style="color:var(--feh-text-muted);font-size:14px;line-height:1.6;margin-bottom:26px;">
+        Cổng thông tin <strong>FPTU EventHub</strong> quản lý vé sự kiện, điểm danh bằng QR và tích lũy điểm rèn luyện PDP nội bộ.<br>
+        <strong>Bạn có phải là Sinh viên hoặc Cán bộ thuộc Đại học FPT không?</strong>
+      </p>
+
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <button type="button" id="btn-login-is-fpt" class="feh-btn feh-btn--primary" style="height:48px;font-size:15px;width:100%;font-weight:700;">
+          <i class="fa-solid fa-circle-check"></i> ĐÚNG, TÔI LÀ SINH VIÊN / CÁN BỘ FPT
+        </button>
+        <button type="button" id="btn-login-not-fpt" class="feh-btn" style="height:48px;font-size:15px;width:100%;background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;font-weight:700;">
+          <i class="fa-solid fa-circle-xmark"></i> KHÔNG, TÔI LÀ KHÁCH NGOÀI TRƯỜNG
+        </button>
+      </div>
     </div>
 
-    <form method="POST">
-      {{ form.hidden_tag() }}
-
-      <div class="form-group" style="margin-bottom:18px;">
-        <label style="font-weight:700;color:var(--feh-text-main);">Email FPT hoặc Mã SV (MSSV)</label>
-        {{ form.email(class="form-control", placeholder="Ví dụ: nguyenvana@fpt.edu.vn hoặc DExxxxxx", style="height:44px;border-radius:8px;") }}
-        {% for err in form.email.errors %}
-          <div class="text-danger" style="font-size:12px;margin-top:4px;">{{ err }}</div>
-        {% endfor %}
+    <!-- CẢNH BÁO TỪ CHỐI KHI KHÔNG PHẢI SINH VIÊN FPT -->
+    <div id="login-block-not-fpt" style="display:none;text-align:center;">
+      <div style="width:70px;height:70px;background:#fee2e2;color:#dc2626;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:16px;">
+        <i class="fa-solid fa-hand"></i>
       </div>
 
-      <div class="form-group" style="margin-bottom:18px;">
-        <label style="font-weight:700;color:var(--feh-text-main);">Mật khẩu</label>
-        {{ form.password(class="form-control", placeholder="Mặc định: pass123", style="height:44px;border-radius:8px;") }}
-        {% for err in form.password.errors %}
-          <div class="text-danger" style="font-size:12px;margin-top:4px;">{{ err }}</div>
-        {% endfor %}
+      <h3 style="font-weight:800;color:#991b1b;margin:0 0 10px;">
+        Rất Tiếc! Cổng Đăng Nhập Chỉ Dành Cho FPTU
+      </h3>
+
+      <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:18px;margin-bottom:24px;text-align:left;">
+        <p style="color:#7f1d1d;font-size:13px;line-height:1.6;margin:0 0 8px;">
+          <i class="fa-solid fa-circle-info text-danger"></i> <strong>Lưu ý quan trọng:</strong>
+        </p>
+        <ul style="color:#7f1d1d;font-size:13px;line-height:1.6;padding-left:20px;margin:0;">
+          <li>Hệ thống chỉ cấp quyền đăng nhập cho tài khoản email <code>@fpt.edu.vn</code>, <code>@fe.edu.vn</code> hoặc Mã SV (MSSV) của trường.</li>
+          <li>Người ngoài trường không thể đặt vé hoặc tham gia tích lũy điểm rèn luyện PDP.</li>
+        </ul>
       </div>
 
-      <div class="checkbox" style="margin-bottom:22px;">
-        <label style="font-size:13px;color:var(--feh-text-muted);">
-          {{ form.remember_me }} Ghi nhớ phiên đăng nhập
-        </label>
+      <p style="color:var(--feh-text-muted);font-size:13px;margin-bottom:20px;">
+        Nếu bạn là đối tác doanh nghiệp hoặc khách mời, vui lòng liên hệ Ban Công tác Sinh viên FPT qua email: <strong>ctsv@fpt.edu.vn</strong>
+      </p>
+
+      <div style="display:flex;gap:10px;">
+        <a href="{{ url_for('home') }}" class="feh-btn" style="flex:1;background:#dc2626;color:#fff;font-size:13px;height:42px;">
+          <i class="fa-solid fa-arrow-left"></i> Về Trang Chủ
+        </a>
+        <button type="button" id="btn-login-reselect" class="feh-btn" style="flex:1;background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;font-size:13px;height:42px;">
+          <i class="fa-solid fa-rotate-left"></i> Tôi là sinh viên FPT
+        </button>
+      </div>
+    </div>
+
+    <!-- BƯỚC 2: MÀN HÌNH ĐĂNG NHẬP (QUICK LOGIN + MANUAL LOGIN FORM) -->
+    <div id="login-step-form" style="{% if not form.errors %}display:none;{% endif %}">
+      <div style="text-align:center;margin-bottom:24px;">
+        <div style="width:60px;height:60px;border-radius:14px;background:var(--feh-primary-light);color:var(--feh-primary);font-size:26px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <h3 style="font-weight:800;color:var(--feh-text-main);margin:0 0 6px;">Đăng Nhập FPTU EventHub</h3>
+        <p style="color:var(--feh-text-muted);font-size:13px;margin:0;">Sử dụng tài khoản Email FPT hoặc Mã số sinh viên (MSSV)</p>
       </div>
 
-      <button type="submit" class="feh-btn feh-btn--primary feh-btn--block" style="height:44px;font-size:15px;">
-        <i class="fa-solid fa-arrow-right-to-bracket"></i> ĐĂNG NHẬP HỆ THỐNG
-      </button>
-    </form>
+      <!-- Quick 1-Click Login Buttons -->
+      <div style="background:rgba(242,111,33,0.06);border:2px dashed var(--feh-primary);border-radius:12px;padding:16px;margin-bottom:24px;">
+        <div style="font-weight:800;color:var(--feh-primary);margin-bottom:10px;font-size:12px;text-transform:uppercase;display:flex;align-items:center;gap:6px;">
+          <i class="fa-solid fa-bolt"></i> Bấm 1-Click Đăng Nhập Nhanh (Demo / Chấm điểm):
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="{{ url_for('quick_login', role_type='student') }}" class="btn btn-default" style="border-radius:8px;font-weight:700;display:flex;justify-content:space-between;align-items:center;background:var(--feh-bg-card);color:var(--feh-text-main);border-color:var(--feh-border);">
+            <span><i class="fa-solid fa-user-graduate" style="color:var(--feh-primary);margin-right:6px;"></i> Sinh viên: Trương Công Dũng</span>
+            <span class="badge" style="background:#e0f2fe;color:#0284c7;">DE200433</span>
+          </a>
+          <a href="{{ url_for('quick_login', role_type='organizer') }}" class="btn btn-default" style="border-radius:8px;font-weight:700;display:flex;justify-content:space-between;align-items:center;background:var(--feh-bg-card);color:var(--feh-text-main);border-color:var(--feh-border);">
+            <span><i class="fa-solid fa-users" style="color:#d97706;margin-right:6px;"></i> Ban tổ chức: CLB F-Code</span>
+            <span class="badge" style="background:#fef3c7;color:#b45309;">ORG001</span>
+          </a>
+          <a href="{{ url_for('quick_login', role_type='admin') }}" class="btn btn-default" style="border-radius:8px;font-weight:700;display:flex;justify-content:space-between;align-items:center;background:var(--feh-bg-card);color:var(--feh-text-main);border-color:var(--feh-border);">
+            <span><i class="fa-solid fa-shield-halved" style="color:#2563eb;margin-right:6px;"></i> Quản trị viên: Phòng CTSV</span>
+            <span class="badge" style="background:#eff6ff;color:#1e40af;">ADM001</span>
+          </a>
+        </div>
+      </div>
 
+      <!-- Manual Login Form -->
+      <div style="text-align:center;position:relative;margin:18px 0 20px;">
+        <span style="background:var(--feh-bg-card);padding:0 12px;color:var(--feh-text-muted);font-size:12px;font-weight:700;position:relative;z-index:2;">
+          HOẶC NHẬP THỦ CÔNG
+        </span>
+        <div style="position:absolute;top:50%;left:0;right:0;border-top:1px solid var(--feh-border);z-index:1;"></div>
+      </div>
+
+      <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group" style="margin-bottom:18px;">
+          <label style="font-weight:700;color:var(--feh-text-main);">Email FPT hoặc Mã SV (MSSV)</label>
+          {{ form.email(class="form-control", placeholder="Ví dụ: nguyenvana@fpt.edu.vn hoặc DExxxxxx", style="height:44px;border-radius:8px;") }}
+          {% for err in form.email.errors %}
+            <div class="text-danger" style="font-size:12px;margin-top:4px;">{{ err }}</div>
+          {% endfor %}
+        </div>
+
+        <div class="form-group" style="margin-bottom:18px;">
+          <label style="font-weight:700;color:var(--feh-text-main);">Mật khẩu</label>
+          {{ form.password(class="form-control", placeholder="Mặc định: pass123", style="height:44px;border-radius:8px;") }}
+          {% for err in form.password.errors %}
+            <div class="text-danger" style="font-size:12px;margin-top:4px;">{{ err }}</div>
+          {% endfor %}
+        </div>
+
+        <div class="checkbox" style="margin-bottom:22px;">
+          <label style="font-size:13px;color:var(--feh-text-muted);">
+            {{ form.remember_me }} Ghi nhớ phiên đăng nhập
+          </label>
+        </div>
+
+        <button type="submit" class="feh-btn feh-btn--primary feh-btn--block" style="height:44px;font-size:15px;font-weight:700;">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> ĐĂNG NHẬP HỆ THỐNG
+        </button>
+      </form>
+
+      <div style="text-align:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--feh-border);font-size:13px;color:var(--feh-text-muted);">
+        <button type="button" id="btn-login-back-step1" style="background:none;border:none;color:var(--feh-text-muted);font-weight:600;font-size:12px;cursor:pointer;">
+          <i class="fa-solid fa-arrow-left"></i> Quay lại câu hỏi xác thực
+        </button>
+      </div>
+    </div>
+
+    <!-- Bottom link to register -->
     <div style="text-align:center;margin-top:24px;padding-top:18px;border-top:1px solid var(--feh-border);font-size:13px;color:var(--feh-text-muted);">
       Chưa có tài khoản sinh viên? 
       <a href="{{ url_for('register') }}" style="color:var(--feh-primary);font-weight:700;">Đăng ký ngay</a>
     </div>
+
   </div>
 </div>
+
+<!-- Interactive Switcher Script for Login -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const stepIdentity = document.getElementById("login-step-identity");
+  const blockNotFpt = document.getElementById("login-block-not-fpt");
+  const stepForm = document.getElementById("login-step-form");
+
+  const btnIsFpt = document.getElementById("btn-login-is-fpt");
+  const btnNotFpt = document.getElementById("btn-login-not-fpt");
+  const btnReselect = document.getElementById("btn-login-reselect");
+  const btnBackStep1 = document.getElementById("btn-login-back-step1");
+
+  if (btnIsFpt) {
+    btnIsFpt.addEventListener("click", function () {
+      stepIdentity.style.display = "none";
+      blockNotFpt.style.display = "none";
+      stepForm.style.display = "block";
+    });
+  }
+
+  if (btnNotFpt) {
+    btnNotFpt.addEventListener("click", function () {
+      stepIdentity.style.display = "none";
+      stepForm.style.display = "none";
+      blockNotFpt.style.display = "block";
+    });
+  }
+
+  if (btnReselect) {
+    btnReselect.addEventListener("click", function () {
+      blockNotFpt.style.display = "none";
+      stepIdentity.style.display = "none";
+      stepForm.style.display = "block";
+    });
+  }
+
+  if (btnBackStep1) {
+    btnBackStep1.addEventListener("click", function () {
+      stepForm.style.display = "none";
+      blockNotFpt.style.display = "none";
+      stepIdentity.style.display = "block";
+    });
+  }
+});
+</script>
 {% endblock %}
