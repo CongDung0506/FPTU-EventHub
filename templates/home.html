@@ -68,13 +68,16 @@
             </div>
           </div>
           <div class="col-xs-12">
-            <div class="feh-hero__stats-card">
-              <i class="fa-solid fa-qrcode feh-hero__stats-icon"></i>
+            <a href="{{ url_for('check_in') }}" class="feh-hero__stats-card" style="text-decoration:none;cursor:pointer;display:flex;align-items:center;" title="Bấm để mở Bàn Check-in quét mã QR bằng Camera">
+              <i class="fa-solid fa-qrcode feh-hero__stats-icon" style="color:var(--feh-primary);"></i>
               <div>
-                <strong style="color:var(--feh-text-main);font-size:14px;">Camera QR Scanner & Check-in Tức Thì</strong>
-                <p style="font-size:12px;color:var(--feh-text-muted);margin:0;">Điểm danh bằng camera điện thoại và cấp E-Certificate tự động.</p>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <strong style="color:var(--feh-text-main);font-size:14px;">Camera QR Scanner & Check-in Tức Thì</strong>
+                  <span class="label label-warning" style="font-size:10px;text-transform:uppercase;background:var(--feh-primary);">Bấm Mở Quét →</span>
+                </div>
+                <p style="font-size:12px;color:var(--feh-text-muted);margin:2px 0 0;">Điểm danh bằng camera điện thoại và cấp E-Certificate tự động.</p>
               </div>
-            </div>
+            </a>
           </div>
         </div>
       </div>

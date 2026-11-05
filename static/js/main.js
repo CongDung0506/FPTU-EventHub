@@ -158,6 +158,7 @@ function initViewSwitcher() {
       localStorage.setItem("feh-view-mode", "timeline");
     } else {
       gridView.style.display = "flex";
+      gridView.style.flexWrap = "wrap";
       timelineView.style.display = "none";
       btnGrid.className = "btn btn-sm btn-primary";
       btnTimeline.className = "btn btn-sm btn-default";

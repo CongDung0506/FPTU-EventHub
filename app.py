@@ -68,6 +68,15 @@ def auto_init_database():
     except Exception as e:
         print(f"Notice DB init: {e}")
 
+@app.before_request
+def require_fpt_login():
+    # Bat buoc tat ca nguoi dung phai dang nhap FPT Mail truoc khi truy cap vao cong su kien
+    public_endpoints = ("login", "quick_login", "register", "static", "serve_static_fallback")
+    if request.endpoint and request.endpoint in public_endpoints:
+        return None
+    if not current_user.is_authenticated:
+        return redirect(url_for("login"))
+
 
 # --- Authentication Routes ---------------------------------------------------
 @app.route("/login", methods=["GET", "POST"])
@@ -498,8 +507,9 @@ def export_attendees_csv(event_id):
 
 
 # --- Check-in Desk (Manual & Camera QR Code Scanner) -----------------------
+@app.route("/check-in", methods=["GET", "POST"])
 @app.route("/organizer/check-in", methods=["GET", "POST"])
-@organizer_required
+@login_required
 def check_in():
     form = CheckInManualForm()
     check_result = None
@@ -548,7 +558,7 @@ def check_in():
 
 
 @app.route("/api/check-in/scan", methods=["POST"])
-@organizer_required
+@login_required
 def api_scan_checkin():
     data = request.get_json() or {}
     raw_code = data.get("ticket_code", "").strip()
