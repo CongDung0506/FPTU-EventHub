@@ -31,7 +31,7 @@ class RegisterForm(FlaskForm):
     def validate_student_id(self, field):
         sid = field.data.strip().upper()
         if len(sid) < 6:
-            raise ValidationError("Mã số sinh viên không hợp lệ (ví dụ: DE200433, SE171234).")
+            raise ValidationError("Mã số sinh viên không hợp lệ (ví dụ: DExxxxxx, SExxxxxx).")
 
 class EventCreateForm(FlaskForm):
     title = StringField("Tiêu đề sự kiện", validators=[DataRequired(), Length(max=255)])

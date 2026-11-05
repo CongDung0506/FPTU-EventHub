@@ -20,9 +20,9 @@ class EventHubTestCase(unittest.TestCase):
         self.role_organizer = Role.query.filter_by(name="Organizer").first()
 
         self.user = User(
-            student_id="DE200433",
-            full_name="Trương Công Dũng",
-            email="dungtc@fpt.edu.vn",
+            student_id="DE170001",
+            full_name="Nguyễn Văn A",
+            email="nguyenvana@fpt.edu.vn",
             role=self.role_student
         )
         self.user.set_password("pass123")
@@ -79,7 +79,7 @@ class EventHubTestCase(unittest.TestCase):
 
     def test_booking_transaction(self):
         ev = Event.query.first()
-        u = User.query.filter_by(student_id="DE200433").first()
+        u = User.query.filter_by(student_id="DE170001").first()
 
         ev.available_slots -= 1
         t = Ticket(
@@ -97,7 +97,7 @@ class EventHubTestCase(unittest.TestCase):
 
     def test_ticket_cancellation_frees_slot(self):
         ev = Event.query.first()
-        u = User.query.filter_by(student_id="DE200433").first()
+        u = User.query.filter_by(student_id="DE170001").first()
 
         ev.available_slots -= 1
         t = Ticket(
@@ -121,7 +121,7 @@ class EventHubTestCase(unittest.TestCase):
 
     def test_check_in_and_pdp_points_logic(self):
         ev = Event.query.first()
-        u = User.query.filter_by(student_id="DE200433").first()
+        u = User.query.filter_by(student_id="DE170001").first()
 
         t = Ticket(
             ticket_code="FU-2026-TEST01",
@@ -146,7 +146,7 @@ class EventHubTestCase(unittest.TestCase):
 
     def test_event_review_and_average_rating(self):
         ev = Event.query.first()
-        u = User.query.filter_by(student_id="DE200433").first()
+        u = User.query.filter_by(student_id="DE170001").first()
 
         r1 = Review(event=ev, user=u, rating=5, comment="Sự kiện rất tuyệt vời!")
         db.session.add(r1)

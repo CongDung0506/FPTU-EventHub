@@ -17,18 +17,22 @@ def seed_data_internal():
     role_admin = Role.query.filter_by(name="Admin").first()
 
     # 1. Nguoi dung mau (Sinh vien, Ban to chuc CLB, Admin CTSV)
-    student = User.query.filter_by(email="dungtcde200433@fpt.edu.vn").first()
+    student = User.query.filter((User.email == "nguyenvana@fpt.edu.vn") | (User.email == "dungtcde200433@fpt.edu.vn")).first()
     if student is None:
         student = User(
-            student_id="DE200433",
-            full_name="Trương Công Dũng",
-            email="dungtcde200433@fpt.edu.vn",
+            student_id="DE170001",
+            full_name="Nguyễn Văn A",
+            email="nguyenvana@fpt.edu.vn",
             phone="0905123456",
             avatar_url="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
             role=role_student
         )
         student.set_password("pass123")
         db.session.add(student)
+    else:
+        student.student_id = "DE170001"
+        student.full_name = "Nguyễn Văn A"
+        student.email = "nguyenvana@fpt.edu.vn"
 
     student2 = User.query.filter_by(email="anhnvse190111@fpt.edu.vn").first()
     if student2 is None:
@@ -301,7 +305,7 @@ Chương trình thiện nguyện truyền thống thường niên của sinh vi�
     if Ticket.query.first() is None and len(saved_events) >= 2:
         ticket1 = Ticket(
             ticket_code=Ticket.generate_ticket_code(),
-            qr_url="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=FU-2026-AIWORKSHOP-DE200433",
+            qr_url="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=FU-2026-AIWORKSHOP-DE170001",
             event=saved_events[0], # Workshop AI
             user=student,
             status="CHECKED_IN",
@@ -309,7 +313,7 @@ Chương trình thiện nguyện truyền thống thường niên của sinh vi�
         )
         ticket2 = Ticket(
             ticket_code=Ticket.generate_ticket_code(),
-            qr_url="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=FU-2026-HACKATHON-DE200433",
+            qr_url="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=FU-2026-HACKATHON-DE170001",
             event=saved_events[1], # Hackathon
             user=student,
             status="REGISTERED"

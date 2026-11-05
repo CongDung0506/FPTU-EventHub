@@ -89,7 +89,7 @@
               <label style="font-weight:700;color:var(--feh-text-main);font-size:13px;">
                 {{ form.student_id.label }} <span class="text-danger">*</span>
               </label>
-              {{ form.student_id(id="reg-mssv", class="form-control", placeholder="Ví dụ: DE200433", style="height:44px;border-radius:10px;text-transform:uppercase;font-weight:600;") }}
+              {{ form.student_id(id="reg-mssv", class="form-control", placeholder="Ví dụ: DExxxxxx (hoặc SExxxxxx)", style="height:44px;border-radius:10px;text-transform:uppercase;font-weight:600;") }}
               {% if form.student_id.errors %}
                 <span class="text-danger" style="font-size:12px;font-weight:600;">{{ form.student_id.errors[0] }}</span>
               {% endif %}
@@ -101,7 +101,7 @@
               <label style="font-weight:700;color:var(--feh-text-main);font-size:13px;">
                 {{ form.full_name.label }} <span class="text-danger">*</span>
               </label>
-              {{ form.full_name(class="form-control", placeholder="Ví dụ: Trương Công Dũng", style="height:44px;border-radius:10px;font-weight:600;") }}
+              {{ form.full_name(class="form-control", placeholder="Ví dụ: Nguyễn Văn A", style="height:44px;border-radius:10px;font-weight:600;") }}
               {% if form.full_name.errors %}
                 <span class="text-danger" style="font-size:12px;font-weight:600;">{{ form.full_name.errors[0] }}</span>
               {% endif %}
@@ -114,7 +114,7 @@
           <label style="font-weight:700;color:var(--feh-text-main);font-size:13px;">
             Email trường cấp (@fpt.edu.vn / @fe.edu.vn) <span class="text-danger">*</span>
           </label>
-          {{ form.email(id="reg-email", class="form-control", placeholder="dungtcde200433@fpt.edu.vn", style="height:44px;border-radius:10px;font-weight:600;") }}
+          {{ form.email(id="reg-email", class="form-control", placeholder="Ví dụ: nguyenvana@fpt.edu.vn", style="height:44px;border-radius:10px;font-weight:600;") }}
           
           <!-- Real-time Validation Message Container -->
           <div id="email-feedback" style="margin-top:6px;font-size:12px;font-weight:700;"></div>
@@ -223,7 +223,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       if (!val.includes("@")) {
-        emailFeedback.innerHTML = "<span class='text-muted'><i class='fa-solid fa-spinner'></i> Vui lòng nhập đầy đủ địa chỉ email (VD: dungtcde200433@fpt.edu.vn)</span>";
+        emailFeedback.innerHTML = "<span class='text-muted'><i class='fa-solid fa-spinner'></i> Vui lòng nhập đầy đủ địa chỉ email (VD: nguyenvana@fpt.edu.vn)</span>";
         return false;
       }
 

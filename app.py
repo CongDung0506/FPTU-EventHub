@@ -97,14 +97,16 @@ def login():
 def quick_login(role_type):
     auto_init_database()
     email_map = {
-        "student": "dungtcde200433@fpt.edu.vn",
+        "student": "nguyenvana@fpt.edu.vn",
         "organizer": "fcode.club@fpt.edu.vn",
         "admin": "ctsv.admin@fpt.edu.vn"
     }
     target_email = email_map.get(role_type.lower())
     if not target_email:
         return redirect(url_for("login"))
-    user = User.query.filter_by(email=target_email).first()
+    user = User.query.filter((User.email == target_email) | (User.email == "dungtcde200433@fpt.edu.vn")).first()
+    if not user and role_type.lower() == "student":
+        user = User.query.filter(User.role.has(name="Student")).first()
     if user:
         login_user(user, remember=True)
         flash(f"🎉 Đăng nhập nhanh thành công: {user.full_name} ({user.role.name})!", "success")
