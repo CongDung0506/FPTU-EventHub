@@ -7,7 +7,7 @@ import io
 import tempfile
 import urllib.parse
 from datetime import datetime
-from flask import Flask, render_template, redirect, url_for, request, flash, abort, jsonify, Response
+from flask import Flask, render_template, redirect, url_for, request, flash, abort, jsonify, Response, send_from_directory
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager, login_required, current_user, login_user, logout_user
 
@@ -603,6 +603,13 @@ def admin_dashboard():
         recent_users=recent_users,
         categories=categories
     )
+
+
+# --- Static Files Fallback for Serverless/Vercel Environments ---------------
+@app.route("/static/<path:filename>")
+def serve_static_fallback(filename):
+    static_folder = os.path.join(app.root_path, "static")
+    return send_from_directory(static_folder, filename)
 
 
 if __name__ == "__main__":
