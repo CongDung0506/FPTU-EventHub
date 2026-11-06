@@ -22,7 +22,7 @@ class Role(db.Model):
     @staticmethod
     def insert_roles():
         roles = {
-            "Student": "Sinh viên tham dự sự kiện và tích lũy điểm PDP",
+            "Student": "Sinh viên tham dự sự kiện",
             "Organizer": "Ban tổ chức CLB / Giảng viên tổ chức workshop",
             "Admin": "Cán bộ quản trị Phòng Công tác sinh viên (CTSV)",
         }
@@ -32,6 +32,13 @@ class Role(db.Model):
                 role = Role(name=name, description=desc)
                 db.session.add(role)
         db.session.commit()
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description
+        }
 
     def __repr__(self):
         return f"<Role {self.name}>"
@@ -78,46 +85,17 @@ class User(UserMixin, db.Model):
             status="REGISTERED"
         ).first() is not None
 
-    @property
-    def total_pdp_points(self):
-        # Tinh tong diem PDP da tich luy qua cac su kien da check-in
-        checked_tickets = Ticket.query.filter_by(user_id=self.id, status="CHECKED_IN").all()
-        return sum(t.event.pdp_points for t in checked_tickets if t.event and t.event.pdp_points)
-
-    @property
-    def pdp_rank(self):
-        pts = self.total_pdp_points
-        if pts >= 30:
-            return {
-                "title": "Huyền Thoại Cóc Vàng",
-                "icon": "🥇",
-                "badge_class": "feh-rank-gold",
-                "color": "#f59e0b",
-                "next_rank": None,
-                "pts_to_next": 0,
-                "progress_percent": 100
-            }
-        elif pts >= 15:
-            return {
-                "title": "Chiến Binh Năng Nổ",
-                "icon": "🥈",
-                "badge_class": "feh-rank-warrior",
-                "color": "#3b82f6",
-                "next_rank": "Huyền Thoại Cóc Vàng (30 PDP)",
-                "pts_to_next": 30 - pts,
-                "progress_percent": min(100, int((pts / 30) * 100))
-            }
-        else:
-            return {
-                "title": "Tân Binh Trường F",
-                "icon": "🥉",
-                "badge_class": "feh-rank-recruit",
-                "color": "#10b981",
-                "next_rank": "Chiến Binh Năng Nổ (15 PDP)",
-                "pts_to_next": 15 - pts,
-                "progress_percent": min(100, int((pts / 15) * 100))
-            }
-
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "student_id": self.student_id,
+            "full_name": self.full_name,
+            "email": self.email,
+            "phone": self.phone,
+            "avatar_url": self.avatar_url,
+            "role": self.role.name if self.role else None,
+            "created_at": self.created_at.strftime("%Y-%m-%d %H:%M:%S") if self.created_at else None
+        }
 
     def __repr__(self):
         return f"<User {self.email} ({self.student_id})>"
@@ -134,6 +112,17 @@ class Category(db.Model):
     description = db.Column(db.Unicode(255), nullable=True)
 
     events = db.relationship("Event", back_populates="category", lazy="select")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "slug": self.slug,
+            "icon": self.icon,
+            "color": self.color,
+            "description": self.description,
+            "events_count": len(self.events) if self.events else 0
+        }
 
     def __repr__(self):
         return f"<Category {self.name}>"
@@ -155,7 +144,6 @@ class Event(db.Model):
 
     total_capacity = db.Column(db.Integer, nullable=False, default=100) # Tong so cho ngoi
     available_slots = db.Column(db.Integer, nullable=False, default=100) # So cho con lai
-    pdp_points = db.Column(db.Integer, nullable=False, default=10) # Diem ren luyen PDP (FPT)
 
     description_md = db.Column(db.UnicodeText, nullable=True)
     description_html = db.Column(db.UnicodeText, nullable=True)
@@ -193,6 +181,29 @@ class Event(db.Model):
     def review_count(self):
         return len(self.reviews)
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "slug": self.slug,
+            "venue": self.venue,
+            "start_time": self.start_time.strftime("%Y-%m-%d %H:%M:%S") if self.start_time else None,
+            "end_time": self.end_time.strftime("%Y-%m-%d %H:%M:%S") if self.end_time else None,
+            "total_capacity": self.total_capacity,
+            "available_slots": self.available_slots,
+            "speaker_name": self.speaker_name,
+            "speaker_title": self.speaker_title,
+            "banner_url": self.banner_url,
+            "category": self.category.name if self.category else None,
+            "category_id": self.category_id,
+            "organizer": self.organizer.full_name if self.organizer else None,
+            "status": self.status,
+            "is_sold_out": self.is_sold_out,
+            "average_rating": self.average_rating,
+            "review_count": self.review_count,
+            "created_at": self.created_at.strftime("%Y-%m-%d %H:%M:%S") if self.created_at else None
+        }
+
     def __repr__(self):
         return f"<Event {self.title}>"
 
@@ -218,6 +229,20 @@ class Ticket(db.Model):
         rand_str = uuid.uuid4().hex[:6].upper()
         return f"FU-{datetime.now().year}-{rand_str}"
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "ticket_code": self.ticket_code,
+            "status": self.status,
+            "registered_at": self.registered_at.strftime("%Y-%m-%d %H:%M:%S") if self.registered_at else None,
+            "checked_in_at": self.checked_in_at.strftime("%Y-%m-%d %H:%M:%S") if self.checked_in_at else None,
+            "event_id": self.event_id,
+            "event_title": self.event.title if self.event else None,
+            "student_id": self.user.student_id if self.user else None,
+            "student_name": self.user.full_name if self.user else None,
+            "student_email": self.user.email if self.user else None
+        }
+
     def __repr__(self):
         return f"<Ticket {self.ticket_code} for {self.user.email}>"
 
@@ -235,6 +260,17 @@ class Review(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     user = db.relationship("User", back_populates="reviews")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "rating": self.rating,
+            "comment": self.comment,
+            "created_at": self.created_at.strftime("%Y-%m-%d %H:%M:%S") if self.created_at else None,
+            "event_id": self.event_id,
+            "user_id": self.user_id,
+            "user_name": self.user.full_name if self.user else None
+        }
 
     def __repr__(self):
         return f"<Review {self.rating}* by {self.user.email} for Event {self.event_id}>"

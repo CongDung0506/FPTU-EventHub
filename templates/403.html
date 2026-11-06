@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}403 - Quyền Truy Cập Bị Từ Chối | FPTU EventHub{% endblock %}
+
+{% block content %}
+<div class="feh-container py-5 text-center" style="max-width: 600px; margin: 40px auto;">
+    <div class="feh-card p-5" style="border-top: 4px solid #ef4444;">
+        <div style="font-size: 64px; margin-bottom: 16px;">🚫</div>
+        <h1 class="feh-hero-title mb-3" style="font-size: 28px; color: #ef4444;">403 - Quyền Truy Cập Bị Từ Chối</h1>
+        <p class="text-secondary mb-4">
+            Tài khoản hiện tại của bạn không có thẩm quyền truy cập vào phân hệ này. 
+            Chức năng này được bảo vệ bởi cơ chế phân quyền RBAC (Role-Based Access Control) của Phòng Công tác sinh viên.
+        </p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{{ url_for('home') }}" class="feh-btn feh-btn-primary">
+                <i class="fa fa-home me-2"></i>Về Trang Chủ
+            </a>
+            <a href="{{ url_for('login') }}" class="feh-btn feh-btn-outline">
+                <i class="fa fa-sign-in-alt me-2"></i>Đổi Tài Khoản
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

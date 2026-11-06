@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} | FPTU EventHub{% endblock %}
+
+{% block content %}
+<div class="feh-container py-4" style="max-width: 640px; margin: 0 auto;">
+    <div class="feh-card p-4 p-md-5">
+        <h2 class="h4 mb-3 text-white">{{ title }}</h2>
+        <p class="text-secondary small mb-4">Nhập thông tin danh mục sự kiện cho cổng FPTU EventHub.</p>
+
+        <form method="POST">
+            {{ form.hidden_tag() }}
+
+            <div class="mb-3">
+                {{ form.name.label(class="form-label text-white") }}
+                {{ form.name(class="feh-input", placeholder="Ví dụ: Công Nghệ & AI") }}
+                {% if form.name.errors %}
+                <div class="text-danger small mt-1">{{ form.name.errors[0] }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.slug.label(class="form-label text-white") }}
+                {{ form.slug(class="feh-input", placeholder="Ví dụ: tech-ai") }}
+                {% if form.slug.errors %}
+                <div class="text-danger small mt-1">{{ form.slug.errors[0] }}</div>
+                {% endif %}
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    {{ form.color.label(class="form-label text-white") }}
+                    {{ form.color(class="feh-input", placeholder="#f26f21") }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    {{ form.icon.label(class="form-label text-white") }}
+                    {{ form.icon(class="feh-input", placeholder="fa-calendar-star") }}
+                </div>
+            </div>
+
+            <div class="mb-4">
+                {{ form.description.label(class="form-label text-white") }}
+                {{ form.description(class="feh-input", placeholder="Mô tả ngắn gọn về danh mục") }}
+            </div>
+
+            <div class="d-flex gap-3">
+                {{ form.submit(class="feh-btn feh-btn-primary") }}
+                <a href="{{ url_for('category_list') }}" class="feh-btn feh-btn-outline">Quay Lại</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

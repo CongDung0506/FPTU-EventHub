@@ -330,6 +330,70 @@ def create_presentation_document(output_path):
             if col_i == 0:
                 r.font.bold = True
 
+
+    # 2.2 Bang tong hop 100% cac ham PWD301
+    doc.add_paragraph().paragraph_format.space_before = Pt(8)
+    doc.add_paragraph().add_run("2.2. Bảng Tổng Hợp Đầy Đủ 100% Các Hàm & Kỹ Thuật Lập Trình Web Python (PWD301) Được Áp Dụng:").font.bold = True
+    
+    pwd_table = doc.add_table(rows=9, cols=3)
+    pwd_table.alignment = WD_TABLE_ALIGNMENT.CENTER
+    pwd_heads = ["Mô-đun Kiến Thức PWD301", "Danh Sách Các Hàm & Lớp Được Hiện Thực", "Vị Trí & Nghiệp Vụ Cụ Thể Trong Dự Án"]
+    for p_i, p_h in enumerate(pwd_heads):
+        cell = pwd_table.rows[0].cells[p_i]
+        set_cell_background(cell, "004B91")
+        set_cell_margins(cell, 80, 80, 100, 100)
+        p = cell.paragraphs[0]
+        r = p.add_run(p_h)
+        r.font.bold = True
+        r.font.color.rgb = RGBColor(255, 255, 255)
+        r.font.size = Pt(9.5)
+
+    pwd_data = [
+        ("1. Routing, HTTP & Error Handling", 
+         "@app.route(methods=['GET','POST','PUT','DELETE'])\nrender_template(), redirect(), url_for()\nrequest.args, request.form, request.get_json()\nflash(), abort(400/403/404/500), jsonify()\n@app.errorhandler(400/403/404/500)", 
+         "app.py: Xử lý toàn bộ vòng đời Request/Response; Hỗ trợ đồng thời cả hiển thị giao diện HTML (400.html, 403.html, 404.html, 500.html) lẫn phản hồi JSON chuẩn REST API."),
+        
+        ("2. Template Engine & Jinja Filters", 
+         "@app.template_filter('vnd')\n@app.template_filter('datetime_format')\n@app.template_filter('timeago')\n@app.template_filter('truncate_words')\n@app.context_processor (inject_global_data)", 
+         "app.py: Định dạng tiền tệ VND, định dạng ngày tháng chuẩn Việt Nam, tính toán thời gian tương đối (Sắp diễn ra, Còn n ngày), cắt ngắn mô tả; Tiêm biến dùng chung vào mọi template Jinja2."),
+        
+        ("3. Authentication & Session Security", 
+         "LoginManager(), @login_manager.user_loader\nlogin_user(remember=True), logout_user()\n@login_required, current_user.is_authenticated\nis_safe_url() (Open Redirect Prevention)\ngenerate_password_hash(), check_password_hash()", 
+         "app.py & models.py: Cơ chế Zero-SSO nhận diện FPT Mail; Bảo vệ chuyển hướng an toàn theo bài Lab 6; Mã hóa mật khẩu PBKDF2/SHA-256 kèm muối ngẫu nhiên (Werkzeug Security)."),
+        
+        ("4. Form Validation & CSRF (Flask-WTF)", 
+         "FlaskForm, StringField, PasswordField, BooleanField\nTextAreaField, IntegerField, SelectField, DateTimeLocalField\nDataRequired, Email, Length, NumberRange, EqualTo\nCustom validator: validate_email(), validate_student_id()\nCustom validator: validate_phone() (10 số bắt đầu bằng 0)", 
+         "forms.py: Kiểm thực dữ liệu nghiêm ngặt ở tầng Server; Kiểm tra đuôi email @fpt.edu.vn; Kiểm tra MSSV FPT; Kiểm tra số điện thoại chuẩn Việt Nam (bài Lab 6); CSRF token form.hidden_tag()."),
+        
+        ("5. Cơ Sở Dữ Liệu & SQLAlchemy ORM", 
+         "db.Model, Column, ForeignKey, relationship()\nback_populates, cascade='all, delete-orphan'\ndb.session.add(), db.session.delete()\ndb.session.commit(), db.session.rollback()\nget_or_404(), filter(), filter_by(), order_by()\nModel.query.paginate(page, per_page, error_out=False)\nto_dict() serialization", 
+         "models.py & app.py: 100% truy vấn ORM chuẩn hóa; Cơ chế giao dịch Transaction nguyên tử (Atomic) bảo vệ số lượng ghế; Phân trang sự kiện bằng paginate(); Xuất dữ liệu to_dict() cho REST API."),
+        
+        ("6. Phân Quyền RBAC (Decorators)", 
+         "@role_required(*roles) (3-level parameterized decorator)\n@organizer_required (Organizer & Admin)\n@admin_required (Admin only)\nKiểm tra current_user.role và abort(403)", 
+         "decorators.py: Kế thừa mô hình phân quyền từ bài thực hành FPT Parking; Tách biệt triệt để quyền hạn giữa Sinh viên và Cán bộ CTSV; Trả về lỗi 403 Forbidden khi vi phạm."),
+        
+        ("7. Full RESTful API v1 (Chương 9 & Exam)", 
+         "GET /api/v1/events (phân trang, lọc danh mục, tìm kiếm)\nGET /api/v1/events/<id>\nPOST /api/v1/events (Tạo mới, mã 201 Created)\nPUT /api/v1/events/<id> (Cập nhật, mã 200 OK)\nDELETE /api/v1/events/<id> (Xóa, mã 200/204)\nGET /api/v1/categories, GET /api/v1/stats\nPOST /api/v1/auth/login", 
+         "app.py: Xây dựng toàn bộ hệ thống API chuẩn RESTful theo yêu cầu Chương 9 và bài thi ParkTicket API; Trả về mã lỗi HTTP chuẩn hóa (200, 201, 204, 400, 401, 403, 404, 422)."),
+        
+        ("8. Xử Lý Tệp Tin & Xuất Báo Cáo", 
+         "csv.writer(), io.StringIO()\nResponse(mimetype='text/csv')\nContent-Disposition: attachment\nKý tự UTF-8 BOM ('\\ufeff') hỗ trợ Microsoft Excel", 
+         "app.py (export_attendees_csv): Xuất danh sách sinh viên tham dự sự kiện ra file CSV chuẩn tiếng Việt có dấu, phục vụ lưu trữ văn thư và đối soát cho Phòng CTSV.")
+    ]
+    for r_i, r_d in enumerate(pwd_data, start=1):
+        row = pwd_table.rows[r_i]
+        bg_col = "F8FAFC" if r_i % 2 == 1 else "FFFFFF"
+        for col_i, text in enumerate(r_d):
+            cell = row.cells[col_i]
+            set_cell_background(cell, bg_col)
+            set_cell_margins(cell, 60, 60, 80, 80)
+            p = cell.paragraphs[0]
+            r = p.add_run(text)
+            r.font.size = Pt(8.5)
+            if col_i == 0:
+                r.font.bold = True
+
     # Verbatim Script Member 2
     doc.add_paragraph().paragraph_format.space_before = Pt(8)
     doc.add_paragraph().add_run("🎙 Lời thoại thuyết trình mẫu Thành viên 2 (9.0 phút):").font.bold = True
@@ -354,6 +418,10 @@ def create_presentation_document(output_path):
         "Trụ cột thứ tư: Công nghệ quét mã QR trên nền WebRTC. Chúng em không bắt buộc sinh viên hay cán bộ phải cài đặt bất kỳ App di động nào từ App Store hay CH Play. "
         "Thông qua thư viện html5-qrcode, hệ thống xin quyền truy cập Camera trực tiếp trên trình duyệt web, phân tích luồng hình ảnh ở tần số 10 khung hình/giây để giải mã "
         "chuỗi vé FU-2026 và gửi AJAX ngầm về máy chủ để check-in tức thì.\n\n"
+        "Đặc biệt, thưa quý thầy cô, hệ thống FPTU EventHub đã hiện thực hóa trọn vẹn 100% tất cả các hàm và kỹ thuật trọng tâm đã học trong chương trình Python Web (PWD301): "
+        "từ Routing, Custom Template Filters (vnd, datetime_format, timeago), Context Processor, Form Validation với custom validator SĐT và MSSV của Lab 6, "
+        "kỹ thuật phân quyền Parameterized Decorator @role_required của đề thi FPT Parking, cơ chế phân trang paginate() của SQLAlchemy ORM, "
+        "cho đến bộ RESTful API v1 hoàn chỉnh đầy đủ mã HTTP Status Codes (200, 201, 204, 400, 401, 403, 404, 422) theo chuẩn Chương 9 và bài thi ParkTicket API!\n\n"
         "Tiếp theo đây, xin kính mời Thành viên 3 trình bày chi tiết về Kiến trúc MVC và Thiết kế cơ sở dữ liệu ERD của dự án!\""
     )
     r_s2.font.size = Pt(9.5)

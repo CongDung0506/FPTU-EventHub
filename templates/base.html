@@ -243,6 +243,7 @@
           {% if current_user.is_authenticated %}
             {% if current_user.is_admin %}
               <li><a href="{{ url_for('admin_dashboard') }}" class="feh-navbar__link"><i class="fa-solid fa-shield-halved"></i> Quản Trị CTSV</a></li>
+              <li><a href="{{ url_for('category_list') }}" class="feh-navbar__link"><i class="fa-solid fa-tags"></i> Danh Mục</a></li>
               <li><a href="{{ url_for('organizer_dashboard') }}" class="feh-navbar__link"><i class="fa-solid fa-chart-line"></i> Quản Lý Sự Kiện & Điểm Danh</a></li>
               <li><a href="{{ url_for('check_in') }}" class="feh-navbar__link"><i class="fa-solid fa-qrcode"></i> Bàn Check-in</a></li>
             {% elif current_user.is_organizer %}
@@ -292,6 +293,7 @@
                 {% if current_user.is_admin %}
                   <li class="dropdown-header">Cán bộ CTSV: {{ current_user.student_id or 'ADM001' }}</li>
                   <li><a href="{{ url_for('admin_dashboard') }}"><i class="fa-solid fa-shield-halved"></i> Trung tâm Quản trị CTSV</a></li>
+                  <li><a href="{{ url_for('category_list') }}"><i class="fa-solid fa-tags"></i> Quản lý danh mục sự kiện</a></li>
                   <li><a href="{{ url_for('organizer_dashboard') }}"><i class="fa-solid fa-chart-line"></i> Quản lý sự kiện & Người tham gia</a></li>
                   <li><a href="{{ url_for('event_create') }}"><i class="fa-solid fa-plus-circle"></i> Đăng sự kiện mới</a></li>
                   <li><a href="{{ url_for('check_in') }}"><i class="fa-solid fa-qrcode"></i> Bàn quét mã QR Check-in</a></li>
@@ -304,6 +306,9 @@
                   <li class="dropdown-header">MSSV: {{ current_user.student_id or 'FPT Student' }}</li>
                   <li><a href="{{ url_for('my_tickets') }}"><i class="fa-solid fa-ticket"></i> Vé Đã Đăng Ký Của Tôi</a></li>
                 {% endif %}
+                <li role="separator" class="divider"></li>
+                <li><a href="{{ url_for('profile') }}"><i class="fa-solid fa-user-gear"></i> Hồ sơ cá nhân</a></li>
+                <li><a href="{{ url_for('change_password') }}"><i class="fa-solid fa-key"></i> Đổi mật khẩu</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="{{ url_for('logout') }}"><i class="fa-solid fa-arrow-right-from-bracket text-danger"></i> Đăng xuất an toàn</a></li>
               </ul>

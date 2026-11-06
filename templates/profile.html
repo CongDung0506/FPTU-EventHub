@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Hồ Sơ Cá Nhân | FPTU EventHub{% endblock %}
+
+{% block content %}
+<div class="feh-container py-4" style="max-width: 720px; margin: 0 auto;">
+    <div class="feh-card p-4 p-md-5">
+        <div class="d-flex align-items-center gap-3 mb-4 pb-3" style="border-bottom: 1px solid rgba(255,255,255,0.08);">
+            <img src="{{ current_user.avatar_url or 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80' }}" 
+                 alt="{{ current_user.full_name }}" 
+                 style="width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 2px solid #f26f21;">
+            <div>
+                <h2 class="h4 mb-1 text-white">{{ current_user.full_name }}</h2>
+                <div class="d-flex gap-2 align-items-center">
+                    <span class="badge bg-primary">{{ current_user.role.name }}</span>
+                    {% if current_user.student_id %}
+                    <span class="badge bg-secondary">MSSV: {{ current_user.student_id }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <form method="POST" action="{{ url_for('profile') }}">
+            {{ form.hidden_tag() }}
+
+            <div class="mb-3">
+                <label class="form-label text-secondary">Email Trường Cấp (@fpt.edu.vn)</label>
+                <input type="text" class="feh-input" value="{{ current_user.email }}" disabled style="opacity: 0.7; cursor: not-allowed;">
+                <small class="text-muted">Email sinh viên FPT được đồng bộ từ hệ thống danh bạ trường.</small>
+            </div>
+
+            <div class="mb-3">
+                {{ form.full_name.label(class="form-label text-white") }}
+                {{ form.full_name(class="feh-input", placeholder="Nhập họ và tên đầy đủ") }}
+                {% if form.full_name.errors %}
+                <div class="text-danger small mt-1">{{ form.full_name.errors[0] }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.phone.label(class="form-label text-white") }}
+                {{ form.phone(class="feh-input", placeholder="Ví dụ: 0912345678 (10 số, bắt đầu bằng 0)") }}
+                <small class="text-muted">Áp dụng Custom Validator kiểm tra 10 chữ số chuẩn định dạng Việt Nam.</small>
+                {% if form.phone.errors %}
+                <div class="text-danger small mt-1">{{ form.phone.errors[0] }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-4">
+                {{ form.avatar_url.label(class="form-label text-white") }}
+                {{ form.avatar_url(class="feh-input", placeholder="https://...") }}
+                {% if form.avatar_url.errors %}
+                <div class="text-danger small mt-1">{{ form.avatar_url.errors[0] }}</div>
+                {% endif %}
+            </div>
+
+            <div class="d-flex gap-3">
+                {{ form.submit(class="feh-btn feh-btn-primary") }}
+                <a href="{{ url_for('change_password') }}" class="feh-btn feh-btn-outline">
+                    <i class="fa fa-key me-2"></i>Đổi Mật Khẩu
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
