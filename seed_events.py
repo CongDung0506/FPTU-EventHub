@@ -142,7 +142,6 @@ def seed_data_internal():
             "end_time": now + timedelta(days=2, hours=11, minutes=30),
             "total_capacity": 100,
             "available_slots": 75,
-            "pdp_points": 10,
             "speaker_name": "TS. Nguyễn Hoàng Nam",
             "speaker_title": "Senior AI Architect tại FPT Software & Cựu SV FPT",
             "speaker_avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
@@ -166,7 +165,6 @@ Workshop dành riêng cho sinh viên ngành CNTT ĐH FPT, mang đến cái nhìn
             "total_capacity": 20,
             "available_slots": 0, # HET VE - Phong Lab AI kin cho!
             "status": "FULL",
-            "pdp_points": 15,
             "speaker_name": "Ban Chuyên Môn CLB F-Code",
             "speaker_title": "Đơn vị tổ chức cuộc thi học thuật ĐH FPT",
             "speaker_avatar": "/static/images/fpt_logo.jpg",
@@ -187,7 +185,6 @@ Thử thách bản thân trong môi trường áp lực cao để phát triển 
             "end_time": now + timedelta(days=3, hours=17),
             "total_capacity": 120,
             "available_slots": 92,
-            "pdp_points": 10,
             "speaker_name": "Chị Lê Thu Hà",
             "speaker_title": "Trưởng phòng Tuyển dụng & Đào tạo FPT Software",
             "speaker_avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80",
@@ -208,7 +205,6 @@ Dành cho sinh viên từ kỳ 4 trở lên chuẩn bị bước vào kỳ On-th
             "end_time": now + timedelta(days=7, hours=22),
             "total_capacity": 250,
             "available_slots": 222,
-            "pdp_points": 5,
             "speaker_name": "Ban Chấp Hành Đoàn Trường FPTU",
             "speaker_title": "Phòng CTSV phối hợp cùng 30 CLB FPTU",
             "speaker_avatar": "/static/images/fpt_logo.jpg",
@@ -228,7 +224,6 @@ Dành cho sinh viên từ kỳ 4 trở lên chuẩn bị bước vào kỳ On-th
             "end_time": now + timedelta(days=10, hours=16),
             "total_capacity": 80,
             "available_slots": 62,
-            "pdp_points": 10,
             "speaker_name": "Võ Sư Nguyễn Thanh Tùng",
             "speaker_title": "Trưởng Bộ môn Giáo dục Thể chất Vovinam FPTU",
             "speaker_avatar": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=200&q=80",
@@ -248,7 +243,6 @@ Dành cho sinh viên từ kỳ 4 trở lên chuẩn bị bước vào kỳ On-th
             "total_capacity": 30,
             "available_slots": 0, # HET VE - Chay ve toan bo!
             "status": "FULL",
-            "pdp_points": 10,
             "speaker_name": "Thầy Võ Minh Trí",
             "speaker_title": "Giảng viên Xuất Sắc Bộ môn Kỹ năng Mềm FPTU",
             "speaker_avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=200&q=80",
@@ -269,7 +263,6 @@ Sự kiện đã nhận được sự quan tâm kỷ lục và **chính thức c
             "total_capacity": 15,
             "available_slots": 0, # HET VE - Phong hoi thao 302 kin cho!
             "status": "FULL",
-            "pdp_points": 10,
             "speaker_name": "Anh Phạm Quốc Bảo",
             "speaker_title": "Chuyên Gia Bảo Mật Cấp Cao FPT IS",
             "speaker_avatar": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&q=80",
@@ -289,7 +282,6 @@ Thực hành trực tiếp tấn công và phòng thủ web (CTF mini challenge)
             "end_time": now + timedelta(days=8, hours=11),
             "total_capacity": 150,
             "available_slots": 124,
-            "pdp_points": 15,
             "speaker_name": "Đội Tình Nguyện Sinh Viên FPTU",
             "speaker_title": "Phối hợp cùng Hội Chữ Thập Đỏ & Bệnh viện",
             "speaker_avatar": "/static/images/fpt_logo.jpg",
@@ -319,7 +311,6 @@ Chương trình thiện nguyện truyền thống thường niên của sinh vi�
                 total_capacity=ed["total_capacity"],
                 available_slots=ed["available_slots"],
                 status=ed.get("status", "OPEN"),
-                pdp_points=ed["pdp_points"],
                 description_md=ed["desc_md"],
                 description_html=render_safe_markdown(ed["desc_md"]),
                 category=ed["category"],
@@ -331,7 +322,6 @@ Chương trình thiện nguyện truyền thống thường niên của sinh vi�
             ev.available_slots = ed["available_slots"]
             ev.status = ed.get("status", "OPEN")
             ev.venue = ed["venue"]
-            ev.pdp_points = ed["pdp_points"]
             ev.speaker_name = ed["speaker_name"]
             ev.speaker_title = ed["speaker_title"]
             ev.speaker_avatar = ed["speaker_avatar"]
