@@ -116,42 +116,47 @@
 
 ---
 
-### 🔹 SLIDE 7: CHÂN DUNG & PHÂN CÔNG 5 THÀNH VIÊN
+### 🔹 SLIDE 7: CHÂN DUNG & PHÂN CÔNG 40 USECASES CHO 5 THÀNH VIÊN
 * **Bố cục đề xuất:** 5 Thẻ Persona đặt nằm ngang (Mỗi thẻ 1 màu nhấn riêng).
 * **Nội dung đưa vào Slide:**
   * **Thẻ 1: Trương Công Dũng (DE200433) — Trưởng Nhóm & System Architect**
-    * Thiết kế kiến trúc tổng thể MVC, giải thuật khóa vé Atomic, điều phối nhóm.
-    * `⭐ Đóng góp: 20%`
-  * **Thẻ 2: Nguyễn Việt Anh (SE190111) — PM & Scrum Master**
-    * Quản lý tiến độ 4 Sprint Jira, mô hình hóa quan hệ CSDL, quy chuẩn Gitflow.
-    * `⭐ Đóng góp: 20%`
+    * Xác thực Zero-SSO 1-click, Đăng ký FPT Mail, Profile, RBAC Guard.
+    * Đổi mật khẩu Werkzeug, Router security, Khám phá & lọc sự kiện.
+    * `⭐ Đóng góp: 20% (8 UseCases: UC01 → UC08)`
+  * **Thẻ 2: Nguyễn Việt Anh (SE190111) — PM & Database Architect**
+    * Quản lý Danh mục CRUD, Dashboard điều hành CTSV toàn trường.
+    * Phân trang `paginate`, Lọc sự kiện theo thời gian, Phân quyền Admin.
+    * `⭐ Đóng góp: 20% (8 UseCases: UC09 → UC16)`
   * **Thẻ 3: Lê Hoàng Long (SE190222) — Security & Backend Lead**
-    * 4 Lá chắn bảo mật OWASP, mã hóa băm mật khẩu, thuật toán Token QR.
-    * `⭐ Đóng góp: 20%`
-  * **Thẻ 4: Trần Minh Quang (SE190333) — Fullstack & UI/UX Lead**
-    * Thiết kế giao diện Responsive, tích hợp camera WebRTC, kịch bản Demo.
-    * `⭐ Đóng góp: 20%`
-  * **Thẻ 5: Phạm Đức Trọng (SE190444) — QA & Test Lead**
-    * Thiết kế 15 Unit Tests tự động, kiểm thử tải đồng thời, tối ưu Vercel.
-    * `⭐ Đóng góp: 20%`
-* **Gợi ý ảnh/icon:** Icon lập trình viên 👨‍💻, huy hiệu sao ⭐.
+    * Xem chi tiết sự kiện, Khóa vé nguyên tử Atomic Concurrency, Auto-Lock.
+    * Sinh mã vé & Token bảo mật, Ví vé "Vé Của Tôi", Hủy vé, CSRF/XSS.
+    * `⭐ Đóng góp: 20% (8 UseCases: UC17 → UC24)`
+  * **Thẻ 4: Trần Minh Quang (SE190333) — Fullstack & Scanner Lead**
+    * Bàn Check-in Camera WebRTC đa thiết bị, Giải mã QR siêu tốc < 0.1s.
+    * Chống gian lận quét trùng, Toggle Check-in, Review 5 sao, Theme Switcher.
+    * `⭐ Đóng góp: 20% (8 UseCases: UC25 → UC32)`
+  * **Thẻ 5: Phạm Đức Trọng (SE190444) — QA & DevOps Lead**
+    * Dashboard Ban Tổ Chức, Quản lý sinh viên tham dự, Xuất file Excel.
+    * Quản lý sự kiện CRUD, RESTful API v1 JSON, 15 Unit Tests tự động.
+    * `⭐ Đóng góp: 20% (8 UseCases: UC33 → UC40)`
+* **Gợi ý ảnh/icon:** Icon lập trình viên 👨‍💻, huy hiệu sao ⭐, tổng 40 UseCases.
 
 ---
 
-### 🔹 SLIDE 8: CÔNG CỤ QUẢN LÝ DỰ ÁN & CỘNG TÁC
+### 🔹 SLIDE 8: CÔNG CỤ QUẢN LÝ DỰ ÁN & QUY TRÌNH (JIRA & GIT EDUCATION)
 * **Bố cục đề xuất:** 4 Thẻ vuông (Grid 2x2).
 * **Nội dung đưa vào Slide:**
-  * **Thẻ 1: 📋 Jira & Trello (Quản trị Agile/Scrum)**
-    * Phân rã User Stories thành 24 Tasks, gán Story Points rõ ràng.
+  * **Thẻ 1: 📋 Jira Software (Agile Scrum)**
+    * Phân rã 40 UseCases thành 40 User Stories / Tasks cụ thể, gán Story Points.
     * Bảng Kanban 4 cột (To Do -> In Progress -> Code Review -> Done).
-  * **Thẻ 2: 🐙 GitHub Enterprise (Quản lý mã nguồn)**
-    * Phân chia nhánh Gitflow, bắt buộc tạo Pull Request có review chéo.
-    * Tích hợp CI/CD tự động kiểm tra code trước khi merge.
+  * **Thẻ 2: 🐙 GitHub Education (Quản lý mã nguồn)**
+    * Tài khoản GitHub Student Developer Pack bảo đảm hạ tầng chuyên nghiệp.
+    * Chuẩn Gitflow: Nhánh main, develop và các nhánh feature/uc[xx] riêng biệt.
   * **Thẻ 3: 🎨 Figma (Thiết kế UI/UX)**
-    * Wireframe & Prototype giao diện chuẩn Responsive (Mobile & Laptop).
-    * Thiết kế luồng thao tác bàn quét QR tối ưu cho điện thoại.
-  * **Thẻ 4: 💬 Discord & Slack (Giao tiếp nhóm)**
-    * Họp Daily Standup 15 phút mỗi ngày, thông báo Webhook tự động khi có code mới.
+    * Wireframe & Prototype giao diện chuẩn Responsive (Mobile First & Laptop).
+    * Thiết kế luồng thao tác Bàn Check-in WebRTC tối ưu cho điện thoại.
+  * **Thẻ 4: 💬 Discord & Slack (Giao tiếp & CI/CD)**
+    * Họp Daily Standup 15 phút mỗi sáng, Webhook thông báo tự động Commit/Build.
 * **Gợi ý ảnh/icon:** Logo Jira, GitHub, Figma, Discord.
 
 ---

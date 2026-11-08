@@ -485,36 +485,36 @@ def build_bright_deck():
     ], top_accent=GREEN, bg_color=GREEN_TINT, border_color=GREEN_BORDER, icon="🏛️")
 
     # =========================================================================
-    # SLIDE 7: 5 PERSONA CARDS (Phân công nhiệm vụ)
+    # SLIDE 7: 5 PERSONA CARDS (Phân công 40 UseCases cho 5 thành viên)
     # =========================================================================
     s7 = prs.slides.add_slide(blank_layout)
-    add_header(s7, "2. Phân công nhiệm vụ", "Chân Dung & Trách Nhiệm 5 Thành Viên Nhóm", "Thành viên 2: Nguyễn Việt Anh", "👥")
+    add_header(s7, "2. Phân công nhiệm vụ", "Phân Công 40 UseCases Cho 5 Thành Viên (8 UC/Bạn)", "Thành viên 2: Nguyễn Việt Anh", "👥")
 
     members = [
         ("Trương Công Dũng", "DE200433", "Trưởng Nhóm & System", PRIMARY, PRIMARY_TINT, PRIMARY_BORDER, [
-            "Kiến trúc tổng thể MVC",
-            "Cơ chế Atomic Booking",
-            "Điều phối chung dự án"
+            "Zero-SSO & Auth Guard",
+            "Khám phá sự kiện & Filter",
+            "⭐ 8 UC: UC01 → UC08"
         ]),
-        ("Nguyễn Việt Anh", "SE190111", "PM & Scrum Master", BLUE, BLUE_TINT, BLUE_BORDER, [
-            "Quản lý tiến độ 4 Sprint",
-            "Mô hình CSDL & Relations",
-            "Quy trình chuẩn Gitflow"
+        ("Nguyễn Việt Anh", "SE190111", "PM & Database Arch", BLUE, BLUE_TINT, BLUE_BORDER, [
+            "Quản lý Danh mục CRUD",
+            "Dashboard CTSV toàn trường",
+            "⭐ 8 UC: UC09 → UC16"
         ]),
         ("Lê Hoàng Long", "SE190222", "Security & Backend", GREEN, GREEN_TINT, GREEN_BORDER, [
-            "4 Lá chắn bảo mật OWASP",
-            "Thuật toán mã hóa QR",
-            "Xử lý CSRF & Session"
+            "Khóa vé Atomic Concurrency",
+            "Mã QR & Hủy vé hoàn slot",
+            "⭐ 8 UC: UC17 → UC24"
         ]),
-        ("Trần Minh Quang", "SE190333", "Fullstack & UI/UX", PURPLE, PURPLE_TINT, PURPLE_BORDER, [
-            "Giao diện Responsive",
-            "WebRTC Scanner Camera",
-            "Phụ trách kịch bản Demo"
+        ("Trần Minh Quang", "SE190333", "Fullstack & Scanner", PURPLE, PURPLE_TINT, PURPLE_BORDER, [
+            "Bàn Check-in WebRTC Camera",
+            "Chống gian lận quét trùng",
+            "⭐ 8 UC: UC25 → UC32"
         ]),
-        ("Phạm Đức Trọng", "SE190444", "QA & Test Lead", AMBER, AMBER_TINT, AMBER_BORDER, [
-            "Thiết kế 15 Unit Tests",
-            "Kiểm thử tải & Concurrency",
-            "Tối ưu Cold Start Vercel"
+        ("Phạm Đức Trọng", "SE190444", "QA & DevOps Lead", AMBER, AMBER_TINT, AMBER_BORDER, [
+            "Dashboard Ban Tổ Chức",
+            "Xuất Excel & 15 Unit Tests",
+            "⭐ 8 UC: UC33 → UC40"
         ]),
     ]
 
@@ -594,21 +594,21 @@ def build_bright_deck():
         r_20.font.color.rgb = m_col
 
     # =========================================================================
-    # SLIDE 8: CÔNG CỤ QUẢN LÝ DỰ ÁN
+    # SLIDE 8: CÔNG CỤ QUẢN LÝ DỰ ÁN (JIRA & GIT EDUCATION)
     # =========================================================================
     s8 = prs.slides.add_slide(blank_layout)
-    add_header(s8, "3. Công cụ & Kế hoạch", "Bộ Công Cụ Quản Lý & Điều Phối Dự Án", "Thành viên 2: Nguyễn Việt Anh", "🛠️")
+    add_header(s8, "3. Công cụ & Kế hoạch", "Bộ Công Cụ Quản Lý: Jira Software & Git Education", "Thành viên 2: Nguyễn Việt Anh", "🛠️")
 
-    add_bento_box(s8, Inches(0.8), Inches(1.5), Inches(5.6), Inches(2.6), "Jira & Trello (Quản Trị Agile)", [
-        ("Phân rã User Stories", "Chuyển đổi yêu cầu thành 24 Tasks cụ thể, gán Story Points."),
+    add_bento_box(s8, Inches(0.8), Inches(1.5), Inches(5.6), Inches(2.6), "Jira Software (Quản Trị Agile/Scrum)", [
+        ("Phân rã 40 UseCases", "Chuyển đổi thành 40 User Stories trên Product Backlog, gán Story Points."),
         ("Kanban Board 4 cột", "To Do -> In Progress -> Code Review -> Done minh bạch tiến độ."),
-        ("Kiểm soát rủi ro", "Phát hiện điểm nghẽn (Bottlenecks) sớm trong các buổi Daily Standup.")
+        ("Kiểm soát 4 Sprint", "Phát hiện điểm nghẽn sớm trong các buổi Daily Standup mỗi sáng.")
     ], top_accent=BLUE, bg_color=BLUE_TINT, border_color=BLUE_BORDER, icon="📋")
 
-    add_bento_box(s8, Inches(6.8), Inches(1.5), Inches(5.6), Inches(2.6), "GitHub Enterprise (Quản Lý Mã Nguồn)", [
-        ("Mô hình Gitflow chuẩn mực", "Tách biệt rõ ràng nhánh main, develop và các feature/branches."),
-        ("Pull Request bắt buộc", "Mọi thay đổi cần ít nhất 1 thành viên review trước khi merge."),
-        ("Tự động hóa CI/CD", "Tự động chạy bộ test kiểm tra trước khi đồng bộ lên máy chủ Vercel.")
+    add_bento_box(s8, Inches(6.8), Inches(1.5), Inches(5.6), Inches(2.6), "Git Education & GitHub (Quản Lý Mã Nguồn)", [
+        ("Gói GitHub Student Pack", "Sử dụng hạ tầng Git Education chuyên nghiệp cho nhóm sinh viên."),
+        ("Mô hình Gitflow chuẩn", "Tách biệt nhánh main, develop và các nhánh feature/uc[xx] độc lập."),
+        ("Pull Request bắt buộc", "Mọi thay đổi cần ít nhất 1 thành viên review và pass test CI/CD trước khi merge.")
     ], top_accent=PRIMARY, bg_color=PRIMARY_TINT, border_color=PRIMARY_BORDER, icon="🐙")
 
     add_bento_box(s8, Inches(0.8), Inches(4.3), Inches(5.6), Inches(2.6), "Figma (Thiết Kế UI/UX Responsive)", [
