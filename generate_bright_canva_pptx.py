@@ -371,7 +371,7 @@ def build_bright_deck():
     ], top_accent=RED, bg_color=RED_TINT, border_color=RED_BORDER, icon="🚨")
 
     add_bento_box(s3, Inches(6.8), Inches(1.5), Inches(5.6), Inches(2.6), "02. Vấn Nạn 'Ghế Ảo' (Không Đi)", [
-        ("Tham gia hoàn toàn tự nguyện", "Việc sinh viên tham gia sự kiện là tùy ý, không có giấy chứng nhận."),
+        ("Tham gia hoàn toàn tự nguyện", "Việc sinh viên tham gia sự kiện là tùy ý mỗi cá nhân."),
         ("Không có nút hủy vé", "Sinh viên bận không nhường ghế được, hệ thống báo hết vé nhưng hội trường trống ghế.")
     ], top_accent=RED, bg_color=RED_TINT, border_color=RED_BORDER, icon="🎟️")
 

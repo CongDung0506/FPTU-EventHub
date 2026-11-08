@@ -137,7 +137,7 @@ def create_presentation_document(output_path):
         ("Phút 00:00 – 09:30\n(9.5 phút)", "Thành Viên 1 (Nhóm Trưởng)\nTrương Công Dũng", "1. GIỚI THIỆU DỰ ÁN\n(Bối cảnh FPTU, Pain Points cổng cũ events.fptu.vn, Mục tiêu & Bảng so sánh đột phá)", "Slide 1 &rarr; 5\nTrang chủ EventHub"),
         ("Phút 09:30 – 18:30\n(9.0 phút)", "Thành Viên 2\nKỹ Thuật & Bảo Mật", "2. CÁC TOOL & CÔNG NGHỆ\n(Tech Stack: Python/Flask, Bleach XSS, WebRTC Camera QR, PBKDF2/Salt, Zero-SSO)", "Slide 6 &rarr; 10\nVS Code (Mã nguồn)"),
         ("Phút 18:30 – 27:00\n(8.5 phút)", "Thành Viên 3\nKiến Trúc & Database", "3. KIẾN TRÚC DỰ ÁN\n(Mô hình MVC, Luồng Request, Thiết kế CSDL ERD 6 bảng, Cơ chế Dual-Database)", "Slide 11 &rarr; 16\nDiagram ERD, DB Tool"),
-        ("Phút 27:00 – 36:30\n(9.5 phút)", "Thành Viên 4\nLive Demo Sinh Viên", "4A. CHỨC NĂNG CHÍNH (USECASE SINH VIÊN)\n(UC01 &rarr; UC08: Live Search, Đặt vé real-time, Quản lý ví vé QR, Hủy vé, E-Cert)", "Slide 17 &rarr; 22\nTrình duyệt (Tab SV)"),
+        ("Phút 27:00 – 36:30\n(9.5 phút)", "Thành Viên 4\nLive Demo Sinh Viên", "4A. CHỨC NĂNG CHÍNH (USECASE SINH VIÊN)\n(UC01 &rarr; UC08: Live Search, Đặt vé real-time, Quản lý ví vé QR, Hủy vé, Lịch sử tham gia)", "Slide 17 &rarr; 22\nTrình duyệt (Tab SV)"),
         ("Phút 36:30 – 45:30\n(9.0 phút)", "Thành Viên 5\nLive Demo CTSV & Kết Luận", "4B. CHỨC NĂNG CHÍNH (USECASE PHÒNG CTSV)\n(UC09 &rarr; UC14: Bảng điều hành CTSV, Quét Camera QR Check-in, Xuất CSV, Tổng kết)", "Slide 23 &rarr; 28\nTrình duyệt (Tab CTSV)"),
         ("Phút 45:30 – 50:00+\n(5 – 10 phút)", "Cả 5 Thành Viên\nHội đồng phản biện", "PHẦN VẤN ĐÁP BẢO VỆ (Q&A)\n(Trả lời 15 câu hỏi kỹ thuật chuyên sâu từ quý thầy cô phản biện)", "Tất cả slide, mã nguồn")
     ]
@@ -181,7 +181,7 @@ def create_presentation_document(output_path):
     doc.add_paragraph().add_run("1.2. Phân tích bất cập của cổng cũ & thực tế tổ chức sự kiện tại trường:").font.bold = True
     bullet_pts1 = [
         ("Bản chất bảng tin tĩnh & Quá tải sức chứa:", "Cổng cũ chỉ đăng bài thông báo, khi đăng ký dồn dập không có cơ chế khóa số lượng tự động theo thời gian thực (Atomic lock), dễ dẫn đến tình trạng đăng ký vượt quá sức chứa hội trường."),
-        ("Vấn nạn 'ghế ảo' do không có tính năng hủy vé:", "Việc tham gia sự kiện là hoàn toàn tự nguyện, đi hay không là tùy ý sinh viên và trường không cấp chứng nhận. Tuy nhiên, cổng cũ không có nút hủy vé; sinh viên bận đột xuất cứ thế bỏ qua, dẫn đến hệ thống báo hết vé nhưng hội trường thực tế lại bị trống ghế, lãng phí cơ hội của bạn khác."),
+        ("Vấn nạn 'ghế ảo' do không có tính năng hủy vé:", "Việc tham gia sự kiện là hoàn toàn tự nguyện, đi hay không là tùy ý sinh viên. Tuy nhiên, cổng cũ không có nút hủy vé; sinh viên bận đột xuất cứ thế bỏ qua, dẫn đến hệ thống báo hết vé nhưng hội trường thực tế lại bị trống ghế, lãng phí cơ hội của bạn khác."),
         ("Quy trình quét mã của bạn quản lý còn nhiều hạn chế:", "Khi đến sự kiện, có bạn quản lý đứng tại cửa để quét mã vé điểm danh cho sinh viên. Tuy nhiên, hệ thống cũ cần phần mềm/app riêng cồng kềnh, đối soát chậm khi sinh viên vào đông, và thiếu cảnh báo nếu mã vé bị quét lại lần 2 (nguy cơ chụp ảnh màn hình quét hộ)."),
         ("Dữ liệu điểm danh không đồng bộ tức thì cho CTSV:", "Sau khi bạn quản lý quét mã xong, số lượng sinh viên có mặt thực tế không được cập nhật ngay lên Dashboard của Cán bộ CTSV, phải chờ tổng hợp dữ liệu thủ công sau sự kiện.")
     ]
@@ -194,7 +194,7 @@ def create_presentation_document(output_path):
     p_mt = doc.add_paragraph()
     p_mt.add_run(
         "FPTU EventHub được phát triển nhằm khép kín toàn bộ vòng đời của một sự kiện: "
-        "Sinh viên đăng nhập FPT SSO &rarr; Giữ chỗ tức thì nhận vé điện tử kèm mã QR riêng &rarr; Cán bộ CTSV dùng Camera quét QR điểm danh trong 1 giây &rarr; Nhận ngay Giấy chứng nhận E-Certificate chuẩn học thuật."
+        "Sinh viên đăng nhập FPT SSO &rarr; Giữ chỗ tức thì nhận vé điện tử kèm mã QR riêng &rarr; Bàn Check-in WebRTC Camera quét QR trong 0.1s &rarr; Tự động chặn vé trùng và đồng bộ sĩ số CTSV."
     )
 
     # Comparison Table inside Section 1
@@ -252,7 +252,7 @@ def create_presentation_document(output_path):
         "Tuy nhiên, khi nhìn vào cổng thông tin hiện tại của trường là events.fptu.vn, chúng em nhận thấy một bài toán rất lớn: Cổng cũ thực chất chỉ là một bảng tin tĩnh đăng bài thông báo. "
         "Khi sinh viên muốn đăng ký giữ chỗ, ban tổ chức vẫn phải dẫn link ra ngoài Google Form hoặc biểu mẫu trung gian.\n\n"
         "Từ trải nghiệm thực tế khi tham gia sự kiện tại trường, nhóm chúng em nhận thấy một số điểm nghẽn lớn:\n"
-        "Thứ nhất, việc tham gia sự kiện là hoàn toàn tự nguyện, đi hay không là tùy ý sinh viên và trường không cấp chứng nhận tham gia. Nhưng hệ thống cũ không có tính năng HỦY VÉ: Khi sinh viên đăng ký giữ chỗ trước mà đến ngày bận việc đột xuất thì cứ thế bỏ qua. Hậu quả là hệ thống báo 'Hết vé', nhưng tại hội trường lại trống nhiều ghế, trong khi những bạn sinh viên khác thật sự muốn đi lại không có vé để đăng ký.\n"
+        "Thứ nhất, việc tham gia sự kiện là hoàn toàn tự nguyện, đi hay không là tùy ý sinh viên. Nhưng hệ thống cũ không có tính năng HỦY VÉ: Khi sinh viên đăng ký giữ chỗ trước mà đến ngày bận việc đột xuất thì cứ thế bỏ qua. Hậu quả là hệ thống báo 'Hết vé', nhưng tại hội trường lại trống nhiều ghế, trong khi những bạn sinh viên khác thật sự muốn đi lại không có vé để đăng ký.\n"
         "Thứ hai, cổng cũ không có cơ chế khóa số lượng tự động theo thời gian thực (Atomic lock). Khi mở đăng ký sự kiện hot, sinh viên bấm dồn dập dễ dẫn đến đăng ký vượt quá sức chứa hội trường.\n"
         "Thứ ba, về quy trình check-in: Tại cửa sự kiện, có một bạn quản lý đứng quét mã vé của sinh viên thì sinh viên mới được điểm danh. Tuy nhiên, hệ thống cũ cần phần mềm/app riêng cồng kềnh, đối soát chậm khi sinh viên vào đông, và thiếu cơ chế cảnh báo nếu một mã vé bị quét lại lần 2 (nguy cơ chụp màn hình quét hộ).\n"
         "Thứ tư, dữ liệu điểm danh sau khi quét không được đồng bộ thời gian thực, khiến Cán bộ CTSV không nắm được ngay sĩ số thực tế mà phải chờ tổng hợp thủ công sau sự kiện.\n\n"
@@ -269,7 +269,7 @@ def create_presentation_document(output_path):
         ("Tại sao nhóm không dùng luôn Google Forms hay Microsoft Forms cho nhanh mà phải lập trình riêng một hệ thống web?",
          "Dạ thưa thầy/cô, Google Forms có 3 giới hạn cốt tử: Thứ nhất, Google Form không kiểm soát sức chứa ghế (Capacity) theo cơ chế giao dịch Transaction thời gian thực, dễ gây vỡ trận số lượng. Thứ hai, Google Forms không tự sinh được vé điện tử có mã QR định danh cá nhân để quét tại cửa. Thứ ba, Google Forms không có kiến trúc phân quyền (RBAC) để phục vụ công tác điều hành của Cán bộ CTSV và tự động xuất file báo cáo điểm danh ạ."),
         ("Đối tượng người dùng chính của hệ thống là ai và họ được phân quyền như thế nào?",
-         "Dạ hệ thống được thiết kế theo chuẩn phân quyền Role-Based Access Control (RBAC) với 2 nhóm người dùng chuyên biệt: 1. Sinh viên (Student): Khám phá sự kiện, đặt vé giữ chỗ, sở hữu Ví vé QR cá nhân, hủy vé và in Giấy chứng nhận. 2. Phòng Công Tác Sinh Viên (Admin/CTSV): Giám sát dữ liệu toàn trường, duyệt và đăng sự kiện, mở Bàn Check-in quét mã QR bằng camera và xuất báo cáo điểm danh ra file Excel/CSV ạ."),
+         "Dạ hệ thống được thiết kế theo chuẩn phân quyền Role-Based Access Control (RBAC) với 2 nhóm người dùng chuyên biệt: 1. Sinh viên (Student): Khám phá sự kiện, đặt vé giữ chỗ, sở hữu Ví vé QR cá nhân, hủy vé và tra cứu lịch sử sự kiện. 2. Phòng Công Tác Sinh Viên (Admin/CTSV): Giám sát dữ liệu toàn trường, duyệt và đăng sự kiện, mở Bàn Check-in quét mã QR bằng camera và xuất báo cáo điểm danh ra file Excel/CSV ạ."),
         ("Hệ thống giải quyết vấn đề 'đặt chỗ ảo' (ghế đăng ký kín nhưng người không đến) như thế nào?",
          "Dạ chúng em giải quyết bằng 2 cơ chế: 1. Tính năng 'Hủy vé 1-click' trong trang Vé Của Tôi: khi sinh viên biết mình bận, các bạn bấm hủy thì slot ghế được hoàn trả ngay lập tức cho bạn khác trên trang chủ. 2. Mỗi sinh viên chỉ được đặt 1 vé duy nhất cho mỗi sự kiện nhờ cơ chế kiểm tra ràng buộc ở cả Client lẫn Server, chấm dứt hoàn toàn tình trạng 1 người ôm nhiều chỗ ạ.")
     ]
@@ -559,7 +559,7 @@ def create_presentation_document(output_path):
         ("UC04 - Quản Lý Ví Vé QR Cá Nhân:", "Trang 'Vé Của Tôi' hiển thị danh sách vé đã đặt. Modal phóng to mã QR sắc nét để sẵn sàng quét tại cửa hội trường."),
         ("UC05 - Hủy Vé 1-Click:", "Khi có việc bận, sinh viên bấm 'Hủy vé', trạng thái đổi sang CANCELLED và slot ghế tự động hoàn trả lại cho người khác."),
         ("UC06 - Đồng Bộ Google Calendar:", "Bấm 1 nút để tự động thêm ngày giờ, địa điểm hội trường vào ứng dụng Google Calendar trên điện thoại."),
-        ("UC07 - Nhận & In E-Certificate:", "Sau khi được điểm danh check-in, nút 'Xem Giấy Chứng Nhận' kích hoạt, cho phép sinh viên xem và in chứng nhận chuẩn học thuật."),
+        ("UC07 - Tra cứu & Quản lý lịch sử sự kiện:", "Sinh viên xem lại danh sách các sự kiện mình đã đăng ký, đối soát trạng thái vé (Hợp lệ, Đã check-in, Đã hủy) một cách trực quan, minh bạch."),
         ("UC08 - Đánh Giá & Nhận Xét (Review):", "Đánh giá 1 đến 5 sao và gửi phản hồi chất lượng về công tác tổ chức sự kiện.")
     ]
     for u_t, u_d in uc_student:
@@ -590,9 +590,8 @@ def create_presentation_document(output_path):
         "Bây giờ, em quay lại một sự kiện còn chỗ là 'Lễ Hội Văn Hóa CLB', bấm 'ĐĂNG KÝ GIỮ CHỖ NGAY': Hệ thống trừ slot và chuyển thẳng em vào trang 'Vé Của Tôi'.\n\n"
         "(Thao tác 5 - Xem mã QR & Hủy vé): Trong danh sách vé, em bấm nút 'Mã QR Check-in', mã QR cá nhân phóng to trên màn hình để sẵn sàng đưa cho ban tổ chức quét tại cửa hội trường. "
         "Nếu chẳng may em bận việc, em chỉ cần bấm nút đỏ 'Hủy vé' &rarr; Vé lập tức chuyển sang trạng thái ĐÃ HỦY và ghế trống được trả lại cho các bạn sinh viên khác.\n\n"
-        "(Thao tác 6 - Giấy chứng nhận E-Certificate): Đối với các sự kiện đã tham gia và được ban tổ chức check-in thành công, một nút màu xanh 'Xem & In Giấy Chứng Nhận' sẽ sáng lên. "
-        "Bấm vào đây, hệ thống render ra Giấy Chứng Nhận Tham Gia trang trọng, có đầy đủ tên Trương Công Dũng, MSSV DE200433, tên chương trình, ngày tháng, mã QR xác thực và chữ ký của Trưởng phòng CTSV. "
-        "Sinh viên có thể bấm In hoặc lưu thành file PDF nộp báo cáo bất cứ lúc nào.\n\n"
+        "(Thao tác 6 - Tra cứu & Kiểm tra trạng thái vé): Đối với các sự kiện đã được ban tổ chức quét mã check-in thành công tại cửa hội trường, vé sẽ tự động đổi sang trạng thái màu xanh lá 'ĐÃ CHECK-IN' kèm thời gian điểm danh chi tiết. "
+        "Sinh viên có thể theo dõi lại toàn bộ lịch sử các sự kiện mình đã tham gia một cách trực quan và minh bạch.\n\n"
         "Sau đây, em xin nhường quyền trình bày cho Thành viên 5 để demo luồng điều hành của Cán bộ Phòng CTSV!\""
     )
     r_s4.font.size = Pt(9.5)

@@ -28,7 +28,7 @@
 
 ### 1.2. Thách thức & "Nỗi đau" (Pain Points) thực tế từ cổng cũ và sự kiện trường
 1. **Quá tải sức chứa (Overbooking) khi mở đăng ký**: Cổng cũ không có cơ chế khóa số lượng tự động tức thời; khi có sự kiện công nghệ hoặc workshop hot, sinh viên bấm ồ ạt dẫn đến số lượng đăng ký vượt quá sức chứa hội trường.
-2. **Vấn nạn "Ghế ảo" do không có tính năng hủy vé**: Việc sinh viên tham gia sự kiện là hoàn toàn tự nguyện, đi hay không là tùy ý sinh viên và không có cấp giấy chứng nhận. Tuy nhiên, cổng cũ không có nút hủy vé; sinh viên bận đột xuất cứ thế bỏ qua, dẫn đến hệ thống báo hết vé nhưng hội trường thực tế lại bị trống nhiều ghế, lãng phí cơ hội của các bạn khác muốn tham gia.
+2. **Vấn nạn "Ghế ảo" do không có tính năng hủy vé**: Việc sinh viên tham gia sự kiện là hoàn toàn tự nguyện, đi hay không là tùy ý sinh viên. Tuy nhiên, cổng cũ không có nút hủy vé; sinh viên bận đột xuất cứ thế bỏ qua, dẫn đến hệ thống báo hết vé nhưng hội trường thực tế lại bị trống nhiều ghế, lãng phí cơ hội của các bạn khác muốn tham gia.
 3. **Quy trình quét mã check-in của bạn quản lý còn nhiều hạn chế**: Khi đến sự kiện, có một bạn quản lý đứng tại cửa để quét mã vé của từng sinh viên thì sinh viên mới được điểm danh. Tuy nhiên, thao tác trên hệ thống cũ yêu cầu phần mềm riêng cồng kềnh, dễ chậm khi dòng sinh viên vào đông, và thiếu cơ chế cảnh báo nếu một mã vé bị quét lại lần 2 (nguy cơ chụp ảnh màn hình quét hộ).
 4. **Dữ liệu điểm danh không đồng bộ thời gian thực cho Cán bộ CTSV**: Sau khi bạn quản lý quét mã xong, số lượng sinh viên có mặt thực tế không được hiển thị ngay lập tức lên dashboard của CTSV, phải chờ tổng hợp dữ liệu thủ công sau sự kiện.
 
@@ -199,7 +199,7 @@ erDiagram
 - **UC03: Đăng ký vé giữ chỗ tức thì** (Giao dịch Transaction Atomic, chống trùng vé)
 - **UC04: Xem vé điện tử & Mã QR Check-in** (Trang "Vé Của Tôi", hiển thị mã QR động)
 - **UC05: Hủy vé tự động hoàn slot** (Hoàn lại chỗ ngồi cho sinh viên khác)
-- **UC06: Xem Giấy Chứng Nhận E-Certificate** (Cấp tự động sau khi check-in)
+- **UC06: Tra Cứu Lịch Sử Tham Gia Sự Kiện** (Ghi nhận trạng thái Đã check-in và thời gian thực)
 - **UC07: Đánh giá & Phản hồi sao sự kiện** (Rating 1-5 sao kèm nhận xét)
 - **UC08: Quản lý hồ sơ cá nhân & Đổi mật khẩu** (Xác thực SĐT chuẩn Việt Nam)
 
