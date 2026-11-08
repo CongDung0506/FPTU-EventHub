@@ -281,6 +281,7 @@ def login():
 def quick_login(role_type):
     auto_init_database()
     rt = role_type.lower().strip()
+    user = None
     if rt == "student":
         user = User.query.filter(
             (User.email == "dungtcde200433@fpt.edu.vn") | 
@@ -291,17 +292,23 @@ def quick_login(role_type):
             if not role_student:
                 Role.insert_roles()
                 role_student = Role.query.filter_by(name="Student").first()
-            user = User(
-                student_id="DE200433",
-                full_name="Trương Công Dũng",
-                email="dungtcde200433@fpt.edu.vn",
-                phone="0905123456",
-                avatar_url="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
-                role=role_student
-            )
-            user.set_password("pass123")
-            db.session.add(user)
-            db.session.commit()
+            try:
+                user = User(
+                    student_id="DE200433",
+                    full_name="Trương Công Dũng",
+                    email="dungtcde200433@fpt.edu.vn",
+                    phone="0905123456",
+                    avatar_url="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
+                    role=role_student
+                )
+                user.set_password("pass123")
+                db.session.add(user)
+                db.session.commit()
+            except Exception:
+                db.session.rollback()
+                user = User.query.filter((User.student_id == "DE200433") | (User.email == "dungtcde200433@fpt.edu.vn")).first()
+                if not user:
+                    user = User.query.filter(User.role.has(name="Student")).first()
     elif rt in ("admin", "organizer"):
         user = User.query.filter(
             (User.email == "ctsv.admin@fpt.edu.vn") | 
@@ -312,19 +319,30 @@ def quick_login(role_type):
             if not role_admin:
                 Role.insert_roles()
                 role_admin = Role.query.filter_by(name="Admin").first()
-            user = User(
-                student_id="ADM001",
-                full_name="Phòng Công Tác Sinh Viên (CTSV)",
-                email="ctsv.admin@fpt.edu.vn",
-                phone="02367300999",
-                avatar_url="/static/images/fpt_logo.jpg",
-                role=role_admin
-            )
-            user.set_password("pass123")
-            db.session.add(user)
-            db.session.commit()
-    else:
-        user = None
+            try:
+                user = User(
+                    student_id="ADM001",
+                    full_name="Phòng Công Tác Sinh Viên (CTSV)",
+                    email="ctsv.admin@fpt.edu.vn",
+                    phone="02367300999",
+                    avatar_url="/static/images/fpt_logo.jpg",
+                    role=role_admin
+                )
+                user.set_password("pass123")
+                db.session.add(user)
+                db.session.commit()
+            except Exception:
+                db.session.rollback()
+                user = User.query.filter((User.student_id == "ADM001") | (User.email == "ctsv.admin@fpt.edu.vn")).first()
+                if not user:
+                    user = User.query.filter(User.role.has(name="Admin")).first()
+
+    # Fallback dự phòng tối cao: Nếu vẫn chưa có user, lấy bất kỳ user hợp lệ
+    if not user:
+        if rt == "student":
+            user = User.query.filter(User.role.has(name="Student")).first()
+        elif rt in ("admin", "organizer"):
+            user = User.query.filter(User.role.has(name="Admin")).first() or User.query.first()
 
     if user:
         login_user(user, remember=True)

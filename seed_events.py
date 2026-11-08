@@ -51,10 +51,10 @@ def seed_data_internal():
     # 2. Danh sach sinh vien FPT phong phu (Ho ten, MSSV, Nganh hoc SE/DE/IA/SS/GD/MC)
     students_roster = [
         {"sid": "DE200433", "name": "Trương Công Dũng", "email": "dungtcde200433@fpt.edu.vn", "phone": "0905123456", "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80"},
-        {"sid": "SE190111", "name": "Nguyễn Việt Anh", "email": "anhnvse190111@fpt.edu.vn", "phone": "0912345678", "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80"},
-        {"sid": "SE182345", "name": "Lê Hoàng Nam", "email": "namlhse182345@fpt.edu.vn", "phone": "0981123456", "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80"},
-        {"sid": "IA190567", "name": "Trần Minh Quang", "email": "quangtmi190567@fpt.edu.vn", "phone": "0972234567", "avatar": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=300&q=80"},
-        {"sid": "SS180234", "name": "Phan Thu Trang", "email": "trangptss180234@fpt.edu.vn", "phone": "0963345678", "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80"},
+        {"sid": "SE190111", "name": "Cao Chí Trung", "email": "trungccse190111@fpt.edu.vn", "phone": "0912345678", "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80"},
+        {"sid": "SE190222", "name": "Dương Thanh Viên", "email": "vientdse190222@fpt.edu.vn", "phone": "0981123456", "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80"},
+        {"sid": "SE190333", "name": "Nguyễn Đặng Đình Nam", "email": "namnddse190333@fpt.edu.vn", "phone": "0972234567", "avatar": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=300&q=80"},
+        {"sid": "SE190444", "name": "Lê Anh Tuấn", "email": "tuanlase190444@fpt.edu.vn", "phone": "0963345678", "avatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=300&q=80"},
         {"sid": "GD190456", "name": "Huỳnh Bảo Ngọc", "email": "ngochbgd190456@fpt.edu.vn", "phone": "0914456789", "avatar": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=300&q=80"},
         {"sid": "SE200123", "name": "Võ Quốc Huy", "email": "huyvqse200123@fpt.edu.vn", "phone": "0905567890", "avatar": "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=300&q=80"},
         {"sid": "DE190876", "name": "Đỗ Mai Phương", "email": "phuongdmde190876@fpt.edu.vn", "phone": "0986678901", "avatar": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=300&q=80"},
@@ -86,7 +86,7 @@ def seed_data_internal():
 
     student_objs = []
     for s_info in students_roster:
-        u = User.query.filter_by(email=s_info["email"]).first()
+        u = User.query.filter((User.student_id == s_info["sid"]) | (User.email == s_info["email"])).first()
         if u is None:
             u = User(
                 student_id=s_info["sid"],
@@ -101,6 +101,9 @@ def seed_data_internal():
         else:
             u.student_id = s_info["sid"]
             u.full_name = s_info["name"]
+            u.email = s_info["email"]
+            u.phone = s_info["phone"]
+            u.avatar_url = s_info["avatar"]
             u.role = role_student
         student_objs.append(u)
 

@@ -680,7 +680,7 @@ def create_presentation_document(output_path):
         ("Nếu tại cửa hội trường xảy ra sự cố mất mạng Internet thì quy trình check-in xử lý ra sao?",
          "Dạ thưa cô, chúng em đã chuẩn bị kịch bản dự phòng 2 tầng: Tầng 1: Cán bộ CTSV có thể mở hotspot phát 4G từ điện thoại cho thiết bị quét vì mỗi request check-in dạng JSON chỉ tiêu tốn vài kilobyte dữ liệu. Tầng 2: Ô check-in thủ công cho phép gõ trực tiếp mã vé dự phòng ngay cả khi camera gặp sự cố ánh sáng yếu ạ."),
         ("File CSV xuất ra có hỗ trợ đầy đủ tiếng Việt có dấu khi mở bằng Microsoft Excel trên Windows không?",
-         "Dạ có thưa thầy/cô. Đây là lỗi kỹ thuật kinh điển khi xuất file CSV trên Windows (bị lỗi font Unicode cp1258). Để khắc phục triệt để, trong route /organizer/events/<id>/export-csv, chúng em đã chủ động ghi mã Byte Order Mark (UTF-8 BOM '\\ufeff') vào đầu luồng dữ liệu trước khi xuất dòng tiêu đề. Nhờ vậy, khi mở file bằng Microsoft Excel trên bất kỳ máy tính Windows nào, toàn bộ tên tiếng Việt có dấu như 'Trương Công Dũng', 'Nguyễn Việt Anh' đều hiển thị hoàn hảo 100% mà không bị lỗi font ạ.")
+         "Dạ có thưa thầy/cô. Đây là lỗi kỹ thuật kinh điển khi xuất file CSV trên Windows (bị lỗi font Unicode cp1258). Để khắc phục triệt để, trong route /organizer/events/<id>/export-csv, chúng em đã chủ động ghi mã Byte Order Mark (UTF-8 BOM '\\ufeff') vào đầu luồng dữ liệu trước khi xuất dòng tiêu đề. Nhờ vậy, khi mở file bằng Microsoft Excel trên bất kỳ máy tính Windows nào, toàn bộ tên tiếng Việt có dấu như 'Trương Công Dũng', 'Cao Chí Trung' đều hiển thị hoàn hảo 100% mà không bị lỗi font ạ.")
     ]
     for q_i, (q_t, a_t) in enumerate(qa5, start=1):
         p_q = doc.add_paragraph()

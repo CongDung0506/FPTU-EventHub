@@ -111,7 +111,7 @@
 
 ---
 
-## 👤 PHẦN 2: PHÂN CÔNG NHIỆM VỤ & QUẢN TRỊ DỰ ÁN (Thành viên 2: Nguyễn Việt Anh - PM)
+## 👤 PHẦN 2: PHÂN CÔNG NHIỆM VỤ & QUẢN TRỊ DỰ ÁN (Thành viên 2: Cao Chí Trung - PM)
 *Thời lượng trình bày: ~8 - 9 phút (Slide 7 -> Slide 10)*
 
 ---
@@ -123,19 +123,19 @@
     * Xác thực Zero-SSO 1-click, Đăng ký FPT Mail, Profile, RBAC Guard.
     * Đổi mật khẩu Werkzeug, Router security, Khám phá & lọc sự kiện.
     * `⭐ Đóng góp: 20% (8 UseCases: UC01 → UC08)`
-  * **Thẻ 2: Nguyễn Việt Anh (SE190111) — PM & Database Architect**
+  * **Thẻ 2: Cao Chí Trung (SE190111) — PM & Database Architect**
     * Quản lý Danh mục CRUD, Dashboard điều hành CTSV toàn trường.
     * Phân trang `paginate`, Lọc sự kiện theo thời gian, Phân quyền Admin.
     * `⭐ Đóng góp: 20% (8 UseCases: UC09 → UC16)`
-  * **Thẻ 3: Lê Hoàng Long (SE190222) — Security & Backend Lead**
+  * **Thẻ 3: Dương Thanh Viên (SE190222) — Security & Backend Lead**
     * Xem chi tiết sự kiện, Khóa vé nguyên tử Atomic Concurrency, Auto-Lock.
     * Sinh mã vé & Token bảo mật, Ví vé "Vé Của Tôi", Hủy vé, CSRF/XSS.
     * `⭐ Đóng góp: 20% (8 UseCases: UC17 → UC24)`
-  * **Thẻ 4: Trần Minh Quang (SE190333) — Fullstack & Scanner Lead**
+  * **Thẻ 4: Nguyễn Đặng Đình Nam (SE190333) — Fullstack & Scanner Lead**
     * Bàn Check-in Camera WebRTC đa thiết bị, Giải mã QR siêu tốc < 0.1s.
     * Chống gian lận quét trùng, Toggle Check-in, Review 5 sao, Theme Switcher.
     * `⭐ Đóng góp: 20% (8 UseCases: UC25 → UC32)`
-  * **Thẻ 5: Phạm Đức Trọng (SE190444) — QA & DevOps Lead**
+  * **Thẻ 5: Lê Anh Tuấn (SE190444) — QA & DevOps Lead**
     * Dashboard Ban Tổ Chức, Quản lý sinh viên tham dự, Xuất file Excel.
     * Quản lý sự kiện CRUD, RESTful API v1 JSON, 15 Unit Tests tự động.
     * `⭐ Đóng góp: 20% (8 UseCases: UC33 → UC40)`
@@ -197,7 +197,7 @@
 
 ---
 
-## 👤 PHẦN 3: KIẾN TRÚC PHẦN MỀM & CÔNG NGHỆ (Thành viên 3: Lê Hoàng Long - Architect)
+## 👤 PHẦN 3: KIẾN TRÚC PHẦN MỀM & CÔNG NGHỆ (Thành viên 3: Dương Thanh Viên - Architect)
 *Thời lượng trình bày: ~9 - 10 phút (Slide 11 -> Slide 15)*
 
 ---
@@ -290,7 +290,7 @@
 
 ---
 
-## 👤 PHẦN 4: TÍNH NĂNG CHÍNH & LIVE DEMO (Thành viên 4: Trần Minh Quang - Fullstack)
+## 👤 PHẦN 4: TÍNH NĂNG CHÍNH & LIVE DEMO (Thành viên 4: Nguyễn Đặng Đình Nam - Fullstack)
 *Thời lượng trình bày: ~11 - 12 phút (Slide 16 -> Slide 21, gồm 8 phút Live Demo)*
 
 ---
@@ -384,7 +384,7 @@
 
 ---
 
-## 👤 PHẦN 5: KIỂM THỬ, TƯƠNG LAI & TỔNG KẾT (Thành viên 5: Phạm Đức Trọng - QA Lead)
+## 👤 PHẦN 5: KIỂM THỬ, TƯƠNG LAI & TỔNG KẾT (Thành viên 5: Lê Anh Tuấn - QA Lead)
 *Thời lượng trình bày: ~8 - 9 phút (Slide 22 -> Slide 26)*
 
 ---

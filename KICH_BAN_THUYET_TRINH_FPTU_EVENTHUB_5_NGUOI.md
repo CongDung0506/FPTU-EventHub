@@ -10,17 +10,16 @@
 
 | Phần & Nội Dung | Người Báo Cáo | Thời Gian | Slide Trình Chiếu | Nội Dung Trọng Tâm |
 | :--- | :--- | :---: | :---: | :--- |
-| **1. Giới thiệu dự án** | **Thành viên 1** | 00:00 – 09:30 *(9.5 phút)* | Slide 1 – 5 | Bối cảnh sinh viên FPTU, Pain points của cổng cũ `events.fptu.vn`, Sứ mệnh & Mục tiêu, Bảng so sánh đột phá 8 tiêu chí. |
-| **2. Các tool & công nghệ triển khai** | **Thành viên 2** | 09:30 – 18:30 *(9.0 phút)* | Slide 6 – 10 | Python 3.11/3.14, Flask, Bleach XSS, WebRTC Camera QR, Werkzeug PBKDF2/SHA256, Scoped CSS BEM, Zero-SSO, SQLAlchemy, Vercel Serverless. **Đầy đủ 100% các hàm PWD301**. |
-| **3. Kiến trúc dự án** | **Thành viên 3** | 18:30 – 27:00 *(8.5 phút)* | Slide 11 – 16 | Mô hình MVC, Vòng đời xử lý HTTP Request, Thiết kế CSDL ERD 6 thực thể quan hệ, Cơ chế Dual-Database (Production Cloud vs Local Enterprise). |
-| **4A. Chức năng chính (UseCase Sinh Viên)** | **Thành viên 4** | 27:00 – 36:30 *(9.5 phút)* | Slide 17 – 22 | Phân hệ Sinh viên: UC01 Đăng nhập Zero-SSO @fpt.edu.vn, UC02 Duyệt & Lọc danh mục, UC03 Đặt vé giữ chỗ tức thì, UC04 Tra cứu & Quét vé điện tử QR, Kịch bản Demo Live. |
-| **4B. Chức năng chính (UseCase CTSV & Admin)** | **Thành viên 5** | 36:30 – 45:30 *(9.0 phút)* | Slide 23 – 28 | Phân hệ Ban Quản Trị: UC09 Đăng nhập Cán bộ CTSV, UC10 Tạo mới & Quản lý sự kiện, UC11 Camera QR Scanner Check-in real-time, UC12 Dashboard Báo cáo & Xuất Excel, Kịch bản Demo Live & Tổng kết. |
-| **Vấn đáp Hội đồng (Q&A)** | **Cả 5 Thành Viên** | 45:30 – 50:00+ *(Phản biện)* | Slide 29 | 15 Câu hỏi xoáy đáp xoay trọng tâm bảo vệ đồ án: Bảo mật, Hiệu năng, Concurrency, Kiến trúc, Mở rộng quy mô. |
-
+| **1. Giới thiệu dự án** | **Thành viên 1: Trương Công Dũng (Lead)** | 00:00 – 09:30 *(9.5 phút)* | Slide 1 – 6 | Bối cảnh sinh viên FPTU, Pain points của cổng cũ, Sứ mệnh & Mục tiêu, Bảng so sánh đột phá 8 tiêu chí. |
+| **2. Đội ngũ, 40 UseCases & Tools** | **Thành viên 2: Cao Chí Trung (PM)** | 09:30 – 18:30 *(9.0 phút)* | Slide 7 – 10 | Phân công 40 UseCases cho 5 thành viên (8 UC/bạn), Quản trị Jira Software (4 Sprint), Chuẩn Gitflow Git Education. |
+| **3. Kiến trúc dự án** | **Thành viên 3: Dương Thanh Viên (Arch)** | 18:30 – 27:00 *(8.5 phút)* | Slide 11 – 15 | Mô hình MVC, Vòng đời Request, Thiết kế CSDL ERD 6 bảng, 4 Lá chắn an toàn OWASP, Khóa vé Atomic. |
+| **4A. Live Demo Sinh Viên** | **Thành viên 4: Nguyễn Đặng Đình Nam (Demo)** | 27:00 – 36:30 *(9.5 phút)* | Slide 16 – 21 | Phân hệ Sinh viên: UC01 Zero-SSO, UC08 Duyệt sự kiện, UC18 Đặt vé Atomic, UC21 Ví vé QR, UC23 Hủy vé hoàn slot. |
+| **4B. Live Demo Bàn Quét QR & CTSV** | **Thành viên 5: Lê Anh Tuấn (QA)** | 36:30 – 45:30 *(9.0 phút)* | Slide 22 – 25 | Phân hệ Ban Quản Trị: UC25 Bàn Check-in WebRTC, UC27 Chống quét trùng, UC35 Xuất Excel, UC40 15 Unit Tests. |
+| **Vấn đáp Hội đồng (Q&A)** | **Cả 5 Thành Viên** | 45:30 – 50:00+ *(Phản biện)* | Slide 26 | 15 Câu hỏi xoáy đáp xoay trọng tâm bảo vệ đồ án: Bảo mật, Hiệu năng, Concurrency, Kiến trúc, Mở rộng quy mô. |
 ---
 
 ## PHẦN 1: GIỚI THIỆU DỰ ÁN (00:00 – 09:30)
-**Người trình bày: Thành viên 1**
+**Người trình bày: Thành viên 1 — Trương Công Dũng (Trưởng Nhóm & System Architect)**
 
 ### 1.1. Bối cảnh & Lý do chọn đề tài
 - Hệ sinh thái học tập năng động tại Đại học FPT: Hàng trăm sự kiện công nghệ, cuộc thi học thuật, workshop kỹ năng mềm và đêm hội văn hóa được tổ chức mỗi kỳ.
@@ -52,8 +51,8 @@
 
 ---
 
-## PHẦN 2: CÁC TOOL VÀ CÔNG NGHỆ ĐƯỢC SỬ DỤNG (09:30 – 18:30)
-**Người trình bày: Thành viên 2**
+## PHẦN 2: ĐỘI NGŨ, 40 USECASES & TOOLS (09:30 – 18:30)
+**Người trình bày: Thành viên 2 — Cao Chí Trung (PM & Database Architect)**
 
 ### 2.1. Phân loại Công nghệ và Công cụ (Tech Stack Ecosystem)
 - **Backend**: Python 3.11/3.14 + Flask Microframework, Jinja2 Template Engine, Werkzeug WSGI.
@@ -77,8 +76,8 @@
 
 ---
 
-## PHẦN 3: KIẾN TRÚC DỰ ÁN (18:30 – 27:00)
-**Người trình bày: Thành viên 3**
+## PHẦN 3: KIẾN TRÚC DỰ ÁN & AN NINH (18:30 – 27:00)
+**Người trình bày: Thành viên 3 — Dương Thanh Viên (Security & Backend Lead)**
 
 ### 3.1. Mô hình Kiến trúc MVC (Model - View - Controller)
 - **Model (`models.py`)**: Định nghĩa cấu trúc các thực thể dữ liệu (`User`, `Role`, `Category`, `Event`, `Ticket`, `Review`), quan hệ khóa ngoại, logic validation nghiệp vụ và hàm `to_dict()`.
@@ -193,7 +192,7 @@ erDiagram
 
 ## PHẦN 4: CHỨC NĂNG CHÍNH (MÔ TẢ BẰNG USECASE) & LIVE DEMO (27:00 – 45:30)
 
-### 4A. Phân Hệ Sinh Viên (Thành viên 4: 27:00 – 36:30)
+### 4A. Phân Hệ Sinh Viên & Live Demo (Thành viên 4 — Nguyễn Đặng Đình Nam: 27:00 – 36:30)
 - **UC01: Đăng nhập Sinh viên Zero-SSO** (`@fpt.edu.vn`)
 - **UC02: Khám phá & Lọc sự kiện đa chiều** (Tìm kiếm, 6 danh mục, phân trang `paginate`)
 - **UC03: Đăng ký vé giữ chỗ tức thì** (Giao dịch Transaction Atomic, chống trùng vé)
@@ -203,7 +202,7 @@ erDiagram
 - **UC07: Đánh giá & Phản hồi sao sự kiện** (Rating 1-5 sao kèm nhận xét)
 - **UC08: Quản lý hồ sơ cá nhân & Đổi mật khẩu** (Xác thực SĐT chuẩn Việt Nam)
 
-### 4B. Phân Hệ Phòng Công Tác Sinh Viên CTSV (Thành viên 5: 36:30 – 45:30)
+### 4B. Phân Hệ CTSV, Bàn Quét QR & Kiểm Thử (Thành viên 5 — Lê Anh Tuấn: 36:30 – 45:30)
 - **UC09: Đăng nhập Quản trị viên CTSV** (`ctsv.admin@fpt.edu.vn`)
 - **UC10: Quản lý Danh mục sự kiện CRUD** (Thêm, sửa, xóa danh mục có kiểm tra toàn vẹn)
 - **UC11: Tạo mới & Chỉnh sửa Sự kiện Toàn trường** (Soạn thảo Markdown, quản lý số ghế)

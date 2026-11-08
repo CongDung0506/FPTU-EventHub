@@ -117,10 +117,10 @@ flowchart TD
 | Thành Viên | MSSV | Vai Trò Đảm Nhiệm | Phạm Vi Chức Năng | Số UseCase | Danh Sách UseCase Phụ Trách |
 | :--- | :---: | :--- | :--- | :---: | :--- |
 | **Trương Công Dũng** *(Lead)* | **DE200433** | Trưởng Nhóm & System Architect | Xác thực người dùng, Phân quyền RBAC, Khám phá sự kiện | **8 UseCases** | **UC01 &rarr; UC08** |
-| **Nguyễn Việt Anh** | **SE190111** | PM & Database Architect | Quản lý Danh mục, Phân trang & Dashboard CTSV | **8 UseCases** | **UC09 &rarr; UC16** |
-| **Lê Hoàng Long** | **SE190222** | Security & Backend Lead | Khóa vé nguyên tử Atomic, Vé QR, Hủy vé & Bảo mật CSRF | **8 UseCases** | **UC17 &rarr; UC24** |
-| **Trần Minh Quang** | **SE190333** | Fullstack & Scanner Lead | Bàn quét QR Camera WebRTC, Chống quét trùng, Review | **8 UseCases** | **UC25 &rarr; UC32** |
-| **Phạm Đức Trọng** | **SE190444** | QA & DevOps Lead | Quản lý người tham dự, Xuất file Excel, REST API, Unit Test | **8 UseCases** | **UC33 &rarr; UC40** |
+| **Cao Chí Trung** | **SE190111** | PM & Database Architect | Quản lý Danh mục, Phân trang & Dashboard CTSV | **8 UseCases** | **UC09 &rarr; UC16** |
+| **Dương Thanh Viên** | **SE190222** | Security & Backend Lead | Khóa vé nguyên tử Atomic, Vé QR, Hủy vé & Bảo mật CSRF | **8 UseCases** | **UC17 &rarr; UC24** |
+| **Nguyễn Đặng Đình Nam** | **SE190333** | Fullstack & Scanner Lead | Bàn quét QR Camera WebRTC, Chống quét trùng, Review | **8 UseCases** | **UC25 &rarr; UC32** |
+| **Lê Anh Tuấn** | **SE190444** | QA & DevOps Lead | Quản lý người tham dự, Xuất file Excel, REST API, Unit Test | **8 UseCases** | **UC33 &rarr; UC40** |
 | **TỔNG CỘNG** | | **5 THÀNH VIÊN** | **TOÀN BỘ HỆ THỐNG FPTU EVENTHUB** | **40 USECASES** | **100% ĐẠT CHUẨN TỐI THIỂU** |
 
 ---
@@ -407,8 +407,8 @@ erDiagram
 | Mốc Thời Gian | Người Trình Bày | Nội Dung Thuyết Trình & Thao Tác | Slide Trình Chiếu |
 | :---: | :--- | :--- | :---: |
 | **00:00 – 09:00**<br>*(9 phút)* | **Thành viên 1**<br>*(Trương Công Dũng - Lead)* | **Phần 1: Giới thiệu dự án & Bối cảnh**<br>• Bối cảnh phong trào FPTU, 4 nỗi đau cổng cũ (vỡ trận sức chứa, ghế ảo, quét mã chậm, thiếu đồng bộ).<br>• Mục tiêu đột phá & Bảng so sánh 8 tiêu chí. | Slide 1 &rarr; 6 |
-| **09:00 – 17:30**<br>*(8.5 phút)* | **Thành viên 2**<br>*(Nguyễn Việt Anh - PM)* | **Phần 2: Đội ngũ, Phân công 40 UseCases & Quản trị Jira/Git**<br>• Chân dung 5 thành viên (Mỗi bạn 8 UseCases chuẩn chỉ).<br>• Kế hoạch 4 Sprint Jira & Chuẩn Gitflow GitHub Education. | Slide 7 &rarr; 10 |
-| **17:30 – 26:00**<br>*(8.5 phút)* | **Thành viên 3**<br>*(Lê Hoàng Long - Arch)* | **Phần 3: Kiến trúc MVC, CSDL ERD & An ninh OWASP**<br>• Kiến trúc 3 tầng MVC, Thiết kế CSDL 6 bảng quan hệ.<br>• 4 Lá chắn an toàn OWASP, Cơ chế khóa vé Concurrency Atomic. | Slide 11 &rarr; 15 |
-| **26:00 – 35:00**<br>*(9 phút)* | **Thành viên 4**<br>*(Trần Minh Quang - Demo)* | **Phần 4: LIVE DEMO THỰC TẾ (HÀNH TRÌNH SINH VIÊN)**<br>• Demo trên web: Đăng nhập Zero-SSO &rarr; Đặt vé giữ chỗ atomic &rarr; Nhận vé QR &rarr; Demo Hủy vé hoàn slot trả lại ghế ảo ngay lập tức. | Slide 16 &rarr; 21 |
-| **35:00 – 43:30**<br>*(8.5 phút)* | **Thành viên 5**<br>*(Phạm Đức Trọng - QA)* | **Phần 5: LIVE DEMO BÀN QUÉT QR, KIỂM THỬ & BÁO CÁO CTSV**<br>• Demo Camera WebRTC quét mã vé < 0.1s &rarr; Chặn quét trùng lặp &rarr; Xuất file Excel báo cáo &rarr; Báo cáo 15/15 Tests Passed 100%. | Slide 22 &rarr; 25 |
+| **09:00 – 17:30**<br>*(8.5 phút)* | **Thành viên 2**<br>*(Cao Chí Trung - PM)* | **Phần 2: Đội ngũ, Phân công 40 UseCases & Quản trị Jira/Git**<br>• Chân dung 5 thành viên (Mỗi bạn 8 UseCases chuẩn chỉ).<br>• Kế hoạch 4 Sprint Jira & Chuẩn Gitflow GitHub Education. | Slide 7 &rarr; 10 |
+| **17:30 – 26:00**<br>*(8.5 phút)* | **Thành viên 3**<br>*(Dương Thanh Viên - Arch)* | **Phần 3: Kiến trúc MVC, CSDL ERD & An ninh OWASP**<br>• Kiến trúc 3 tầng MVC, Thiết kế CSDL 6 bảng quan hệ.<br>• 4 Lá chắn an toàn OWASP, Cơ chế khóa vé Concurrency Atomic. | Slide 11 &rarr; 15 |
+| **26:00 – 35:00**<br>*(9 phút)* | **Thành viên 4**<br>*(Nguyễn Đặng Đình Nam - Demo)* | **Phần 4: LIVE DEMO THỰC TẾ (HÀNH TRÌNH SINH VIÊN)**<br>• Demo trên web: Đăng nhập Zero-SSO &rarr; Đặt vé giữ chỗ atomic &rarr; Nhận vé QR &rarr; Demo Hủy vé hoàn slot trả lại ghế ảo ngay lập tức. | Slide 16 &rarr; 21 |
+| **35:00 – 43:30**<br>*(8.5 phút)* | **Thành viên 5**<br>*(Lê Anh Tuấn - QA)* | **Phần 5: LIVE DEMO BÀN QUÉT QR, KIỂM THỬ & BÁO CÁO CTSV**<br>• Demo Camera WebRTC quét mã vé < 0.1s &rarr; Chặn quét trùng lặp &rarr; Xuất file Excel báo cáo &rarr; Báo cáo 15/15 Tests Passed 100%. | Slide 22 &rarr; 25 |
 | **43:30 – 45:00**<br>*(1.5 phút)* | **Cả 5 Thành Viên** | **Tổng kết, Lời cảm ơn Hội đồng & Mở đầu phần Vấn đáp (Q&A)** | Slide 26 |

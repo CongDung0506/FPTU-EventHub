@@ -488,7 +488,7 @@ def build_bright_deck():
     # SLIDE 7: 5 PERSONA CARDS (Phân công 40 UseCases cho 5 thành viên)
     # =========================================================================
     s7 = prs.slides.add_slide(blank_layout)
-    add_header(s7, "2. Phân công nhiệm vụ", "Phân Công 40 UseCases Cho 5 Thành Viên (8 UC/Bạn)", "Thành viên 2: Nguyễn Việt Anh", "👥")
+    add_header(s7, "2. Phân công nhiệm vụ", "Phân Công 40 UseCases Cho 5 Thành Viên (8 UC/Bạn)", "Thành viên 2: Cao Chí Trung", "👥")
 
     members = [
         ("Trương Công Dũng", "DE200433", "Trưởng Nhóm & System", PRIMARY, PRIMARY_TINT, PRIMARY_BORDER, [
@@ -496,22 +496,22 @@ def build_bright_deck():
             "Khám phá sự kiện & Filter",
             "⭐ 8 UC: UC01 → UC08"
         ]),
-        ("Nguyễn Việt Anh", "SE190111", "PM & Database Arch", BLUE, BLUE_TINT, BLUE_BORDER, [
+        ("Cao Chí Trung", "SE190111", "PM & Database Arch", BLUE, BLUE_TINT, BLUE_BORDER, [
             "Quản lý Danh mục CRUD",
             "Dashboard CTSV toàn trường",
             "⭐ 8 UC: UC09 → UC16"
         ]),
-        ("Lê Hoàng Long", "SE190222", "Security & Backend", GREEN, GREEN_TINT, GREEN_BORDER, [
+        ("Dương Thanh Viên", "SE190222", "Security & Backend", GREEN, GREEN_TINT, GREEN_BORDER, [
             "Khóa vé Atomic Concurrency",
             "Mã QR & Hủy vé hoàn slot",
             "⭐ 8 UC: UC17 → UC24"
         ]),
-        ("Trần Minh Quang", "SE190333", "Fullstack & Scanner", PURPLE, PURPLE_TINT, PURPLE_BORDER, [
+        ("Nguyễn Đặng Đình Nam", "SE190333", "Fullstack & Scanner", PURPLE, PURPLE_TINT, PURPLE_BORDER, [
             "Bàn Check-in WebRTC Camera",
             "Chống gian lận quét trùng",
             "⭐ 8 UC: UC25 → UC32"
         ]),
-        ("Phạm Đức Trọng", "SE190444", "QA & DevOps Lead", AMBER, AMBER_TINT, AMBER_BORDER, [
+        ("Lê Anh Tuấn", "SE190444", "QA & DevOps Lead", AMBER, AMBER_TINT, AMBER_BORDER, [
             "Dashboard Ban Tổ Chức",
             "Xuất Excel & 15 Unit Tests",
             "⭐ 8 UC: UC33 → UC40"
@@ -597,7 +597,7 @@ def build_bright_deck():
     # SLIDE 8: CÔNG CỤ QUẢN LÝ DỰ ÁN (JIRA & GIT EDUCATION)
     # =========================================================================
     s8 = prs.slides.add_slide(blank_layout)
-    add_header(s8, "3. Công cụ & Kế hoạch", "Bộ Công Cụ Quản Lý: Jira Software & Git Education", "Thành viên 2: Nguyễn Việt Anh", "🛠️")
+    add_header(s8, "3. Công cụ & Kế hoạch", "Bộ Công Cụ Quản Lý: Jira Software & Git Education", "Thành viên 2: Cao Chí Trung", "🛠️")
 
     add_bento_box(s8, Inches(0.8), Inches(1.5), Inches(5.6), Inches(2.6), "Jira Software (Quản Trị Agile/Scrum)", [
         ("Phân rã 40 UseCases", "Chuyển đổi thành 40 User Stories trên Product Backlog, gán Story Points."),
@@ -627,7 +627,7 @@ def build_bright_deck():
     # SLIDE 9: KẾ HOẠCH 4 SPRINT AGILE
     # =========================================================================
     s9 = prs.slides.add_slide(blank_layout)
-    add_header(s9, "3. Công cụ & Kế hoạch", "Kế Hoạch Thực Thi Dự Án Qua 4 Sprint Agile", "Thành viên 2: Nguyễn Việt Anh", "📅")
+    add_header(s9, "3. Công cụ & Kế hoạch", "Kế Hoạch Thực Thi Dự Án Qua 4 Sprint Agile", "Thành viên 2: Cao Chí Trung", "📅")
 
     sprints = [
         ("Sprint 1 (Tuần 1 - 2)", "Khởi Tạo & Khảo Sát", PRIMARY, PRIMARY_TINT, PRIMARY_BORDER, [
@@ -707,7 +707,7 @@ def build_bright_deck():
     # SLIDE 10: QUY TRÌNH PHÁT TRIỂN & CHUẨN GITFLOW
     # =========================================================================
     s10 = prs.slides.add_slide(blank_layout)
-    add_header(s10, "3. Công cụ & Kế hoạch", "Quy Trình Gitflow & Cổng Kiểm Soát Chất Lượng", "Thành viên 2: Nguyễn Việt Anh", "🌿")
+    add_header(s10, "3. Công cụ & Kế hoạch", "Quy Trình Gitflow & Cổng Kiểm Soát Chất Lượng", "Thành viên 2: Cao Chí Trung", "🌿")
 
     add_bento_box(s10, Inches(0.8), Inches(1.5), Inches(5.6), Inches(5.3), "Cấu Trúc Nhánh Gitflow Chuẩn Mực", [
         ("main (Production)", "Nhánh ổn định tuyệt đối, tự động kích hoạt deploy lên Vercel."),
@@ -729,7 +729,7 @@ def build_bright_deck():
     # SLIDE 11: TỔNG QUAN TECH STACK
     # =========================================================================
     s11 = prs.slides.add_slide(blank_layout)
-    add_header(s11, "4. Kiến trúc & Công nghệ", "Tổng Quan Công Nghệ Sử Dụng (Tech Stack Hiện Đại)", "Thành viên 3: Lê Hoàng Long", "💻")
+    add_header(s11, "4. Kiến trúc & Công nghệ", "Tổng Quan Công Nghệ Sử Dụng (Tech Stack Hiện Đại)", "Thành viên 3: Dương Thanh Viên", "💻")
 
     tech_cols = [
         ("Frontend", "Giao Diện & Tương Tác", PRIMARY, PRIMARY_TINT, PRIMARY_BORDER, "🎨", [
@@ -770,7 +770,7 @@ def build_bright_deck():
     # SLIDE 12: KIẾN TRÚC PHẦN MỀM MVC 3 TẦNG
     # =========================================================================
     s12 = prs.slides.add_slide(blank_layout)
-    add_header(s12, "4. Kiến trúc & Công nghệ", "Kiến Trúc Phần Mềm MVC Phân Tách Trách Nhiệm", "Thành viên 3: Lê Hoàng Long", "🏗️")
+    add_header(s12, "4. Kiến trúc & Công nghệ", "Kiến Trúc Phần Mềm MVC Phân Tách Trách Nhiệm", "Thành viên 3: Dương Thanh Viên", "🏗️")
 
     layers = [
         ("TẦNG 1: VIEW (GIAO DIỆN NGƯỜI DÙNG)", "Jinja2 Templates & Responsive Web", PRIMARY, PRIMARY_TINT, PRIMARY_BORDER, [
@@ -798,7 +798,7 @@ def build_bright_deck():
     # SLIDE 13: THIẾT KẾ CƠ SỞ DỮ LIỆU
     # =========================================================================
     s13 = prs.slides.add_slide(blank_layout)
-    add_header(s13, "4. Kiến trúc & Công nghệ", "Mô Hình Dữ Liệu Quan Hệ 6 Bảng Chuẩn Hóa", "Thành viên 3: Lê Hoàng Long", "🗄️")
+    add_header(s13, "4. Kiến trúc & Công nghệ", "Mô Hình Dữ Liệu Quan Hệ 6 Bảng Chuẩn Hóa", "Thành viên 3: Dương Thanh Viên", "🗄️")
 
     tables = [
         ("User (Tài Khoản)", "Khóa chính: id", PRIMARY, PRIMARY_TINT, PRIMARY_BORDER, [
@@ -846,7 +846,7 @@ def build_bright_deck():
     # SLIDE 14: 4 LÁ CHẮN AN TOÀN THÔNG TIN
     # =========================================================================
     s14 = prs.slides.add_slide(blank_layout)
-    add_header(s14, "4. Kiến trúc & Công nghệ", "4 Lá Chắn Bảo Mật Theo Tiêu Chuẩn OWASP", "Thành viên 3: Lê Hoàng Long", "🛡️")
+    add_header(s14, "4. Kiến trúc & Công nghệ", "4 Lá Chắn Bảo Mật Theo Tiêu Chuẩn OWASP", "Thành viên 3: Dương Thanh Viên", "🛡️")
 
     shields = [
         ("Lá Chắn 1: Chống Giả Mạo CSRF", "Token Xác Thực Trong Mọi Form", BLUE, BLUE_TINT, BLUE_BORDER, "🔒", [
@@ -882,7 +882,7 @@ def build_bright_deck():
     # SLIDE 15: CƠ CHẾ KHÓA VÉ CHỐNG OVERBOOKING
     # =========================================================================
     s15 = prs.slides.add_slide(blank_layout)
-    add_header(s15, "4. Kiến trúc & Công nghệ", "Cơ Chế Khóa Vé Nguyên Tử & Chống Đua Dữ Liệu", "Thành viên 3: Lê Hoàng Long", "⚡")
+    add_header(s15, "4. Kiến trúc & Công nghệ", "Cơ Chế Khóa Vé Nguyên Tử & Chống Đua Dữ Liệu", "Thành viên 3: Dương Thanh Viên", "⚡")
 
     add_kpi_card(s15, Inches(0.8), Inches(1.5), Inches(3.6), Inches(1.4), "1 Ghế Còn Lại", "Tình Huống Căng Thẳng", "Nhiều sinh viên cùng bấm giữ chỗ cùng giây", RED, RED_TINT, RED_BORDER)
     add_kpi_card(s15, Inches(4.8), Inches(1.5), Inches(3.6), Inches(1.4), "0.01 Giây", "Xử Lý Giao Dịch", "Khóa hàng trong CSDL trước khi cấp vé", PRIMARY, PRIMARY_TINT, PRIMARY_BORDER)
@@ -907,7 +907,7 @@ def build_bright_deck():
     # SLIDE 16: PHÂN HỆ SINH VIÊN
     # =========================================================================
     s16 = prs.slides.add_slide(blank_layout)
-    add_header(s16, "5. Tính năng chính", "Phân Hệ Tính Năng Dành Cho Sinh Viên FPTU", "Thành viên 4: Trần Minh Quang", "🎓")
+    add_header(s16, "5. Tính năng chính", "Phân Hệ Tính Năng Dành Cho Sinh Viên FPTU", "Thành viên 4: Nguyễn Đặng Đình Nam", "🎓")
 
     add_bento_box(s16, Inches(0.8), Inches(1.5), Inches(6.8), Inches(5.3), "4 Tính Năng Trọng Tâm Dành Cho Sinh Viên", [
         ("1. Xem & Lọc sự kiện trực quan", "Khám phá danh sách hội thảo, workshop, hackathon theo danh mục hấp dẫn."),
@@ -936,7 +936,7 @@ def build_bright_deck():
     # SLIDE 17: PHÂN HỆ CÁN BỘ CTSV
     # =========================================================================
     s17 = prs.slides.add_slide(blank_layout)
-    add_header(s17, "5. Tính năng chính", "Phân Hệ Quản Trị Dành Cho Cán Bộ CTSV & BTC", "Thành viên 4: Trần Minh Quang", "🛡️")
+    add_header(s17, "5. Tính năng chính", "Phân Hệ Quản Trị Dành Cho Cán Bộ CTSV & BTC", "Thành viên 4: Nguyễn Đặng Đình Nam", "🛡️")
 
     add_bento_box(s17, Inches(0.8), Inches(1.5), Inches(6.8), Inches(5.3), "4 Tính Năng Trọng Tâm Dành Cho Cán Bộ CTSV", [
         ("1. Dashboard tổng quan toàn trường", "Theo dõi tổng số sự kiện, tổng số vé phát hành và số lượng sinh viên tham gia."),
@@ -965,7 +965,7 @@ def build_bright_deck():
     # SLIDE 18: CÔNG NGHỆ QUÉT QR WEBRTC
     # =========================================================================
     s18 = prs.slides.add_slide(blank_layout)
-    add_header(s18, "5. Tính năng chính", "Công Nghệ Bàn Quét Mã QR & Camera WebRTC", "Thành viên 4: Trần Minh Quang", "📷")
+    add_header(s18, "5. Tính năng chính", "Công Nghệ Bàn Quét Mã QR & Camera WebRTC", "Thành viên 4: Nguyễn Đặng Đình Nam", "📷")
 
     add_kpi_card(s18, Inches(0.8), Inches(1.5), Inches(3.6), Inches(1.4), "0.1 Giây", "Tốc Độ Quét Mã", "Nhận diện tức thì qua camera WebRTC", GREEN, GREEN_TINT, GREEN_BORDER)
     add_kpi_card(s18, Inches(4.8), Inches(1.5), Inches(3.6), Inches(1.4), "0 Ứng Dụng", "Không Cần Cài Đặt", "Chạy trực tiếp trên trình duyệt Web", BLUE, BLUE_TINT, BLUE_BORDER)
@@ -989,7 +989,7 @@ def build_bright_deck():
     # SLIDE 19: KỊCH BẢN LIVE DEMO - PHẦN 1 (SINH VIÊN)
     # =========================================================================
     s19 = prs.slides.add_slide(blank_layout)
-    add_header(s19, "5. Tính năng chính", "Kịch Bản Live Demo: Hành Trình Của Sinh Viên", "Thành viên 4: Trần Minh Quang", "🎬")
+    add_header(s19, "5. Tính năng chính", "Kịch Bản Live Demo: Hành Trình Của Sinh Viên", "Thành viên 4: Nguyễn Đặng Đình Nam", "🎬")
 
     # Browser Bar Mockup
     br_bar = s19.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.8), Inches(1.45), Inches(11.733), Inches(0.45))
@@ -1029,7 +1029,7 @@ def build_bright_deck():
     # SLIDE 20: KỊCH BẢN LIVE DEMO - PHẦN 2 (CÁN BỘ CTSV)
     # =========================================================================
     s20 = prs.slides.add_slide(blank_layout)
-    add_header(s20, "5. Tính năng chính", "Kịch Bản Live Demo: Hành Trình Cán Bộ CTSV", "Thành viên 4: Trần Minh Quang", "🎬")
+    add_header(s20, "5. Tính năng chính", "Kịch Bản Live Demo: Hành Trình Cán Bộ CTSV", "Thành viên 4: Nguyễn Đặng Đình Nam", "🎬")
 
     # Browser Bar Mockup
     br_bar2 = s20.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.8), Inches(1.45), Inches(11.733), Inches(0.45))
@@ -1069,7 +1069,7 @@ def build_bright_deck():
     # SLIDE 21: KẾT QUẢ VẬN HÀNH THỰC TẾ
     # =========================================================================
     s21 = prs.slides.add_slide(blank_layout)
-    add_header(s21, "5. Tính năng chính", "Kết Quả Vận Hành & Giá Trị Thực Tế Đạt Được", "Thành viên 4: Trần Minh Quang", "🏆")
+    add_header(s21, "5. Tính năng chính", "Kết Quả Vận Hành & Giá Trị Thực Tế Đạt Được", "Thành viên 4: Nguyễn Đặng Đình Nam", "🏆")
 
     add_kpi_card(s21, Inches(0.8), Inches(1.5), Inches(3.6), Inches(1.4), "0 Phút Chờ", "Xếp Hàng Check-in", "Sinh viên đi qua cửa chỉ với 1 thao tác quét", GREEN, GREEN_TINT, GREEN_BORDER)
     add_kpi_card(s21, Inches(4.8), Inches(1.5), Inches(3.6), Inches(1.4), "100% Khớp", "Sức Chứa Hội Trường", "Không xảy ra tình trạng thiếu chỗ hay dư thừa", PRIMARY, PRIMARY_TINT, PRIMARY_BORDER)
@@ -1101,7 +1101,7 @@ def build_bright_deck():
     # SLIDE 22: CHIẾN LƯỢC KIỂM THỬ
     # =========================================================================
     s22 = prs.slides.add_slide(blank_layout)
-    add_header(s22, "6. Phần kiểm thử", "Chiến Lược Kiểm Thử Phần Mềm Toàn Diện", "Thành viên 5: Phạm Đức Trọng", "🧪")
+    add_header(s22, "6. Phần kiểm thử", "Chiến Lược Kiểm Thử Phần Mềm Toàn Diện", "Thành viên 5: Lê Anh Tuấn", "🧪")
 
     t_levels = [
         ("TẦNG 1: UNIT TESTING (KIỂM THỬ ĐƠN VỊ)", "Kiểm tra từng hàm và phương thức độc lập", PRIMARY, PRIMARY_TINT, PRIMARY_BORDER, [
@@ -1129,7 +1129,7 @@ def build_bright_deck():
     # SLIDE 23: KẾT QUẢ KIỂM THỬ TỰ ĐỘNG
     # =========================================================================
     s23 = prs.slides.add_slide(blank_layout)
-    add_header(s23, "6. Phần kiểm thử", "Báo Cáo Kết Quả Kiểm Thử Tự Động (100% Passed)", "Thành viên 5: Phạm Đức Trọng", "✅")
+    add_header(s23, "6. Phần kiểm thử", "Báo Cáo Kết Quả Kiểm Thử Tự Động (100% Passed)", "Thành viên 5: Lê Anh Tuấn", "✅")
 
     # Giant Emerald Scorecard Card
     add_kpi_card(s23, Inches(0.8), Inches(1.5), Inches(3.6), Inches(1.4), "15 / 15", "Tests Passed Tuyệt Đối", "100% kịch bản kiểm thử đều thành công", GREEN, GREEN_TINT, GREEN_BORDER)
@@ -1155,7 +1155,7 @@ def build_bright_deck():
     # SLIDE 24: HIỆU NĂNG & KHẢ NĂNG CHỊU TẢI
     # =========================================================================
     s24 = prs.slides.add_slide(blank_layout)
-    add_header(s24, "6. Phần kiểm thử", "Báo Cáo Hiệu Năng & Khả Năng Chịu Tải Thực Tế", "Thành viên 5: Phạm Đức Trọng", "⚡")
+    add_header(s24, "6. Phần kiểm thử", "Báo Cáo Hiệu Năng & Khả Năng Chịu Tải Thực Tế", "Thành viên 5: Lê Anh Tuấn", "⚡")
 
     add_kpi_card(s24, Inches(0.8), Inches(1.5), Inches(3.6), Inches(1.4), "< 1 Giây", "Tốc Độ Phản Hồi Trang", "Tối ưu hóa tài nguyên CSS/JS và hình ảnh", BLUE, BLUE_TINT, BLUE_BORDER)
     add_kpi_card(s24, Inches(4.8), Inches(1.5), Inches(3.6), Inches(1.4), "0.1 Giây", "Giải Mã Mã Vạch Camera", "Thuật toán xử lý hình ảnh trực tiếp trên máy khách", GREEN, GREEN_TINT, GREEN_BORDER)
@@ -1179,7 +1179,7 @@ def build_bright_deck():
     # SLIDE 25: LỘ TRÌNH PHÁT TRIỂN TƯƠNG LAI
     # =========================================================================
     s25 = prs.slides.add_slide(blank_layout)
-    add_header(s25, "6. Phần kiểm thử", "Lộ Trình Nâng Cấp & Định Hướng Tương Lai", "Thành viên 5: Phạm Đức Trọng", "🔮")
+    add_header(s25, "6. Phần kiểm thử", "Lộ Trình Nâng Cấp & Định Hướng Tương Lai", "Thành viên 5: Lê Anh Tuấn", "🔮")
 
     future_pillars = [
         ("Giai Đoạn 1: Tích Hợp AI Gợi Ý", "Đề xuất sự kiện thông minh", PRIMARY, PRIMARY_TINT, PRIMARY_BORDER, "🤖", [
