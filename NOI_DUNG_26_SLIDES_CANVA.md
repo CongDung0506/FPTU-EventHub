@@ -41,21 +41,21 @@
 
 ---
 
-### 🔹 SLIDE 3: 4 NỖI ĐAU TỪ CỔNG CŨ EVENTS.FPTU.VN
+### 🔹 SLIDE 3: 4 THÁCH THỨC TỪ CỔNG CŨ & THỰC TẾ SỰ KIỆN FPTU
 * **Bố cục đề xuất:** 4 Thẻ cảnh báo nền đỏ nhạt/viền đỏ (Grid 2x2).
 * **Nội dung đưa vào Slide:**
-  * **Thẻ 1: 🚨 Vỡ Trận Sức Chứa Hội Trường**
-    * Cổng cũ chỉ là tin tức tĩnh, đăng ký phải dẫn link sang Google Form.
-    * Không tự khóa khi hết vé: Hội trường 100 ghế nhưng Form nhận 250 người.
-  * **Thẻ 2: ⏱️ Điểm Danh Thủ Công Ùn Tắc**
-    * Dò tên trên danh sách giấy: Xếp hàng dài, mất 20 - 30 phút/buổi.
-    * Dễ gian lận điểm danh hộ và thất lạc dữ liệu.
-  * **Thẻ 3: 🎟️ Ghế Ảo (Đăng Ký Nhiều Nhưng Vắng)**
-    * Không có vé điện tử QR cá nhân để đối soát tại cửa.
-    * Không có nút hủy vé: Sinh viên bận không nhường lại được chỗ cho bạn khác.
-  * **Thẻ 4: 📜 Chậm Trễ Báo Cáo & Chứng Nhận**
-    * Mất 2 - 3 tuần để ban tổ chức rà soát file Excel và gửi chứng nhận.
-* **Gợi ý ảnh/icon:** Icon cảnh báo ⚠️, 🚨, ⏱️, ❌.
+  * **Thẻ 1: 🚨 Vỡ Trận Sức Chứa (Overbooking)**
+    * Cổng cũ không khóa số lượng tự động theo thời gian thực khi sinh viên đăng ký dồn dập.
+    * Hội trường chỉ có 100 chỗ nhưng lượng đăng ký vượt quá sức chứa, gây khó khăn cho ban tổ chức.
+  * **Thẻ 2: 🎟️ Vấn Nạn "Ghế Ảo" (Đăng Ký Xong Không Đi)**
+    * Tham gia sự kiện là hoàn toàn tự nguyện, đi hay không là tùy sinh viên.
+    * Tuy nhiên, hệ thống cũ KHÔNG CÓ NÚT HỦY VÉ: Sinh viên bận đột xuất cứ thế bỏ qua, khiến hệ thống báo hết chỗ nhưng hội trường thực tế lại trống ghế, lãng phí cơ hội của bạn khác.
+  * **Thẻ 3: 📱 Bất Tiện Cho Bạn Quản Lý Khi Quét Mã Check-in**
+    * Khi đến sự kiện, có bạn quản lý đứng tại cửa quét mã vé để điểm danh sinh viên.
+    * Hệ thống cũ yêu cầu cài đặt phần mềm/app riêng cồng kềnh, đối soát chậm khi sinh viên vào đông, và thiếu cảnh báo nếu vé bị quét trùng lặp (chụp màn hình quét hộ).
+  * **Thẻ 4: 📊 Dữ Liệu Điểm Danh Không Đồng Bộ Tức Thì**
+    * Cán bộ CTSV không theo dõi được ngay số lượng sinh viên thực tế đã có mặt tại hội trường.
+    * Ban tổ chức phải chờ xuất và gộp dữ liệu thủ công sau sự kiện để báo cáo.
 
 ---
 
@@ -64,33 +64,30 @@
 * **Nội dung đưa vào Slide:**
   * **3 Chỉ số cam kết:**
     * **`0.1 Giây`** — Thời gian giữ chỗ thành công với Transaction nguyên tử
-    * **`< 1 Giây`** — Tốc độ nhận diện và check-in mã QR qua camera WebRTC
-    * **`100%`** — Tự động hóa: Cấp vé QR, hủy vé nhả slot, xuất báo cáo CTSV
+    * **`< 1 Giây`** — Tốc độ nhận diện và check-in mã QR qua camera WebRTC cho bạn quản lý
+    * **`100%`** — Tự động hóa: Cấp vé QR, hủy vé nhả slot ngay, đồng bộ sĩ số CTSV
   * **3 Trụ Cột Đổi Mới:**
-    * **Thời gian thực (Real-time):** Đồng bộ số vé còn lại tức thì, hết ghế tự ngắt form.
-    * **Bảo mật tuyệt đối (Zero-Fraud):** Mỗi vé 1 mã Token độc bản, chống vé giả.
-    * **Giải phóng nhân sự:** Giảm 90% thời gian điểm danh tại cửa ra vào.
-* **Gợi ý ảnh/icon:** Ảnh Workshop AI tại FPTU, icon 🎯, 🚀, 💎.
+    * **Thời gian thực (Real-time):** Đồng bộ số vé còn lại tức thì, hết ghế tự ngắt đăng ký.
+    * **Chấm dứt ghế ảo:** Sinh viên chủ động hủy vé trả lại slot cho bạn có nhu cầu.
+    * **Bàn quét QR WebRTC tối ưu:** Bạn quản lý mở trình duyệt quét ngay trên điện thoại/laptop, không cần cài app, phát hiện vé quét trùng lặp tức thì.
 
 ---
 
 ### 🔹 SLIDE 5: BATTLE BOARD — SO SÁNH ĐỐI ĐẦU TRỰC QUAN
 * **Bố cục đề xuất:** 2 Cột song song (Trái: Thẻ đỏ ❌ | Phải: Thẻ xanh ✅ | Giữa: Huy hiệu tròn VS).
 * **Nội dung đưa vào Slide:**
-  * **Cột Trái: ❌ CỔNG CŨ EVENTS.FPTU.VN**
-    * Web tĩnh, chỉ đăng bài viết thông báo
-    * Đăng ký qua Google Form, không khóa sức chứa
-    * Điểm danh ký giấy thủ công, tốn 30 phút
-    * Không có vé QR, không có mã đối soát
-    * Không hủy vé được, ghế trống ảo rất nhiều
-    * Dữ liệu phân tán trên nhiều file Excel cá nhân
+  * **Cột Trái: ❌ CỔNG CŨ CỦA TRƯỜNG**
+    * Không kiểm soát sức chứa thời gian thực, dễ quá tải số lượng đăng ký
+    * Không có nút hủy vé: Sinh viên bận không nhường ghế được, gây ra "ghế ảo"
+    * Bạn quản lý phải dùng app riêng hoặc thao tác đối soát quét mã cồng kềnh
+    * Không cảnh báo tức thì khi mã vé bị quét lại lần 2 (nguy cơ quét hộ)
+    * Dữ liệu điểm danh không đồng bộ thời gian thực cho Cán bộ CTSV
   * **Cột Phải: ✅ FPTU EVENTHUB ĐỘT PHÁ 2026**
-    * Web động tương tác thời gian thực
-    * Khóa chỗ tự động bằng Transaction CSDL
-    * Bàn quét Camera QR WebRTC dưới 1 giây
-    * Vé điện tử cá nhân kèm mã QR Token bảo mật
-    * Hủy vé 1-chạm, hoàn lại chỗ trống ngay lập tức
-    * Báo cáo tập trung, xuất file Excel chuẩn CTSV 1-click
+    * Khóa chỗ tự động bằng Transaction CSDL: Hết ghế tự ngắt đăng ký tức thì
+    * Hủy vé 1-chạm hoàn slot: Sinh viên chủ động trả vé, giải phóng ghế cho bạn khác
+    * Bàn Check-in WebRTC tiện lợi: Bạn quản lý mở web quét mã camera trong 0.1s
+    * Chống gian lận: Vé đã quét lập tức báo đỏ "Đã check-in", ngăn quét trùng
+    * Đồng bộ Dashboard thời gian thực: Cán bộ CTSV thấy ngay sĩ số thực tế và xuất Excel 1-click
 * **Gợi ý ảnh/icon:** Huy hiệu tròn `VS` màu cam FPT ở giữa, icon ❌ và ✅.
 
 ---

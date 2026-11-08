@@ -178,13 +178,12 @@ def create_presentation_document(output_path):
         "Career Talk doanh nghiệp và giải vô địch Vovinam. Nhu cầu tham gia và gắn kết của sinh viên là vô cùng to lớn."
     )
 
-    doc.add_paragraph().add_run("1.2. Phân tích bất cập của cổng cũ (events.fptu.vn) & phương pháp truyền thống:").font.bold = True
+    doc.add_paragraph().add_run("1.2. Phân tích bất cập của cổng cũ & thực tế tổ chức sự kiện tại trường:").font.bold = True
     bullet_pts1 = [
-        ("Bản chất bảng tin tĩnh:", "Cổng events.fptu.vn chỉ đăng bài viết thông báo, không có tương tác giữ chỗ trực tiếp. Để đăng ký, các CLB phải dẫn link ra ngoài Google Form."),
-        ("Vấn nạn vỡ trận số lượng ghế (Capacity Overload):", "Hội trường Alpha chỉ có 100 ghế, nhưng Google Form không thể giới hạn tự động theo thời gian thực (Atomic capacity constraint), dẫn đến nhận 200 đơn đăng ký gây quá tải."),
-        ("Điểm danh thủ công chậm chạp & ùn tắc:", "Đến ngày diễn ra, sinh viên phải xếp hàng dài trước cửa hội trường để cán bộ dò tìm tên trên giấy hoặc file Excel, dễ nhầm lẫn và tốn 30 - 45 phút."),
-        ("Hiện tượng 'ghế ảo' không thể hủy chỗ:", "Sinh viên có việc bận đột xuất không thể hủy vé, dẫn đến tình trạng trên danh sách thì đầy nhưng ghế ngồi trong hội trường lại trống trơn."),
-        ("Cấp chứng nhận chậm trễ:", "Giấy chứng nhận tham gia thường phải chờ cán bộ thiết kế gửi email sau nhiều tuần hoặc không được cấp.")
+        ("Bản chất bảng tin tĩnh & Quá tải sức chứa:", "Cổng cũ chỉ đăng bài thông báo, khi đăng ký dồn dập không có cơ chế khóa số lượng tự động theo thời gian thực (Atomic lock), dễ dẫn đến tình trạng đăng ký vượt quá sức chứa hội trường."),
+        ("Vấn nạn 'ghế ảo' do không có tính năng hủy vé:", "Việc tham gia sự kiện là hoàn toàn tự nguyện, đi hay không là tùy ý sinh viên và trường không cấp chứng nhận. Tuy nhiên, cổng cũ không có nút hủy vé; sinh viên bận đột xuất cứ thế bỏ qua, dẫn đến hệ thống báo hết vé nhưng hội trường thực tế lại bị trống ghế, lãng phí cơ hội của bạn khác."),
+        ("Quy trình quét mã của bạn quản lý còn nhiều hạn chế:", "Khi đến sự kiện, có bạn quản lý đứng tại cửa để quét mã vé điểm danh cho sinh viên. Tuy nhiên, hệ thống cũ cần phần mềm/app riêng cồng kềnh, đối soát chậm khi sinh viên vào đông, và thiếu cảnh báo nếu mã vé bị quét lại lần 2 (nguy cơ chụp ảnh màn hình quét hộ)."),
+        ("Dữ liệu điểm danh không đồng bộ tức thì cho CTSV:", "Sau khi bạn quản lý quét mã xong, số lượng sinh viên có mặt thực tế không được cập nhật ngay lên Dashboard của Cán bộ CTSV, phải chờ tổng hợp dữ liệu thủ công sau sự kiện.")
     ]
     for b_title, b_desc in bullet_pts1:
         bp = doc.add_paragraph(style='List Bullet')
@@ -216,9 +215,9 @@ def create_presentation_document(output_path):
     comp_rows_data = [
         ("Mô hình hoạt động", "Trang tin tức tĩnh / blog thông báo sự kiện, không tương tác đặt chỗ nội bộ.", "Nền tảng quản trị và vận hành sự kiện trực tuyến khép kín (Full-lifecycle event portal)."),
         ("Cơ chế đặt vé (Ticket)", "Chuyển hướng ra ngoài điền Google Form thủ công, không có mã vé định danh.", "Sinh vé điện tử tức thì (mã dạng FU-2026-XXXXX), lưu vào Ví vé cá nhân có mã QR riêng."),
-        ("Quy trình Check-in", "In danh sách giấy hoặc dò file Excel thủ công, dễ ùn tắc kéo dài tại cửa phòng.", "Tích hợp Bàn Check-in bằng Camera điện thoại/laptop (WebRTC), quét QR xong trong 1 giây."),
-        ("Chứng nhận tham gia", "Chờ cán bộ thiết kế gửi email sau nhiều tuần (hoặc không có giấy chứng nhận).", "Hệ thống tự động phát hành Giấy Chứng Nhận Điện Tử (E-Cert) có mã số xác thực ngay khi check-in."),
-        ("Kiểm soát sức chứa", "Không đếm số ghế trống real-time, sinh viên đăng ký quá tải gây vỡ trận hội trường.", "Thanh sức chứa trực quan; tự động khóa nút và gắn mác ĐÃ HẾT VÉ (SOLD OUT) khi kín chỗ."),
+        ("Quy trình Check-in", "Bạn quản lý phải dùng app riêng hoặc quy trình đối soát chậm chạp khi sinh viên vào đông.", "Tích hợp Bàn Check-in Camera WebRTC ngay trên web, bạn quản lý quét mã QR xong trong 0.1s."),
+        ("Chống gian lận quét trùng", "Không có cảnh báo tức thì nếu mã vé bị quét lại lần 2 (nguy cơ chụp ảnh quét hộ).", "Hệ thống báo động đỏ 'Vé này đã điểm danh!', ghi nhận thời gian thực và ngăn chặn quét hộ."),
+        ("Kiểm soát sức chứa", "Không đếm số ghế trống real-time, sinh viên đăng ký quá tải gây vỡ trận hội trường.", "Thanh sức chứa trực quan; Transaction CSDL khóa chỗ nguyên tử khi kín chỗ."),
         ("Hủy vé & Nhượng chỗ", "Sinh viên bận không có cách nào hủy vé, dẫn đến đặt chỗ ảo nhưng hội trường vắng ngắt.", "Sinh viên hủy vé 1-click, hệ thống tự động hoàn lại slot ghế trống cho bạn khác."),
         ("Phân quyền nghiệp vụ", "Chung một giao diện người xem, không có trang nghiệp vụ cho cán bộ CTSV.", "Tách biệt tuyệt đối 2 luồng: Sinh viên (đặt vé, QR) & Phòng CTSV (điều hành, điểm danh, xuất CSV).")
     ]
@@ -252,13 +251,12 @@ def create_presentation_document(output_path):
         "Mỗi tuần, tại Hội trường Alpha, Beta hay phòng Lab Gamma đều diễn ra hàng loạt Workshop công nghệ, Hackathon và giải đấu phong trào. "
         "Tuy nhiên, khi nhìn vào cổng thông tin hiện tại của trường là events.fptu.vn, chúng em nhận thấy một bài toán rất lớn: Cổng cũ thực chất chỉ là một bảng tin tĩnh đăng bài thông báo. "
         "Khi sinh viên muốn đăng ký giữ chỗ, ban tổ chức vẫn phải dẫn link ra ngoài Google Form hoặc biểu mẫu trung gian.\n\n"
-        "Cách làm này để lại 4 nỗi đau nhức nhối:\n"
-        "1. Hội trường Alpha chỉ có sức chứa 100 ghế, nhưng Google Form không thể giới hạn tự động theo thời gian thực, dẫn đến nhận 200 đơn đăng ký gây vỡ trận hội trường.\n"
-        "2. Đến giờ diễn ra, sinh viên phải đứng chen chúc ở cửa để cán bộ cầm giấy hoặc dò từng dòng Excel rất thủ công và chậm chạp.\n"
-        "3. Sinh viên bận việc đột xuất không có cách nào hủy vé để nhường lại cho bạn khác, dẫn đến tình trạng trên danh sách thì đầy nhưng ghế ngồi lại trống.\n"
-        "4. Giấy chứng nhận tham gia thường phải chờ thiết kế gửi email sau nhiều tuần, gây nản lòng cho sinh viên.\n\n"
-        "Chính vì vậy, nhóm chúng em đã xây dựng FPTU EventHub nhằm số hóa 100% quy trình: Sinh viên đăng nhập bằng email trường (@fpt.edu.vn) &rarr; "
-        "Giữ chỗ tức thì nhận vé điện tử kèm mã QR riêng &rarr; Cán bộ CTSV dùng Camera quét QR điểm danh chỉ trong 1 giây &rarr; Nhận ngay Giấy chứng nhận E-Certificate chuẩn học thuật.\n\n"
+        "Từ trải nghiệm thực tế khi tham gia sự kiện tại trường, nhóm chúng em nhận thấy một số điểm nghẽn lớn:\n"
+        "Thứ nhất, việc tham gia sự kiện là hoàn toàn tự nguyện, đi hay không là tùy ý sinh viên và trường không cấp chứng nhận tham gia. Nhưng hệ thống cũ không có tính năng HỦY VÉ: Khi sinh viên đăng ký giữ chỗ trước mà đến ngày bận việc đột xuất thì cứ thế bỏ qua. Hậu quả là hệ thống báo 'Hết vé', nhưng tại hội trường lại trống nhiều ghế, trong khi những bạn sinh viên khác thật sự muốn đi lại không có vé để đăng ký.\n"
+        "Thứ hai, cổng cũ không có cơ chế khóa số lượng tự động theo thời gian thực (Atomic lock). Khi mở đăng ký sự kiện hot, sinh viên bấm dồn dập dễ dẫn đến đăng ký vượt quá sức chứa hội trường.\n"
+        "Thứ ba, về quy trình check-in: Tại cửa sự kiện, có một bạn quản lý đứng quét mã vé của sinh viên thì sinh viên mới được điểm danh. Tuy nhiên, hệ thống cũ cần phần mềm/app riêng cồng kềnh, đối soát chậm khi sinh viên vào đông, và thiếu cơ chế cảnh báo nếu một mã vé bị quét lại lần 2 (nguy cơ chụp màn hình quét hộ).\n"
+        "Thứ tư, dữ liệu điểm danh sau khi quét không được đồng bộ thời gian thực, khiến Cán bộ CTSV không nắm được ngay sĩ số thực tế mà phải chờ tổng hợp thủ công sau sự kiện.\n\n"
+        "Chính vì vậy, nhóm chúng em đã phát triển FPTU EventHub nhằm giải quyết triệt để các bài toán trên: Sinh viên đăng nhập 1-click -> Khóa vé nguyên tử trong 0.1s chống overbooking -> Có nút Hủy vé 1-chạm hoàn slot giải phóng ghế ảo -> Bạn quản lý mở ngay Bàn Check-in WebRTC Camera trên trình duyệt quét mã QR trong 0.1s -> Tự động chặn vé quét trùng và cập nhật sĩ số tức thì cho Cán bộ CTSV.\n\n"
         "Sau đây, em xin kính mời Thành viên 2 tiếp tục trình bày về các Tool và Công nghệ cốt lõi mà nhóm đã lựa chọn để triển khai dự án!\""
     )
     r_s1.font.size = Pt(9.5)
@@ -718,8 +716,13 @@ def create_presentation_document(output_path):
         p.add_run(f"{title} ").font.bold = True
         p.add_run(desc)
 
-    doc.save(output_path)
-    print(f"Full 4-Pillar Document created successfully at: {output_path}")
+    try:
+        doc.save(output_path)
+        print(f"Full 4-Pillar Document created successfully at: {output_path}")
+    except PermissionError:
+        alt_path = output_path.replace(".docx", "_V2.docx")
+        doc.save(alt_path)
+        print(f"Original locked. Saved to: {alt_path}")
 
 if __name__ == "__main__":
     out_file = r"C:\Users\truon\fptu_eventhub\KICH_BAN_THUYET_TRINH_FPTU_EVENTHUB_5_NGUOI.docx"

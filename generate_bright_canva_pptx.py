@@ -360,30 +360,30 @@ def build_bright_deck():
         rtf.font.color.rgb = PRIMARY_DARK
 
     # =========================================================================
-    # SLIDE 3: 4 NỖI ĐAU CỦA CỔNG CŨ
+    # SLIDE 3: 4 THÁCH THỨC TỪ CỔNG CŨ & THỰC TẾ SỰ KIỆN FPTU
     # =========================================================================
     s3 = prs.slides.add_slide(blank_layout)
-    add_header(s3, "1. Giới thiệu dự án", "4 'Nỗi Đau' Lớn Từ Cổng Cũ events.fptu.vn", "Thành viên 1: Trương Công Dũng", "⚠️")
+    add_header(s3, "1. Giới thiệu dự án", "4 Thách Thức Từ Cổng Cũ & Thực Tế Sự Kiện FPTU", "Thành viên 1: Trương Công Dũng", "⚠️")
 
-    add_bento_box(s3, Inches(0.8), Inches(1.5), Inches(5.6), Inches(2.6), "01. Vỡ Trận Sức Chứa Hội Trường", [
-        ("events.fptu.vn chỉ là tin tĩnh", "Khi đăng ký bắt buộc phải dẫn link ra Google Form."),
-        ("Không khóa số lượng tự động", "Hội trường 100 ghế nhưng Form nhận 250 đơn, sinh viên đến không có chỗ ngồi.")
+    add_bento_box(s3, Inches(0.8), Inches(1.5), Inches(5.6), Inches(2.6), "01. Vỡ Trận Sức Chứa (Overbooking)", [
+        ("Không khóa tự động khi đua vé", "Cổng cũ không ngắt đăng ký tức thời khi lượng sinh viên bấm cùng lúc."),
+        ("Vượt quá sức chứa hội trường", "Hội trường 100 ghế nhưng sinh viên đăng ký dư quá tải, khó điều phối.")
     ], top_accent=RED, bg_color=RED_TINT, border_color=RED_BORDER, icon="🚨")
 
-    add_bento_box(s3, Inches(6.8), Inches(1.5), Inches(5.6), Inches(2.6), "02. Điểm Danh Thủ Công Ùn Tắc", [
-        ("Dò tên trên danh sách giấy", "Sinh viên đứng xếp hàng dài tại cửa ra vào để cán bộ dò từng MSSV."),
-        ("Tốn 20-30 phút/buổi", "Dễ thất lạc dữ liệu, gian lận điểm danh hộ rất phổ biến.")
-    ], top_accent=RED, bg_color=RED_TINT, border_color=RED_BORDER, icon="⏱️")
-
-    add_bento_box(s3, Inches(0.8), Inches(4.3), Inches(5.6), Inches(2.6), "03. Ghế Ảo (Đăng Ký Đầy Nhưng Vắng)", [
-        ("Không có vé điện tử QR", "Sinh viên không có mã định danh để đối soát tại cửa."),
-        ("Không có nút hủy vé", "Sinh viên bận đột xuất không thể hủy vé để nhường lại slot ghế cho bạn khác.")
+    add_bento_box(s3, Inches(6.8), Inches(1.5), Inches(5.6), Inches(2.6), "02. Vấn Nạn 'Ghế Ảo' (Không Đi)", [
+        ("Tham gia hoàn toàn tự nguyện", "Việc sinh viên tham gia sự kiện là tùy ý, không có giấy chứng nhận."),
+        ("Không có nút hủy vé", "Sinh viên bận không nhường ghế được, hệ thống báo hết vé nhưng hội trường trống ghế.")
     ], top_accent=RED, bg_color=RED_TINT, border_color=RED_BORDER, icon="🎟️")
 
-    add_bento_box(s3, Inches(6.8), Inches(4.3), Inches(5.6), Inches(2.6), "04. Chậm Trễ Cấp Giấy Chứng Nhận", [
-        ("Quy trình văn thư thủ công", "Mất từ 2 đến 3 tuần để ban tổ chức thiết kế và gửi email chứng nhận."),
-        ("Mất động lực học thuật", "Sinh viên không theo dõi được lịch sử tham gia phong trào của bản thân.")
-    ], top_accent=RED, bg_color=RED_TINT, border_color=RED_BORDER, icon="📜")
+    add_bento_box(s3, Inches(0.8), Inches(4.3), Inches(5.6), Inches(2.6), "03. Bất Tiện Cho Bạn Quản Lý Quét Mã", [
+        ("Người quản lý đứng quét mã tại cửa", "Khi đến sự kiện có bạn quản lý quét mã vé thì sinh viên mới được điểm danh."),
+        ("Thao tác cồng kềnh, dễ nghẽn", "Hệ thống cũ cần app riêng, dễ chậm khi sinh viên vào đông và thiếu cảnh báo vé quét trùng.")
+    ], top_accent=RED, bg_color=RED_TINT, border_color=RED_BORDER, icon="📱")
+
+    add_bento_box(s3, Inches(6.8), Inches(4.3), Inches(5.6), Inches(2.6), "04. Dữ Liệu Điểm Danh Không Đồng Bộ", [
+        ("CTSV không thấy sĩ số tức thì", "Số lượng sinh viên thực tế đến hội trường không được cập nhật ngay."),
+        ("Phải tổng hợp thủ công sau sự kiện", "Ban tổ chức mất thời gian gộp dữ liệu báo cáo sau khi sự kiện kết thúc.")
+    ], top_accent=RED, bg_color=RED_TINT, border_color=RED_BORDER, icon="📊")
 
     # =========================================================================
     # SLIDE 4: MỤC TIÊU & TẦM NHÌN ĐỘT PHÁ
@@ -392,13 +392,13 @@ def build_bright_deck():
     add_header(s4, "1. Giới thiệu dự án", "Mục Tiêu Đột Phá Của FPTU EventHub", "Thành viên 1: Trương Công Dũng", "🎯")
 
     add_kpi_card(s4, Inches(0.8), Inches(1.5), Inches(3.6), Inches(1.4), "0.1 Giây", "Đặt Vé Giữ Chỗ", "Transaction nguyên tử, chống overbooking", PRIMARY, PRIMARY_TINT, PRIMARY_BORDER)
-    add_kpi_card(s4, Inches(4.8), Inches(1.5), Inches(3.6), Inches(1.4), "< 1 Giây", "Check-in Camera QR", "WebRTC MediaDevices không cần cài App", GREEN, GREEN_TINT, GREEN_BORDER)
-    add_kpi_card(s4, Inches(8.8), Inches(1.5), Inches(3.6), Inches(1.4), "100%", "Tự Động Hóa", "Cấp vé QR, hủy vé hoàn slot, cấp E-Cert", BLUE, BLUE_TINT, BLUE_BORDER)
+    add_kpi_card(s4, Inches(4.8), Inches(1.5), Inches(3.6), Inches(1.4), "< 1 Giây", "Quét QR Check-in", "Bạn quản lý quét camera WebRTC trên web", GREEN, GREEN_TINT, GREEN_BORDER)
+    add_kpi_card(s4, Inches(8.8), Inches(1.5), Inches(3.6), Inches(1.4), "100%", "Tự Động Hóa", "Cấp vé QR, hủy vé nhả slot, đồng bộ CTSV", BLUE, BLUE_TINT, BLUE_BORDER)
 
     add_bento_box(s4, Inches(0.8), Inches(3.1), Inches(6.8), Inches(3.7), "3 Trụ Cột Đổi Mới Căn Bản", [
         ("Thời gian thực (Real-time Booking)", "Đồng bộ tức thì số vé còn lại, đóng form ngay khi hết ghế."),
-        ("Bảo mật & Chuẩn xác (Zero Fraud)", "Mỗi mã QR gắn liền duy nhất 1 User + 1 Event, mã hóa Token một chiều."),
-        ("Tiết kiệm nhân sự điều phối", "Giảm 90% thời gian điểm danh tại cửa, giải phóng công sức cho cán bộ CTSV.")
+        ("Chấm dứt vấn nạn ghế ảo", "Sinh viên chủ động hủy vé khi có việc bận, giải phóng slot cho bạn khác."),
+        ("Bàn quét WebRTC cho bạn quản lý", "Quét trực tiếp trên trình duyệt web, không cần cài app, chặn vé quét trùng tức thì.")
     ], top_accent=BLUE, bg_color=CARD_WHITE, icon="🚀")
 
     if os.path.exists(IMG_AI):
@@ -423,13 +423,13 @@ def build_bright_deck():
     add_header(s5, "1. Giới thiệu dự án", "Bảng So Sánh Đối Đầu: Cổng Cũ vs FPTU EventHub", "Thành viên 1: Trương Công Dũng", "⚔️")
 
     # Left: Red Tint Card (Old System)
-    add_bento_box(s5, Inches(0.8), Inches(1.5), Inches(5.4), Inches(5.3), "❌ CỔNG CŨ EVENTS.FPTU.VN", [
-        ("Nền tảng trang tĩnh", "Chỉ đăng bài viết giới thiệu, không có tính năng đặt chỗ trực tuyến."),
-        ("Đăng ký qua Google Form rời rạc", "Không thể tự động khóa khi hết vé, sinh viên đăng ký dư quá tải."),
-        ("Điểm danh giấy thủ công", "Dò tên từng người tốn 20-30 phút/buổi, dễ gian lận ký thay."),
-        ("Không có vé điện tử QR", "Sinh viên không có mã đối soát chứng minh đã được duyệt giữ chỗ."),
-        ("Không hỗ trợ hủy vé", "Sinh viên bận không thể hủy, dẫn đến tình trạng ghế trống ảo."),
-        ("Thống kê phân tán", "Dữ liệu nằm rải rác trên hàng chục file Excel cá nhân của ban tổ chức.")
+    add_bento_box(s5, Inches(0.8), Inches(1.5), Inches(5.4), Inches(5.3), "❌ CỔNG CŨ CỦA TRƯỜNG", [
+        ("Không kiểm soát sức chứa thời gian thực", "Dễ dẫn đến quá tải số lượng khi mở đăng ký sự kiện hot."),
+        ("Không có nút hủy vé", "Sinh viên bận không nhường ghế được, dẫn đến tình trạng ghế trống ảo."),
+        ("Bạn quản lý phải dùng app riêng", "Thao tác quét mã cồng kềnh, dễ chậm khi sinh viên vào đông."),
+        ("Không cảnh báo vé quét lại", "Nguy cơ quét hộ hoặc vé bị tái sử dụng mà không phát hiện kịp thời."),
+        ("Dữ liệu điểm danh rời rạc", "Cán bộ CTSV không theo dõi được sĩ số thực tế theo thời gian thực."),
+        ("Tổng hợp báo cáo thủ công", "Mất nhiều thời gian sau sự kiện để có được số liệu tổng kết.")
     ], top_accent=RED, bg_color=RED_TINT, border_color=RED_BORDER, icon="⚠️")
 
     # Middle: VS Circular Badge
@@ -449,12 +449,12 @@ def build_bright_deck():
 
     # Right: Emerald Tint Card (EventHub)
     add_bento_box(s5, Inches(7.133), Inches(1.5), Inches(5.4), Inches(5.3), "✅ FPTU EVENTHUB ĐỘT PHÁ 2026", [
-        ("Ứng dụng tương tác thời gian thực", "Kiến trúc MVC hiện đại, đăng ký giữ chỗ tức thì trong 0.1 giây."),
-        ("Kiểm soát số lượng ghế tự động", "Transaction Database nguyên tử, tự ngắt nhận đơn khi đủ sức chứa."),
-        ("Bàn quét QR Camera WebRTC", "Check-in tốc độ cao < 1 giây ngay trên trình duyệt, không cần cài app."),
-        ("Vé điện tử QR định danh", "Mã hóa Token duy nhất theo từng tài khoản sinh viên và sự kiện."),
-        ("Hủy vé tức thì hoàn slot", "Giải phóng ghế ngay lập tức cho sinh viên khác có nhu cầu tham gia."),
-        ("Báo cáo số liệu tập trung", "CTSV theo dõi tỷ lệ check-in thực tế và xuất Excel chỉ bằng 1-click.")
+        ("Khóa chỗ tự động bằng Transaction", "Hết ghế tự ngắt đăng ký trong 0.1s, chống overbooking tuyệt đối."),
+        ("Hủy vé tức thì hoàn slot", "Sinh viên chủ động trả lại vé, giải phóng ghế cho bạn khác ngay."),
+        ("Bàn Check-in WebRTC tiện lợi", "Bạn quản lý mở ngay trên web điện thoại/laptop quét mã < 1s."),
+        ("Chống gian lận quét trùng", "Vé đã quét lập tức báo đỏ 'Đã check-in' và ghi nhận thời gian thực."),
+        ("Dashboard đồng bộ CTSV", "Theo dõi sĩ số sinh viên có mặt ngay lập tức và xuất Excel 1-click."),
+        ("Trải nghiệm linh hoạt tự nguyện", "Tôn trọng quyền tự do tham gia của sinh viên, thao tác minh bạch.")
     ], top_accent=GREEN, bg_color=GREEN_TINT, border_color=GREEN_BORDER, icon="🌟")
 
     # =========================================================================
@@ -1282,17 +1282,19 @@ def build_bright_deck():
     r4.font.color.rgb = GREEN_DARK
 
     # Save presentation
+    output_v2 = r"C:\Users\truon\fptu_eventhub\SLIDE_THUYET_TRINH_FPTU_EVENTHUB_CANVA_V2.pptx"
     output_bright = r"C:\Users\truon\fptu_eventhub\SLIDE_THUYET_TRINH_FPTU_EVENTHUB_CANVA_BRIGHT.pptx"
     output_main = r"C:\Users\truon\fptu_eventhub\SLIDE_THUYET_TRINH_FPTU_EVENTHUB.pptx"
     
-    prs.save(output_bright)
-    print(f"Canva-style bright presentation saved successfully at: {output_bright}")
+    prs.save(output_v2)
+    print(f"Canva-style bright V2 presentation saved successfully at: {output_v2}")
     
-    try:
-        prs.save(output_main)
-        print(f"Also updated main presentation at: {output_main}")
-    except PermissionError:
-        print(f"Notice: {output_main} is currently open in WPS/PowerPoint. Saved to {output_bright} instead.")
+    for target in [output_bright, output_main]:
+        try:
+            prs.save(target)
+            print(f"Also updated presentation at: {target}")
+        except PermissionError:
+            print(f"Notice: {target} is currently open in WPS/PowerPoint.")
 
 if __name__ == "__main__":
     build_bright_deck()
