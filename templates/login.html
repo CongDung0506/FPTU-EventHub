@@ -79,31 +79,6 @@
         <p style="color:var(--feh-text-muted);font-size:13px;margin:0;">Sử dụng tài khoản Email FPT hoặc Mã số sinh viên (MSSV)</p>
       </div>
 
-      <!-- Quick 1-Click Login Buttons -->
-      <div style="background:rgba(242,111,33,0.06);border:2px dashed var(--feh-primary);border-radius:12px;padding:16px;margin-bottom:24px;">
-        <div style="font-weight:800;color:var(--feh-primary);margin-bottom:10px;font-size:12px;text-transform:uppercase;display:flex;align-items:center;gap:6px;">
-          <i class="fa-solid fa-bolt"></i> Bấm 1-Click Đăng Nhập Nhanh (Demo / Chấm điểm):
-        </div>
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          <a href="{{ url_for('quick_login', role_type='student') }}" class="btn btn-default" style="border-radius:10px;padding:12px 16px;font-weight:700;display:flex;justify-content:space-between;align-items:center;background:var(--feh-bg-card);color:var(--feh-text-main);border-color:var(--feh-border);box-shadow:var(--feh-shadow);">
-            <span><i class="fa-solid fa-user-graduate" style="color:var(--feh-primary);font-size:16px;margin-right:8px;"></i> Tài khoản Sinh viên: Trương Công Dũng</span>
-            <span class="badge" style="background:#e0f2fe;color:#0284c7;font-size:12px;padding:5px 10px;">DE200433</span>
-          </a>
-          <a href="{{ url_for('quick_login', role_type='admin') }}" class="btn btn-default" style="border-radius:10px;padding:12px 16px;font-weight:700;display:flex;justify-content:space-between;align-items:center;background:var(--feh-bg-card);color:var(--feh-text-main);border-color:var(--feh-border);box-shadow:var(--feh-shadow);">
-            <span><i class="fa-solid fa-shield-halved" style="color:#2563eb;font-size:16px;margin-right:8px;"></i> Quản trị: Phòng Công Tác Sinh Viên (CTSV)</span>
-            <span class="badge" style="background:#eff6ff;color:#1e40af;font-size:12px;padding:5px 10px;">ADM001</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- Manual Login Form -->
-      <div style="text-align:center;position:relative;margin:18px 0 20px;">
-        <span style="background:var(--feh-bg-card);padding:0 12px;color:var(--feh-text-muted);font-size:12px;font-weight:700;position:relative;z-index:2;">
-          HOẶC NHẬP THỦ CÔNG
-        </span>
-        <div style="position:absolute;top:50%;left:0;right:0;border-top:1px solid var(--feh-border);z-index:1;"></div>
-      </div>
-
       <form method="POST">
         {{ form.hidden_tag() }}
 
