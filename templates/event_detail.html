@@ -208,11 +208,11 @@
             </a>
           {% elif has_checked_in %}
             <div class="alert alert-info" style="border-radius:10px;padding:14px;margin-bottom:14px;">
-              <div style="font-weight:700;"><i class="fa-solid fa-award"></i> Bạn đã hoàn thành sự kiện!</div>
+              <div style="font-weight:700;"><i class="fa-solid fa-circle-check"></i> Bạn đã hoàn thành sự kiện!</div>
               <div style="font-size:12px;margin-top:4px;">Trạng thái: Đã điểm danh thành công tại sự kiện!</div>
             </div>
-            <a href="{{ url_for('ticket_certificate', ticket_id=user_ticket.id) }}" class="feh-btn feh-btn--primary feh-btn--block" style="background:#2563eb;">
-              <i class="fa-solid fa-award"></i> Xem Giấy Chứng Nhận
+            <a href="{{ url_for('my_tickets') }}" class="feh-btn feh-btn--primary feh-btn--block" style="background:#2563eb;">
+              <i class="fa-solid fa-ticket"></i> Xem Vé Trong Ví Của Tôi
             </a>
           {% elif event.is_sold_out %}
             <button class="feh-btn feh-btn--disabled feh-btn--block" disabled>

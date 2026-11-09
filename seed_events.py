@@ -50,6 +50,7 @@ def seed_data_internal():
 
     # 2. Danh sach sinh vien FPT phong phu (Ho ten, MSSV, Nganh hoc SE/DE/IA/SS/GD/MC)
     students_roster = [
+        {"sid": "SE180001", "name": "Đỗ Minh Khang (Demo Sinh Viên)", "email": "khangdmse180001@fpt.edu.vn", "phone": "0901234999", "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=300&q=80"},
         {"sid": "DE200433", "name": "Trương Công Dũng", "email": "dungtcde200433@fpt.edu.vn", "phone": "0905123456", "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80"},
         {"sid": "SE190111", "name": "Cao Chí Trung", "email": "trungccse190111@fpt.edu.vn", "phone": "0912345678", "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80"},
         {"sid": "SE190222", "name": "Dương Thanh Viên", "email": "vientdse190222@fpt.edu.vn", "phone": "0981123456", "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80"},

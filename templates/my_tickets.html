@@ -91,12 +91,7 @@
                   <i class="fa-solid fa-qrcode"></i> Mã QR Check-in
                 </button>
 
-                <!-- Certificate Button if Checked-in -->
-                {% if t.status == 'CHECKED_IN' %}
-                  <a href="{{ url_for('ticket_certificate', ticket_id=t.id) }}" class="feh-btn" style="background:#2563eb;color:#fff;">
-                    <i class="fa-solid fa-award"></i> Xem & In Giấy Chứng Nhận
-                  </a>
-                {% endif %}
+                
 
                 <!-- Cancel Button -->
                 {% if t.status == 'REGISTERED' %}
