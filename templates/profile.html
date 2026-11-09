@@ -5,7 +5,7 @@
 <div class="feh-container py-4" style="max-width: 720px; margin: 0 auto;">
     <div class="feh-card p-4 p-md-5">
         <div class="d-flex align-items-center gap-3 mb-4 pb-3" style="border-bottom: 1px solid rgba(255,255,255,0.08);">
-            <img src="{{ current_user.avatar_url or 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80' }}" 
+            <img src="{{ current_user.avatar_url or '/static/images/default_avatar.svg' }}" 
                  alt="{{ current_user.full_name }}" 
                  style="width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 2px solid #f26f21;">
             <div>

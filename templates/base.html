@@ -285,7 +285,7 @@
             {% endif %}
             <li class="dropdown">
               <a href="#" class="dropdown-toggle feh-navbar__link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="display:flex;align-items:center;gap:8px;">
-                <img src="{{ current_user.avatar_url or '/static/images/fpt_logo.jpg' }}" alt="Avatar" style="width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid #cbd5e1;" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80';">
+                <img src="{{ current_user.avatar_url or '/static/images/fpt_logo.jpg' }}" alt="Avatar" style="width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid #cbd5e1;" onerror="this.onerror=null;this.src='/static/images/default_avatar.svg';">
                 <span>{{ current_user.full_name }} ({{ current_user.role.name }})</span>
                 <span class="caret"></span>
               </a>
